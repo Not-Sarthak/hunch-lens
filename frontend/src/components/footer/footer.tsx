@@ -1,58 +1,49 @@
-'use client';
+"use client";
 
-import {
-  DISCORD_LINK,
-  FIGMA_LINK,
-  GITHUB_LINK,
-  ONCHAINKIT_LINK,
-  TWITTER_LINK,
-} from 'src/links';
-import { motion } from 'framer-motion'; // Import motion from framer-motion
-import ArrowSvg from 'src/svg/ArrowSvg';
+import { GITHUB_LINK, TWITTER_LINK } from 'src/links';
+import { motion } from 'framer-motion';
+import { ArrowUpRightIcon } from 'lucide-react';
 
 const docLinks = [
-  { href: ONCHAINKIT_LINK, title: 'Docs' },
   { href: GITHUB_LINK, title: 'Github' },
-  { href: DISCORD_LINK, title: 'Discord' },
-  { href: FIGMA_LINK, title: 'Figma' },
   { href: TWITTER_LINK, title: 'X' },
 ];
 
 export default function Footer() {
   return (
-    <section className="mt-auto mb-2 flex w-full flex-col-reverse justify-between gap-2 md:mt-8 md:mb-6 md:flex-row">
-      <aside className="flex items-center pt-2 md:pt-0">
-        <h3 className="mr-2 mb-2 text-m md:mb-0">
+    <footer className="mt-auto px-4 py-6">
+      <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
+        <p className="text-sm text-gray-400">
           Built with love by{' '}
           <a
-            href={ONCHAINKIT_LINK}
+            href="#"
             target="_blank"
             rel="noreferrer"
-            title="OnchainKit"
-            className="font-semibold hover:text-indigo-600"
+            className="font-medium text-white hover:text-indigo-400 transition-colors"
           >
-            OnchainKit
+            Hunch
           </a>
-        </h3>
-      </aside>
-      <ul className="mt-4 flex max-w-full flex-col flex-wrap justify-center gap-3 md:mt-0 md:flex-row md:justify-start md:gap-6">
-        {docLinks.map(({ href, title }) => (
-          <li className="flex" key={href}>
-            <motion.a
-              href={href}
-              target="_blank"
-              rel="noreferrer"
-              title={title}
-              className="flex items-center gap-1 hover:text-indigo-600"
-              whileHover={{ y: -5 }} // Move up slightly on hover
-              transition={{ type: 'spring', stiffness: 300 }} // Add bounciness
-            >
-              <p>{title}</p>
-              <ArrowSvg />
-            </motion.a>
-          </li>
-        ))}
-      </ul>
-    </section>
+        </p>
+        
+        <ul className="flex items-center gap-6">
+          {docLinks.map(({ href, title }) => (
+            <li key={href}>
+              <motion.a
+                href={href}
+                target="_blank"
+                rel="noreferrer"
+                title={title}
+                className="flex items-center gap-1 text-gray-400 hover:text-indigo-400 transition-colors"
+                whileHover={{ y: -2 }}
+                transition={{ type: 'spring', stiffness: 400, damping: 10 }}
+              >
+                {title}
+                <ArrowUpRightIcon size={16} />
+              </motion.a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </footer>
   );
 }
