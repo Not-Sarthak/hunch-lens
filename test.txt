@@ -1,0 +1,117 @@
+{
+  "result": {
+    "cast": {
+      "hash": "0x5389fe8eb45f0bb10025a0521532593afc100bfb",
+      "parentUrl": "https://warpcast.com/~/channel/base-builds",
+      "threadHash": "0x5389fe8eb45f0bb10025a0521532593afc100bfb",
+      "text": "This week I built a product called Edupay on @base 🚀\nA crypto payments solution for educational institutions.Edupay seeks to promote education through leveraging the endless potential of web3 and ensure every child gets access to quality education in Africa🌍\nhttps://edupaydefi.vercel.app\n#Edupay",
+      "embeds": {
+        "images": [
+          {
+            "type": "image",
+            "url": "https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/bd743214-af12-4551-f597-57803beccc00/original",
+            "sourceUrl": "https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/bd743214-af12-4551-f597-57803beccc00/original",
+            "alt": "Cast image embed",
+            "originalUrl": "https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/bd743214-af12-4551-f597-57803beccc00/original"
+          },
+          {
+            "type": "image",
+            "url": "https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/ecce7449-7b42-49f2-115a-9cbd02623400/original",
+            "sourceUrl": "https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/ecce7449-7b42-49f2-115a-9cbd02623400/original",
+            "alt": "Cast image embed",
+            "originalUrl": "https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/ecce7449-7b42-49f2-115a-9cbd02623400/original"
+          }
+        ],
+        "urls": [],
+        "frames": [],
+        "quoteCasts": []
+      },
+      "mentions": [
+        {
+          "fid": "12142",
+          "followingCount": 183,
+          "followerCount": 126113,
+          "pfp": {
+            "url": "https://i.imgur.com/7Q0QBrm.jpg",
+            "verified": false
+          },
+          "bio": {
+            "text": "base.org",
+            "mentions": []
+          },
+          "external": false,
+          "custodyAddress": "0x04e6f111ebf6fd25576d480480962435dc3aa8d8",
+          "connectedAddress": "0x9652721d02b9db43f4311102820158abb4ecc95b",
+          "allConnectedAddresses": {
+            "ethereum": [
+              "0x9652721d02b9db43f4311102820158abb4ecc95b"
+            ],
+            "solana": []
+          },
+          "username": "base",
+          "displayName": "Base",
+          "registeredAt": 1693464713938
+        }
+      ],
+      "mentionsPositions": [
+        45
+      ],
+      "external": false,
+      "author": {
+        "fid": "887038",
+        "followingCount": 27,
+        "followerCount": 31,
+        "pfp": {
+          "url": "https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/8d332302-2594-4b9e-1c80-91ceee45d700/rectcrop3",
+          "verified": false
+        },
+        "bio": {
+          "text": "Blockchain developer | Web3.0 | Base Enthusiast",
+          "mentions": []
+        },
+        "external": false,
+        "custodyAddress": "0x49540e95297a49c3d5d9c3b0e6600d3ccf042c9f",
+        "connectedAddress": null,
+        "allConnectedAddresses": {
+          "ethereum": [],
+          "solana": []
+        },
+        "username": "iamchris",
+        "displayName": "Chris Oketch",
+        "registeredAt": 1732705375000
+      },
+      "parentAuthor": null,
+      "timestamp": 1732981764000,
+      "replies": {
+        "count": 8
+      },
+      "reactions": {
+        "count": 66
+      },
+      "recasts": {
+        "count": 12
+      },
+      "channel": {
+        "_id": "662a7297bab3024a12c07f87",
+        "channelId": "base-builds",
+        "__v": 0,
+        "createdAt": 1714055739,
+        "description": "Base is for builders, and this is a channel to talk about what you’re building on Base.",
+        "imageUrl": "https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/0761a000-1cf4-4b6c-acda-30cc24c01600/original",
+        "leadFid": "12142",
+        "name": "base-builds",
+        "url": "https://warpcast.com/~/channel/base-builds",
+        "followerCount": 38396,
+        "hostFids": [
+          "2433",
+          "767",
+          "12142",
+          "17318",
+          "17106",
+          "12144"
+        ]
+      }
+    }
+  },
+  "source": "v2"
+}

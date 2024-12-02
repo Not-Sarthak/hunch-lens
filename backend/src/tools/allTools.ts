@@ -1,4 +1,5 @@
 import { deployErc20Tool } from "./deployERC20Tool.js";
+import { retrieveCastTool } from "./farcaster-tools/analyzeCastTool.js";
 import { getBalanceTool } from "./getBalance.js";
 import { getWalletAddressTool } from "./getWalletAddressTool.js";
 import { sendTransactionTool } from "./sendTransactionTool.js";
@@ -21,6 +22,9 @@ export interface ToolConfig<T = any> {
 
 export const tools: Record<string, ToolConfig> = {
     // Add Tools Here
+
+    // FARCASTER_READ
+    get_cast_data: retrieveCastTool,
 
     // READ
     get_balance: getBalanceTool,
