@@ -78,7 +78,7 @@ const Tab: React.FC<TabProps> = ({
 };
 
 const navigationItems: NavItem[] = [
-  { label: "Hunch", path: "/" },
+  { label: "⚡️Hunch", path: "/" },
   { label: "Dashboard", path: "/dashboard" },
   { label: "Profile", path: "/profile" },
 ];

@@ -6,6 +6,7 @@ import "@coinbase/onchainkit/styles.css";
 import dynamic from "next/dynamic";
 import Navbar from "src/components/header/navbar";
 import Footer from "src/components/footer/footer";
+import { Toaster } from "sonner";
 
 const OnchainProviders = dynamic(
   () => import("src/components/OnchainProviders"),
@@ -41,6 +42,7 @@ export default function RootLayout({
           <Navbar />
           <div className="min-h-[90vh]">{children}</div>
           <Footer />
+          <Toaster position="bottom-right" />
         </OnchainProviders>
       </body>
     </html>

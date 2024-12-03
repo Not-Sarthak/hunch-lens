@@ -15,7 +15,7 @@ import {
 
 export default function Header() {
 return (
-  <header className="pt-4 pr-4">
+  <header className="">
     <div className="flex justify-end">
         <div className="wallet-container flex space-x-2">
           <Wallet>
@@ -24,7 +24,7 @@ return (
               <Name className="text-white" />
             </ConnectWallet>
             <WalletDropdown>
-              <Identity className="px-4 pt-3 pb-2" hasCopyAddressOnClick={true}>
+              <Identity className="px-4 pb-2" hasCopyAddressOnClick={true}>
                 <Avatar />
                 <Name />
                 <Address />
