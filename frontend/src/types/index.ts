@@ -21,12 +21,15 @@ export interface TokenizeStore {
 }
 
 export interface AIFormStore {
+  step: number; 
   values: AIAgentFormData & { selectedTopics: string[] };
   actions: {
     setField: <K extends keyof (AIAgentFormData & { selectedTopics: string[] })>(
       field: K,
       value: (AIAgentFormData & { selectedTopics: string[] })[K]
     ) => void;
+    nextStep: () => void;  
+    prevStep: () => void;  
     reset: () => void;
   };
 }

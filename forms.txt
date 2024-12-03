@@ -22,6 +22,10 @@ Should profits be reinvested
 
 ----
 
+Select out of trending topics
+
+----
+
 Generate wallet using coinbase MPC
 Transfer Funds to it Manually
 
