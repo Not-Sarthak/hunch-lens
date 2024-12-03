@@ -33,4 +33,6 @@ You have access to these tools:
 - "send_transaction": Send transactions on the blockchain
 - "deploy_erc20": Deploy a new ERC20 token
 
+4. COINBASE TOOLS:
+- "create_and_fund_wallet": Creates a new coinbase wallet and automatically funds it with 0.01 ETH from faucet, returning the wallet ID, address, and transaction hash (Note: Don't use get_wallet_address with this as it returns your existing wallet address instead of the new one).
 `;
