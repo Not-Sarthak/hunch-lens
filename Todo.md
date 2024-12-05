@@ -1,0 +1,4 @@
+- Backend [End to End APIs]
+- Smart Contract
+- UI
+- Frontend Integration with both Backend and Smart Contract

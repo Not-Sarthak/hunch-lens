@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import { useRouter, usePathname } from "next/navigation";
 import { useAccount } from "wagmi";
 import WalletWrapper from "src/components/WalletWrapper";
+import Image from "next/image";
 
 interface NavItem {
   label: string;
@@ -60,7 +61,7 @@ const Tab: React.FC<TabProps> = ({
       onMouseEnter={handleMouseEnter}
       onClick={handleClick}
       className={`relative z-10 block cursor-pointer px-4 py-2 transition-colors duration-200 ${
-        activeTab === index ? "text-white" : "text-gray-400 hover:text-gray-300"
+        activeTab === index ? "text-white" : "text-gray-400"
       }`}
       role="tab"
       aria-selected={activeTab === index}
@@ -107,19 +108,22 @@ export const Navbar: React.FC = () => {
   const { isConnected } = useAccount();
 
   useEffect(() => {
-    if (isConnected && pathname === '/') {
-      router.push('/dashboard');
+    if (isConnected && pathname === "/") {
+      router.push("/dashboard");
     }
   }, [isConnected, pathname, router]);
 
   return (
-    <nav className="fixed top-4 left-0 right-0 z-20 px-4">
-      <div className="max-w-7xl mx-auto flex justify-between items-center">
-        <div className="flex-1" />
-        <div className="relative z-30">
+    <nav className="absolute top-4 left-0 right-0 z-20 px-4 text-white pb-3 border-b-[1px] border-[#1E1E21]">
+      <div className="max-w-7xl mx-auto flex items-center justify-between">
+        <div className="flex items-center">
+          <Image src="/logo.svg" alt="logo" width={100} height={40} />
+        </div>
+
+        <div className="relative flex-1 flex justify-center z-30">
           <ul
             onMouseLeave={handleMouseLeave}
-            className="relative flex w-fit rounded-xl bg-gradient-to-br from-[#272A48]/30 to-[#0F0E26]/30 backdrop-blur-xl p-1 border border-gray-800"
+            className="relative flex w-fit rounded-xl p-1 border border-green-300 bg-gradient-to-r from-[#26262A] to-[#16151A]"
           >
             {navigationItems.map((item, index) => (
               <Tab
@@ -145,11 +149,12 @@ export const Navbar: React.FC = () => {
                 stiffness: 300,
                 damping: 30,
               }}
-              className="absolute z-0 h-10 rounded-xl bg-gradient-to-br from-[#272A48] to-[#0F0E26] pointer-events-none"
+              className="absolute z-0 h-10 rounded-xl bg-[radial-gradient(circle_at_top_center,_rgba(111,219,181,0.6)_0%,_rgba(69,161,118,0.3)_100%)] pointer-events-none"
             />
           </ul>
         </div>
-        <div className="flex-1 flex justify-end z-40">
+
+        <div className="flex items-center justify-end">
           <WalletWrapper />
         </div>
       </div>

@@ -17,7 +17,7 @@ export default function Header() {
 return (
   <header className="">
     <div className="flex justify-end">
-        <div className="wallet-container flex space-x-2">
+        <div className="flex space-x-2">
           <Wallet>
             <ConnectWallet>
               <Avatar className="h-6 w-6" />

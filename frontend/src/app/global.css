@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -23,7 +24,7 @@ body,
   width: 100%;
 }
 
-body {
+.background {
   color: rgb(var(--foreground-rgb));
   background: linear-gradient(
       to bottom,
@@ -34,7 +35,7 @@ body {
   isolation: isolate;
 }
 
-body:before {
+.background:before {
   content: "";
   z-index: -1;
   position: fixed;
@@ -46,7 +47,7 @@ body:before {
   background-size: 25%;
 }
 
-body:after {
+.background:after {
   content: "";
   z-index: -1;
   position: fixed;
@@ -56,15 +57,16 @@ body:after {
   height: 100%;
   background: radial-gradient(
       circle at top center,
-      hsla(275, 0%, 0%, 0.6) 0%,
-      hsla(275, 0%, 0%, 0.1) 100%
+      rgba(111, 219, 181, 0.6) 0%, 
+      rgba(69, 161, 118, 0.1) 100% 
     ),
     radial-gradient(
       circle at top center,
-      hwb(235 30% 10% / 0.3) 0%,
-      hsla(275, 0%, 0%, 0.3) 100%
+      rgba(111, 219, 181, 0.3) 0%, 
+      rgba(69, 161, 118, 0.3) 100% 
     );
 }
+
 
 .btn {
   align-items: center;
