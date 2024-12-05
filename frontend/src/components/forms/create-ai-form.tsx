@@ -10,8 +10,41 @@ import { FormStep } from "src/types";
 import { useAccount } from "wagmi";
 import Image from "next/image";
 
+const formatAddress = (address: string | undefined): string => {
+  if (!address) return "";
+  const start = address.slice(0, 4);
+  const end = address.slice(-4);
+  return `${start}...${end}`;
+};
+
+const ShimmerUI = () => (
+  <div className="space-y-6 animate-pulse">
+    <div className="flex items-center justify-between">
+      <div className="space-y-2">
+        <div className="h-4 w-32 bg-neutral-800 rounded"></div>
+        <div className="h-8 w-64 bg-neutral-800 rounded"></div>
+      </div>
+      <div className="h-10 w-40 bg-neutral-800 rounded"></div>
+    </div>
+    <div className="h-2 w-full bg-neutral-800 rounded-full"></div>
+    <div className="space-y-4">
+      <div className="h-12 w-full bg-neutral-800 rounded"></div>
+      <div className="h-12 w-3/4 bg-neutral-800 rounded"></div>
+      <div className="h-12 w-1/2 bg-neutral-800 rounded"></div>
+    </div>
+    <div className="flex items-center justify-between">
+      <div className="h-6 w-16 bg-neutral-800 rounded"></div>
+      <div className="flex gap-4">
+        <div className="h-10 w-24 bg-neutral-800 rounded"></div>
+        <div className="h-10 w-24 bg-neutral-800 rounded"></div>
+      </div>
+    </div>
+  </div>
+);
+
 const LaunchAI = () => {
   const router = useRouter();
+  const { address } = useAccount();
 
   const {
     step,
@@ -23,6 +56,7 @@ const LaunchAI = () => {
     compoundProfits,
     walletId,
   } = useFormStore();
+  
   const [isLoading, setIsLoading] = useState(false);
 
   const goNext = (nextStep: FormStep) => {
@@ -35,7 +69,6 @@ const LaunchAI = () => {
 
   const handleLaunch = () => {
     setIsLoading(true);
-
     const formData = {
       name,
       goal,
@@ -54,15 +87,6 @@ const LaunchAI = () => {
     }, 1000);
   };
 
-  const formatAddress = (address: string | undefined): string => {
-    if (!address) return "";
-
-    // Return first 4 and last 4 characters with ... in between
-    const start = address.slice(0, 4);
-    const end = address.slice(-4);
-    return `${start}...${end}`;
-  };
-
   const renderStep = () => {
     switch (step) {
       case 1:
@@ -76,18 +100,24 @@ const LaunchAI = () => {
     }
   };
 
-  const { address } = useAccount();
+  if (isLoading) {
+    return (
+      <div className="max-w-4xl mx-auto">
+        <ShimmerUI />
+      </div>
+    );
+  }
 
   return (
-    <div className="max-w-4xl mx-auto">
+    <div className="min-w-[50vw]">
       <div className="space-y-6">
         <div className="flex items-center justify-between">
-          <div className="">
+          <div>
             <div className="text-neutral-500 text-sm font-normal font-inter leading-[16.80px]">
               Set up your intel agent
             </div>
             <div className="flex items-center gap-2">
-              <div className="text-white text-2xl font-light font-['Helvetica Neue'] capitalize leading-normal">
+              <div className="text-white text-2xl font-light font-inter capitalize leading-normal">
                 {formatAddress(address)}{" "}
               </div>
               <div className="bg-gradient-to-r from-[#6FDBB5] to-[#5BC49E] inline-block text-transparent bg-clip-text text-[44px] leading-[44px]">
@@ -96,71 +126,50 @@ const LaunchAI = () => {
             </div>
           </div>
           <div>
-            <button className="text-neutral-500 flex items-center gap-2 bg-gradient-to-b from-[#26262A] to-[#16151A] px-2 py-2 rounded-lg border-[1px] border-[#1E1E21] text-sm font-normal font-['Helvetica Neue'] leading-[16.80px]">
+            <button className="text-neutral-500 hover:scale-95 transition-all flex items-center gap-2 bg-gradient-to-b from-[#26262A] to-[#16151A] px-2 py-2 rounded-lg border-[1px] border-[#1E1E21] text-sm font-normal font-['Helvetica Neue'] leading-[16.80px]">
               <Image src="/icons/ai.svg" alt="ai" width={20} height={20} />
               Randomise answers
             </button>
           </div>
         </div>
 
-        <div className="flex items-center gap-2">
-          <Hash className="w-4 h-4 text-gray-400" />
-          <div className="w-full h-2 bg-gray-700 rounded-full overflow-hidden">
-            <div
-              className="h-full bg-green-600 transition-all duration-500"
-              style={{ width: `${(step / 3) * 100}%` }}
-            />
+        <div>{renderStep()}</div>
+
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-2 pb-1">
+            <span className="text-sm text-gray-400">{step}/3</span>
           </div>
-          <span className="text-sm text-gray-400">{step}/3</span>
-        </div>
-
-        <div
-          className={`transition-opacity duration-300 ${isLoading ? "opacity-50" : "opacity-100"}`}
-        >
-          {renderStep()}
-        </div>
-
-        {step !== 3 && (
-          <div className="flex justify-between">
+          
+          <div className="flex items-center gap-4">
             {step > 1 && (
               <button
-                className="px-4 py-2 bg-gray-800 hover:bg-gray-700 rounded-lg transition-colors flex items-center gap-2 disabled:opacity-50"
+              className="px-4 py-2 bg-white hover:scale-95 transition-all text-black rounded-lg flex items-center gap-2"
                 onClick={() => setStep((step - 1) as FormStep)}
-                disabled={isLoading}
               >
                 <ArrowLeft className="w-4 h-4" />
                 Previous
               </button>
             )}
-            <button
-              className="px-4 py-2 bg-green-600 hover:bg-green-700 rounded-lg transition-colors flex items-center gap-2 disabled:opacity-50 ml-auto"
+            {step !== 3 ? (
+              <button
+              className="px-4 py-2 bg-white hover:scale-95 transition-all text-black rounded-lg flex items-center gap-2"
               onClick={() => goNext((step + 1) as FormStep)}
-              disabled={isLoading}
-            >
-              Next
-              <ArrowRight className="w-4 h-4" />
-            </button>
+              >
+                Next
+                <ArrowRight className="w-4 h-4" />
+              </button>
+            ) : (
+              <button
+                onClick={handleLaunch}
+                className="px-4 py-2 bg-white hover:scale-95 transition-all text-black rounded-lg flex items-center gap-2"
+              >
+                🚀
+                Launch AI Agent
+              </button>
+            )}
           </div>
-        )}
-
-        {step === 3 && (
-          <div className="mt-6">
-            <button
-              onClick={handleLaunch}
-              className="w-full py-3 px-4 bg-green-600 hover:bg-green-700 text-white rounded-lg transition-colors flex items-center justify-center gap-2"
-            >
-              <Rocket className="w-5 h-5" />
-              Launch AI Agent
-            </button>
-          </div>
-        )}
-      </div>
-
-      {isLoading && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-green-500" />
         </div>
-      )}
+      </div>
     </div>
   );
 };

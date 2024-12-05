@@ -2,13 +2,22 @@ import { z } from "zod";
 import { tokenizationSchema } from "src/schemas/tokenize-cast-schema";
 
 export type FormStep = 1 | 2 | 3;
-export type GoalType = 'profit' | 'values' | 'social';
-export type StrategyType = 'Only Profit' | 'I value values' | 'Socialistic - combo';
+export type GoalType = "profit" | "values" | "social";
+export type StrategyType =
+  | "Scout" 
+  | "Maker" 
+  | "Bull" 
+  | "Bear"; 
+export type AIType = "default" | "custom";
+export type AIGoalType = "aggressive" | "conservative" | "moderate";
 
 export interface FormState {
   step: FormStep;
   name: string;
+  basename: string;
   goal: GoalType;
+  aiType: AIType;
+  aiGoal?: AIGoalType;
   riskTolerance: number;
   selectedStrategies: StrategyType[];
   compoundProfits: boolean;
@@ -37,4 +46,3 @@ export interface TokenizeStore {
     resetForm: () => void;
   };
 }
-
