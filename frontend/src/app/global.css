@@ -89,13 +89,21 @@ body,
   transition: all 0.2s;
 }
 
-.btn-indigo:disabled {
+.btn-green:disabled {
   background: #ffffff26;
   pointer-events: none;
 }
 
-.btn-indigo {
-  background: #6366f180;
+.btn-green {
+  background: linear-gradient(90deg, #44a281, #2A5547);
+  color: white; 
+  border: none; 
+  padding: 10px 20px;
+  cursor: pointer;
+}
+
+.btn-green:hover {
+  background: linear-gradient(90deg, #5BC49E, #1D3A2E);
 }
 
 .shadow-custom {

@@ -1,9 +1,27 @@
 import { z } from "zod";
 import { tokenizationSchema } from "src/schemas/tokenize-cast-schema";
-import { aiAgentSchema } from "src/schemas/ai-agent-schema";
+
+export type FormStep = 1 | 2 | 3;
+export type GoalType = 'profit' | 'values' | 'social';
+export type StrategyType = 'Only Profit' | 'I value values' | 'Socialistic - combo';
+
+export interface FormState {
+  step: FormStep;
+  name: string;
+  goal: GoalType;
+  riskTolerance: number;
+  selectedStrategies: StrategyType[];
+  compoundProfits: boolean;
+  walletId: string;
+}
+
+export interface FormStore extends FormState {
+  setStep: (step: FormStep) => void;
+  setField: <K extends keyof FormState>(key: K, value: FormState[K]) => void;
+  reset: () => void;
+}
 
 export type TokenizeFormData = z.infer<typeof tokenizationSchema>;
-export type AIAgentFormData = z.infer<typeof aiAgentSchema>;
 
 export interface TokenizeStore {
   values: {
@@ -20,16 +38,3 @@ export interface TokenizeStore {
   };
 }
 
-export interface AIFormStore {
-  step: number; 
-  values: AIAgentFormData & { selectedTopics: string[] };
-  actions: {
-    setField: <K extends keyof (AIAgentFormData & { selectedTopics: string[] })>(
-      field: K,
-      value: (AIAgentFormData & { selectedTopics: string[] })[K]
-    ) => void;
-    nextStep: () => void;  
-    prevStep: () => void;  
-    reset: () => void;
-  };
-}

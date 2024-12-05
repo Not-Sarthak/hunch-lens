@@ -109,7 +109,7 @@ export const Navbar: React.FC = () => {
 
   useEffect(() => {
     if (isConnected && pathname === "/") {
-      router.push("/dashboard");
+      router.push("/launch-ai");
     }
   }, [isConnected, pathname, router]);
 

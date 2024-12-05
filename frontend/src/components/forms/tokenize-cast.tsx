@@ -1,55 +1,46 @@
 "use client";
 
-import { memo } from 'react';
+import { memo } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
 import type { TokenizeFormData } from "src/types";
 import { useTokenizeStore } from "src/store/use-tokenize-store";
 import { tokenizationSchema } from "src/schemas/tokenize-cast-schema";
+import { TriangleAlert, X } from "lucide-react";
 
 const formFields = [
-  { id: 'tweetUrl', label: 'Tweet URL', type: 'text' },
-  { id: 'marketName', label: 'Market Name', type: 'text' },
-  { id: 'initialSupply', label: 'Initial Supply', type: 'number' },
-  { id: 'price', label: 'Price', type: 'number', step: 'any' }
+  { id: "tweetUrl", label: "Farcaster / Tweet URL", placeholder: "https://warpcast.com/jessepollak/0x4dde1942", type: "text" },
+  { id: "marketName", label: "Market Name", placeholder: "Based Jesse", type: "text" },
+  { id: "initialSupply", label: "Initial Supply", placeholder: "100", type: "number" },
+  { id: "price", label: "Price", type: "number", placeholder: "0.01 ETH", step: "any" },
 ] as const;
 
-const TokenizeCastForm = memo(({ onClose }: { onClose: () => void }) => {
+const TokenizeCastForm = memo(({ closeModal }: { closeModal: () => void }) => {
   const { values, actions } = useTokenizeStore();
 
   const {
     register,
     handleSubmit,
-    formState: { errors }
+    formState: { errors },
   } = useForm<TokenizeFormData>({
     resolver: zodResolver(tokenizationSchema),
     defaultValues: {
       tweetUrl: values.tweetUrl,
       marketName: values.marketName,
       initialSupply: values.initialSupply,
-      price: values.price
-    }
+      price: values.price,
+    },
   });
 
   const onSubmit = async (data: TokenizeFormData) => {
     actions.setIsSubmitting(true);
     try {
-      console.log('Form Submission Data:', {
-        tweetUrl: data.tweetUrl,
-        marketName: data.marketName,
-        initialSupply: data.initialSupply,
-        price: data.price,
-        types: {
-          initialSupply: typeof data.initialSupply,
-          price: typeof data.price
-        }
-      });
-  
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      console.log("Form Submission Data:", data);
+      await new Promise((resolve) => setTimeout(resolve, 1000));
       toast.success("Tweet tokenized successfully!");
       actions.resetForm();
-      onClose();
+      closeModal();
     } catch (error) {
       toast.error("Failed to tokenize tweet. Please try again.");
       console.error(error);
@@ -57,67 +48,52 @@ const TokenizeCastForm = memo(({ onClose }: { onClose: () => void }) => {
       actions.setIsSubmitting(false);
     }
   };
-  
-  const handleChange = (id: keyof TokenizeFormData, value: string) => {
-    if (id === 'initialSupply' || id === 'price') {
-      actions.setFieldValue(id, Number(value) || 0);
-    } else {
-      actions.setFieldValue(id, value);
-    }
-  };
-
-  const getFieldValue = (id: keyof TokenizeFormData) => {
-    const value = values[id];
-    if (typeof value === 'number' && (id === 'initialSupply' || id === 'price')) {
-      return value || '';
-    }
-    return value;
-  };
-
-  const renderField = ({ id, label, type }: typeof formFields[number]) => (
-    <div key={id}>
-      <label 
-        htmlFor={id} 
-        className="block text-sm font-semibold text-white mb-1"
-      >
-        {label}
-      </label>
-      <input
-        id={id}
-        type={type}
-        {...register(id as keyof TokenizeFormData, {
-          valueAsNumber: type === 'number'
-        })}
-        value={getFieldValue(id as keyof TokenizeFormData)}
-        onChange={e => handleChange(id as keyof TokenizeFormData, e.target.value)}
-        className="w-full p-2 rounded-md bg-cardGray-900 border border-white/10 
-        text-white focus:outline-none focus:ring-2 focus:ring-accentPurple"
-      />
-      {errors[id as keyof TokenizeFormData] && (
-        <p className="mt-1 text-red-400 text-sm">
-          {errors[id as keyof TokenizeFormData]?.message}
-        </p>
-      )}
-    </div>
-  );
 
   return (
     <div className="w-full">
-      <h2 className="text-xl font-bold mb-6 text-white">Tokenize Tweet</h2>
+      <div className="flex justify-between items-center mb-6">
+      <div className="text-neutral-50 text-base font-medium font-inter leading-tight">Tokenize a Cast / Tweet</div>
+        <button onClick={closeModal} className="text-white hover:text-red-400">
+          <X className="w-6 h-6" />
+        </button>
+      </div>
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-        {formFields.map(renderField)}
+        {formFields.map(({ id, label, placeholder, type }) => (
+          <div key={id}>
+            <label htmlFor={id} className="block text-neutral-50 text-sm font-normal font-['Helvetica Neue'] leading-[18.20px] mb-1">
+              {label}
+            </label>
+            <input
+              id={id}
+              type={type}
+              {...register(id as keyof TokenizeFormData, {
+                valueAsNumber: type === "number", 
+              })}
+              placeholder={placeholder}
+              className="px-3.5 py-3 bg-[#242424] w-full rounded-md justify-start items-center gap-1 inline-flex text-neutral-500 text-sm font-normal font-inter leading-[16.80px]"
+            />
+            {errors[id as keyof TokenizeFormData] && (
+              <div className="pt-2">
+              <p className="px-4 py-1 flex items-center rounded-lg border-red-600 border-[1px] text-red-400 text-sm bg-red-500/30">
+                <TriangleAlert />
+                {errors[id as keyof TokenizeFormData]?.message}
+              </p>
+              </div>
+            )}
+          </div>
+        ))}
         <button
           type="submit"
           disabled={values.isSubmitting}
-          className="w-full btn btn-indigo mt-6"
+          className="w-full btn btn-green mt-6"
         >
-          {values.isSubmitting ? "Tokenizing..." : "Tokenize Tweet"}
+          {values.isSubmitting ? "Tokenizing..." : "Create Market"}
         </button>
       </form>
     </div>
   );
 });
 
-TokenizeCastForm.displayName = 'TokenizeCastForm';
+TokenizeCastForm.displayName = "TokenizeCastForm";
 
 export default TokenizeCastForm;

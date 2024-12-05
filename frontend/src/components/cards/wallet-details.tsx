@@ -50,7 +50,7 @@ const WalletDetails: React.FC<WalletDetailsProps> = ({
           </div>
 
           <div className="flex items-center gap-8">
-            <div className="space-y-1">
+            <div className="">
               <div className="text-white text-base font-light font-inter capitalize leading-tight">
                 $ETH
               </div>
@@ -59,7 +59,7 @@ const WalletDetails: React.FC<WalletDetailsProps> = ({
               </div>
             </div>
 
-            <div className="space-y-1">
+            <div className="">
               <div className="text-white text-base font-light font-inter capitalize leading-tight">
                 $USDC
               </div>
@@ -68,7 +68,7 @@ const WalletDetails: React.FC<WalletDetailsProps> = ({
               </div>
             </div>
 
-            <div className="space-y-1">
+            <div className="">
               <div className="text-white text-base font-light font-inter capitalize leading-tight">
                 Invested Casts
               </div>

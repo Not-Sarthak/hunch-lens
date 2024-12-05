@@ -1,6 +1,8 @@
 "use client";
 
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import TokenizeCastForm from "../forms/tokenize-cast";
 
 interface Particle {
   x: number;
@@ -14,6 +16,7 @@ const MarketBanner = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const particles = useRef<Particle[]>([]);
   const animationFrameId = useRef<number>();
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const createParticles = (canvas: HTMLCanvasElement) => {
     const particlesArray: Particle[] = [];
@@ -109,10 +112,36 @@ const MarketBanner = () => {
           <span>Don't wait for popular casts to be tokenised.</span>
           <span>Tokenise them yourself and raise the bar!</span>
         </div>
-        <button className="inline-flex pt-4 items-center text-base font-medium text-[#6FDBB5] hover:text-[#5BC49E] transition-colors hover:underline">
+        <button
+          onClick={() => setIsModalOpen(true)}
+          className="inline-flex pt-4 items-center text-base font-medium text-[#6FDBB5] hover:text-[#5BC49E] transition-colors hover:underline"
+        >
           Tokenise a cast
         </button>
       </div>
+
+      <AnimatePresence>
+        {isModalOpen && (
+          <motion.div
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black/30 bg-opacity-50 backdrop-blur-sm"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setIsModalOpen(false)}
+          >
+            <motion.div
+              className="bg-[#111015] rounded-lg border-[#1e1e21] border-[1px] shadow-lg p-6 max-w-lg w-full relative"
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              transition={{ duration: 0.2 }}
+              onClick={(e) => e.stopPropagation()} 
+            >
+              <TokenizeCastForm closeModal={() => setIsModalOpen(false)} />
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 };

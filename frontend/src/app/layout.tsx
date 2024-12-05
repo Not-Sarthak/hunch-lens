@@ -37,10 +37,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className="bg-black text-white font-inter">
+      <body className="bg-[#111015] text-white font-inter">
         <OnchainProviders>
           <Navbar />
-          <div className="">{children}</div>
+          <div className="min-h-[100vh]">{children}</div>
           <Footer />
           <Toaster position="bottom-right" />
         </OnchainProviders>
