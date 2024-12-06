@@ -300,7 +300,7 @@ const ProfileSection = () => {
             </span>
           </div>
         </div>
-        <button className="flex items-center gap-2 bg-gradient-to-b from-[#26262A] to-[#16151A] border border-[#1e1e21] py-[0.375rem] px-2.5 pr-3.5 rounded-xl hover:from-[#26262A] hover:to-[#26262A] transition-colors">
+        <button className="flex items-center gap-2 bg-gradient-to-b from-[#26262A] to-[#16151A] border border-[#1e1e21] py-[0.25rem] px-2.5 pr-3.5 rounded-xl hover:from-[#26262A] hover:to-[#26262A] transition-colors">
           <svg
             width="16"
             height="17"
