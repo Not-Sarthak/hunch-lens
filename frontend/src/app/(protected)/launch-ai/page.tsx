@@ -14,7 +14,7 @@ const CreateAgentPage = () => {
         opacity: 1,
         y: 0,
       }}
-      className="flex py-32 items-center justify-center w-full"
+      className="flex items-center justify-center w-full py-32 pl-20"
     >
       <CreateAIForm />
     </motion.div>

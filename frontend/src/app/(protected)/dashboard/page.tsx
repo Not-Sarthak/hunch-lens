@@ -19,7 +19,7 @@ const Dashboard = () => {
       }}
       className="min-h-screen bg-[#111015] flex justify-center"
     >
-      <div className="max-w-7xl w-full py-20">
+      <div className="w-full py-24 pl-20 max-w-7xl">
         <div className="pt-4 pb-6 border-[#1E1E21] border-b-[1px]">
           <WalletDetails
             balance={1234.56}
@@ -28,8 +28,8 @@ const Dashboard = () => {
             investedCasts={42}
           />
         </div>
-        <div className="py-6 w-full flex gap-8">
-          <div className="w-2/3 flex flex-col gap-4">
+        <div className="flex w-full gap-8 py-6">
+          <div className="flex flex-col w-2/3 gap-4">
             <div>
               <MarketBanner />
             </div>

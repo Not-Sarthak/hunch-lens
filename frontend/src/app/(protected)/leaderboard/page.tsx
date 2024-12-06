@@ -1,9 +1,9 @@
 "use client";
 
 import { motion } from "framer-motion";
-import ProfileSection from "src/components/sections/profile";
+import LeaderboardSection from "src/components/sections/leaderboard";
 
-const Profile = () => {
+const Leaderboard = () => {
   return (
     <motion.div
       initial={{
@@ -16,9 +16,9 @@ const Profile = () => {
       }}
       className="flex items-center justify-center w-full py-32 pl-20"
     >
-      <ProfileSection />
+      <LeaderboardSection />
     </motion.div>
   );
 };
 
-export default Profile;
+export default Leaderboard;
