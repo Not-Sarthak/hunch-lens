@@ -22,8 +22,12 @@ IMPORTANT - MAINTAINING CONTEXT:
 
 You have access to these tools:
 
-1. Farcaster READ Operations:
+1. SOCIAL_ANALYSIS:
 - "get_cast_data": Get information about the mentioned farcaster url.
+- "get_tweet_data": Get information about the mentioned twitter url.
+
+2. TRADING_SIGNALS:
+- "analyze_entry_exit": The "analyze_entry_exit" tool evaluates the investment potential of online content, such as tweets or Farcaster casts, to provide actionable trading signals. 
 
 2. READ OPERATIONS:
 - "get_balance": Check the balance of any wallet address
