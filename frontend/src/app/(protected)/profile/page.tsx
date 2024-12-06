@@ -1,9 +1,9 @@
 "use client";
 
-import CreateAIForm from "src/components/forms/create-ai-form";
 import { motion } from "framer-motion";
+import ProfileSection from "src/components/sections/profile";
 
-const CreateAgentPage = () => {
+const Profile = () => {
   return (
     <motion.div
       initial={{
@@ -14,11 +14,11 @@ const CreateAgentPage = () => {
         opacity: 1,
         y: 0,
       }}
-      className="flex py-32 items-center justify-center w-full"
+      className="flex items-center justify-center w-full py-32"
     >
-      <CreateAIForm />
+      <ProfileSection />
     </motion.div>
   );
 };
 
-export default CreateAgentPage;
+export default Profile;

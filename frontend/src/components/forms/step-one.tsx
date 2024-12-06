@@ -3,7 +3,8 @@ import { useFormStore } from "src/store/use-form-store";
 import { GoalType, AIType, AIGoalType } from "src/types";
 
 const StepOne = () => {
-  const { name, basename, goal, aiType, aiGoal, riskTolerance, setField } = useFormStore();
+  const { name, basename, goal, aiType, aiGoal, riskTolerance, setField } =
+    useFormStore();
 
   const aiTypes: AIType[] = ["default", "custom"];
   const aiGoals: Record<AIGoalType, string> = {
@@ -15,14 +16,14 @@ const StepOne = () => {
   const goals: Record<GoalType, string> = {
     profit: "Growth",
     values: "Balance",
-    social: "Impact"
+    social: "Impact",
   };
 
   return (
     <div className="w-full bg-[#111015] border-[1px] border-[#1e1e21] rounded-lg p-6">
       <div className="space-y-6">
         <div className="space-y-2">
-          <label className="text-neutral-50 block text-sm font-normal font-inter leading-[18.20px]">
+          <label className="text-neutral-50 block text-sm font-normal font-helvetica leading-[18.20px]">
             Name your AI Agent
           </label>
           <input
@@ -30,12 +31,12 @@ const StepOne = () => {
             value={name}
             onChange={(e) => setField("name", e.target.value)}
             placeholder="Enter name"
-            className="h-[41px] px-3.5 py-3 bg-[#242424] w-full rounded-md justify-start items-center gap-1 inline-flex text-neutral-500 text-sm font-normal font-inter leading-[16.80px]"
+            className="h-[41px] px-3.5 py-3 bg-[#242424] w-full rounded-md justify-start items-center gap-1 inline-flex text-neutral-500 text-sm font-normal font-helvetica leading-[16.80px]"
           />
         </div>
 
         <div className="space-y-2">
-          <label className="text-neutral-50 block text-sm font-normal font-inter leading-[18.20px]">
+          <label className="text-neutral-50 block text-sm font-normal font-helvetica leading-[18.20px]">
             Make your Agent Based 💙
           </label>
           <input
@@ -43,7 +44,7 @@ const StepOne = () => {
             value={basename}
             onChange={(e) => setField("basename", e.target.value)}
             placeholder="Enter basename"
-            className="h-[41px] px-3.5 py-3 bg-[#242424] w-full rounded-md justify-start items-center gap-1 inline-flex text-neutral-500 text-sm font-normal font-inter leading-[16.80px]"
+            className="h-[41px] px-3.5 py-3 bg-[#242424] w-full rounded-md justify-start items-center gap-1 inline-flex text-neutral-500 text-sm font-normal font-helvetica leading-[16.80px]"
           />
         </div>
 
@@ -146,7 +147,9 @@ const StepOne = () => {
                 max="10"
                 step="1"
                 value={riskTolerance}
-                onChange={(e) => setField("riskTolerance", Number(e.target.value))}
+                onChange={(e) =>
+                  setField("riskTolerance", Number(e.target.value))
+                }
                 className="absolute w-full h-8 opacity-0 cursor-pointer -mt-3"
               />
             </div>

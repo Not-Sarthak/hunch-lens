@@ -59,14 +59,14 @@ const CastCard = ({ data }: CastCardProps) => {
           </div>
           <div>
             <div className="flex items-center gap-2">
-              <div className="text-neutral-50 text-sm font-medium font-inter leading-[18.20px]">
+              <div className="text-neutral-50 text-sm font-medium font-helvetica leading-[18.20px]">
                 {data.author.displayName}
               </div>
-              <div className="text-neutral-500 text-sm font-normal font-inter leading-[18.20px]">
+              <div className="text-neutral-500 text-sm font-normal font-helvetica leading-[18.20px]">
                 @{data.author.username}
               </div>
             </div>
-            <div className="text-neutral-500 text-xs font-medium pt-1 font-inter leading-none">
+            <div className="text-neutral-500 text-xs font-medium pt-1 font-helvetica leading-none">
               {data.author.bio.text.length > 80
                 ? `${data.author.bio.text.slice(0, 80)}...`
                 : data.author.bio.text}
@@ -76,7 +76,7 @@ const CastCard = ({ data }: CastCardProps) => {
              </div> */}
           </div>
         </div>
-        <div className="text-neutral-50 text-base font-normal font-['Helvetica Neue'] leading-tight px-1 py-2">
+        <div className="text-neutral-50 text-base font-normal font-helvetica leading-tight px-1 py-2">
           {data.text}
         </div>
       </div>

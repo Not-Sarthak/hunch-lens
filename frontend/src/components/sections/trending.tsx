@@ -74,7 +74,9 @@ const Trending = () => {
         // setCasts(response.data.result.casts);
 
         // This is a simulation of an API call with dummy data
-        const simulatedResponse = await new Promise<{ data: { result: { casts: CastData[] } } }>((resolve) =>
+        const simulatedResponse = await new Promise<{
+          data: { result: { casts: CastData[] } };
+        }>((resolve) =>
           setTimeout(() => {
             resolve({
               data: {
@@ -110,7 +112,7 @@ const Trending = () => {
 
   return (
     <div>
-      <div className="text-neutral-500 text-base font-light font-inter leading-tight pb-4">
+      <div className="text-neutral-500 text-base font-light font-helvetica leading-tight pb-4">
         Trending on Warpcast
       </div>
       <div className="space-y-4">
@@ -121,9 +123,7 @@ const Trending = () => {
             <ShimmerCard />
           </>
         ) : (
-          casts.map((cast) => (
-            <CastCard key={cast.hash} data={cast} />
-          ))
+          casts.map((cast) => <CastCard key={cast.hash} data={cast} />)
         )}
       </div>
     </div>

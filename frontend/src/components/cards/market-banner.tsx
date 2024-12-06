@@ -98,17 +98,17 @@ const MarketBanner = () => {
   }, []);
 
   return (
-    <div className="relative w-full overflow-hidden rounded-2xl bg-[#16151A] py-6 px-10">
-      <div className="absolute -top-10 -right-4 rounded-full w-[153px] h-[153px] bg-gradient-to-b from-[#6FDBB5] to-[#2A5547] blur-[50px]" />
-      <div className="absolute -bottom-10 left-0 rounded-full w-[153px] h-[153px] bg-[#2A5547] blur-[50px]" />
+    <div className="relative w-full overflow-hidden rounded-2xl bg-[#16151A] px-10 py-8 border border-[#1C1C1F]">
+      <div className="absolute -top-20 right-4 rounded-full w-[156px] h-[156px] bg-gradient-to-b from-[#6FDBB5] to-[#2A5547] blur-[50px]" />
+      <div className="absolute -bottom-24 left-0 rounded-full w-[156px] h-[156px] bg-[#2A5547] blur-[50px]" />
 
       <canvas ref={canvasRef} className="absolute inset-0" />
 
       <div className="relative z-10 max-w-2xl">
-        <div className="text-white text-2xl font-normal font-inter leading-normal">
+        <div className="text-white text-2xl font-normal font-helvetica leading-normal">
           Create markets for banger casts
         </div>
-        <div className="text-neutral-500 text-base font-normal font-inter leading-tight flex flex-col pt-2">
+        <div className="text-[#737373] text-base font-normal font-helvetica leading-tight flex flex-col pt-2">
           <span>Don't wait for popular casts to be tokenised.</span>
           <span>Tokenise them yourself and raise the bar!</span>
         </div>
@@ -135,7 +135,7 @@ const MarketBanner = () => {
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.9, opacity: 0 }}
               transition={{ duration: 0.2 }}
-              onClick={(e) => e.stopPropagation()} 
+              onClick={(e) => e.stopPropagation()}
             >
               <TokenizeCastForm closeModal={() => setIsModalOpen(false)} />
             </motion.div>

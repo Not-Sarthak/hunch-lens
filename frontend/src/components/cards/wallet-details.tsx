@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { useAccount } from 'wagmi';
+import { useAccount } from "wagmi";
 import TimeframeDropdown from "../dropdown/time-frame-dropdown";
 
 interface WalletDetailsProps {
@@ -34,16 +34,18 @@ const WalletDetails: React.FC<WalletDetailsProps> = ({
   };
 
   return (
-    <div className="p-[1px] bg-gradient-to-b from-[#26262A] to-[#16151A] rounded-lg">
-      <div className="bg-[#16151A] text-gray-300 px-32 py-16 w-full font-inter rounded-lg">
+    <div className="p-[1px] rounded-lg">
+      <div className="text-gray-300 py-8 w-full font-helvetica rounded-lg">
         <div className="flex justify-between items-center">
           <div className="space-y-1">
-            <div className="text-neutral-500 text-sm font-normal font-inter leading-[16.80px]">
+            <div className="text-neutral-500 text-sm font-normal font-helvetica leading-[16.80px] mb-4">
               Your Wallet / Balance
             </div>
             <div className="flex items-center gap-2">
-              <span className="text-white text-2xl">{formatAddress(address)}</span>
-              <span className="bg-gradient-to-r from-[#6FDBB5] to-[#5BC49E] inline-block text-transparent bg-clip-text font-semibold text-[44px] leading-[44px]">
+              <span className="text-white text-2xl">
+                {formatAddress(address)}
+              </span>
+              <span className="bg-gradient-to-b from-[#6FDBB5] to-[#45A176] inline-block text-transparent bg-clip-text font-normal tracking-tight text-[44px] leading-[44px]">
                 / {formatCurrency(balance)}
               </span>
             </div>
@@ -51,33 +53,33 @@ const WalletDetails: React.FC<WalletDetailsProps> = ({
 
           <div className="flex items-center gap-8">
             <div className="">
-              <div className="text-white text-base font-light font-inter capitalize leading-tight">
+              <div className="text-white text-base font-light font-helvetica capitalize leading-tight">
                 $ETH
               </div>
-              <div className="text-neutral-500 text-sm leading-[16.80px] font-normal">
+              <div className="text-neutral-500 text-sm leading-[16.80px] mt-2 font-normal">
                 {formatCurrency(base)}
               </div>
             </div>
 
             <div className="">
-              <div className="text-white text-base font-light font-inter capitalize leading-tight">
+              <div className="text-white text-base font-light font-helvetica capitalize leading-tight">
                 $USDC
               </div>
-              <div className="text-neutral-500 text-sm leading-[16.80px] font-normal">
+              <div className="text-neutral-500 text-sm leading-[16.80px] mt-2 font-normal">
                 {formatCurrency(usdc)}
               </div>
             </div>
 
             <div className="">
-              <div className="text-white text-base font-light font-inter capitalize leading-tight">
+              <div className="text-white text-base font-light font-helvetica capitalize leading-tight">
                 Invested Casts
               </div>
-              <div className="text-neutral-500 text-sm leading-[16.80px] font-normal">
+              <div className="text-neutral-500 text-sm leading-[16.80px] mt-2 font-normal">
                 {investedCasts}
               </div>
             </div>
 
-            <div className="relative">
+            <div className="relative ml-8">
               <TimeframeDropdown
                 value={selectedTimeframe}
                 onChange={setSelectedTimeframe}
