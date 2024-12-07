@@ -342,7 +342,7 @@ const InfiniteScroll: React.FC = () => {
       const matrix = new DOMMatrix(currentTransform);
       const currentX = matrix.m41;
 
-      let newX = currentX - 0.5;
+      let newX = currentX - 1;
       if (newX <= -totalWidth) {
         newX = 0;
       }
