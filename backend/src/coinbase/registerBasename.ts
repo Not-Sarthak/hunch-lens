@@ -100,4 +100,4 @@ export async function registerBasename(
   } catch (error) {
     return `Error registering basename: Error: ${error}`;
   }
-}
+} 
