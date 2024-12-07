@@ -223,8 +223,8 @@ const LeaderboardIcon = ({ className }: { className?: string }) => {
 };
 
 const navigationItems: NavItem[] = [
-  { label: "⚡️Hunch", path: "/launch-ai", icon: <AnalyticsIcon /> },
   { label: "Dashboard", path: "/dashboard", icon: <DashboardIcon /> },
+  { label: "AI", path: "/launch-ai", icon: <AnalyticsIcon /> },
   { label: "Profile", path: "/profile", icon: <ProfileIcon /> },
   { label: "Leaderboard", path: "/leaderboard", icon: <LeaderboardIcon /> },
 ];
@@ -246,7 +246,7 @@ export const Navbar: React.FC = () => {
 
   useLayoutEffect(() => {
     if (isConnected && pathname === "/") {
-      router.push("/launch-ai");
+      router.push("/dashboard");
     }
   }, [isConnected, pathname, router]);
 
