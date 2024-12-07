@@ -18,7 +18,7 @@ ifeq ($(CHAIN), CITREA_TESTNET)
 endif
 
 ifeq ($(CHAIN), BASE_SEPOLIA)
-    RPC_URL := $(RPC_URL_BASE_SEPOLIA)
+    RPC_URL := $(RPC_URL_BASE_SEPOLIA) 
 endif
 
 ifeq ($(CHAIN), BASE_MAINNET)
