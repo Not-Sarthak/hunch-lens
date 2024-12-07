@@ -44,5 +44,5 @@ export const tools: Record<string, ToolConfig> = {
 
     // COINBASE TOOLS
     create_and_fund_wallet: createAndFundWalletTool,
-    register_basename: registerBasenameTool,
+    register_basename: registerBasenameTool, 
 }

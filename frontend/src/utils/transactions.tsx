@@ -6,14 +6,13 @@ import { baseSepolia } from "viem/chains";
 
 export const publicClient = createPublicClient({
     chain: baseSepolia,
-    transport: http(), // Use appropriate transport for your network
+    transport: http(), 
 });
 
 export const approveTokens = async (amount: bigint) => {
-    // Connect to a wallet
     const walletClient = createWalletClient({
         chain: baseSepolia,
-        transport: custom(window.ethereum), // MetaMask as a provider
+        transport: custom(window.ethereum), 
     });
     const accounts = await walletClient.getAddresses();
     const walletAddress = accounts[0];
@@ -41,10 +40,9 @@ export const mintPost = async (
     likeCount: bigint,
     tokenURI: string,
 ) => {
-    // Connect to a wallet
     const walletClient = createWalletClient({
         chain: baseSepolia,
-        transport: custom(window.ethereum), // MetaMask as a provider
+        transport: custom(window.ethereum), 
     });
     const accounts = await walletClient.getAddresses();
     const walletAddress = accounts[0];
@@ -72,17 +70,15 @@ export const mintPost = async (
 
 export const buyPost = async (
     postHash: string,
-    price: bigint, // Post price in wei
+    price: bigint, 
 ) => {
-    // Connect to a wallet
     const walletClient = createWalletClient({
         chain: baseSepolia,
-        transport: custom(window.ethereum), // MetaMask as a provider
+        transport: custom(window.ethereum),
     });
     const accounts = await walletClient.getAddresses();
     const walletAddress = accounts[0];
 
-    // Approve tokens first
     await approveTokens(price);
 
     const contract = getContract({

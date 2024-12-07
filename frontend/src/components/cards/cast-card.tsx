@@ -42,6 +42,8 @@ const CastCard = ({ data }: CastCardProps) => {
 
   const router = useRouter();
 
+  console.log(data);
+  
   return (
     <motion.div
       className="relative w-full bg-[#111015] border-[1px] border-[#1E1E21] rounded-xl overflow-hidden"

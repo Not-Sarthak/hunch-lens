@@ -25,7 +25,6 @@ const Dashboard = () => {
             balance={1234.56}
             base={789.1}
             usdc={456.78}
-            investedCasts={42}
           />
         </div>
         <div className="flex w-full gap-8 py-6">

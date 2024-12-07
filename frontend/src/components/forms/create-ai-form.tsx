@@ -9,6 +9,8 @@ import StepThree from "./step-three";
 import { FormStep } from "src/types";
 import { useAccount } from "wagmi";
 import Image from "next/image";
+import { backendUrl } from "../../constants";
+import axios from "axios";
 
 const formatAddress = (address: string | undefined): string => {
   if (!address) return "";
@@ -67,7 +69,7 @@ const LaunchAI = () => {
     }, 500);
   };
 
-  const handleLaunch = () => {
+  const handleLaunch = async () => {
     setIsLoading(true);
     const formData = {
       name,
@@ -79,9 +81,39 @@ const LaunchAI = () => {
     };
 
     console.log("Launching AI Agent with configuration:", formData);
+    const response = await axios.post(
+      `${backendUrl}/generate/create-and-fund-wallet`,
+      {
+        network: "Base Sepolia",
+      }
+    );
+    console.log("Response from API:", response.data);
+
+    const responseData = response.data.data.split("\n");
+    const walletIdGenerated = responseData[0].split(": ")[1];
+    const agentAddress = responseData[1].match(/0x[a-fA-F0-9]{40}/)[0];
+    const faucetHash = responseData[2].split(": ")[1];
+
+    console.log("Wallet ID:", walletIdGenerated);
+    console.log("Address:", agentAddress);
+    console.log("Hash:", faucetHash);
+
+    const explorerUrl = `https://sepolia.basescan.org/tx/${faucetHash}`;
 
     setTimeout(() => {
-      toast.success("AI Agent launched successfully!");
+        toast.success(
+          <>
+            AI Agent launched successfully!{" "}
+            <a
+              href={explorerUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-blue-500 underline"
+            >
+              View Transaction
+            </a>
+          </>
+        )
       setIsLoading(false);
       router.push("/dashboard");
     }, 1000);
