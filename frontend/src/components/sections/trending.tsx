@@ -7,6 +7,7 @@ import { toast } from "sonner";
 // import axios from "axios"; // You would need this in real implementation
 
 interface CastData {
+  id: number;
   hash: string;
   text: string;
   embeds: {
@@ -36,18 +37,18 @@ const ShimmerCard = () => (
   <div className="relative w-full max-w-2xl bg-[#16151A] rounded-xl overflow-hidden animate-pulse">
     <div className="p-4 space-y-2">
       <div className="flex items-center gap-3">
-        <div className="w-10 h-10 rounded-full bg-gray-600" />
+        <div className="w-10 h-10 bg-gray-600 rounded-full" />
         <div className="space-y-2">
           <div className="flex items-center gap-2">
-            <div className="h-4 w-24 bg-gray-600 rounded" />
-            <div className="h-4 w-16 bg-gray-600 rounded" />
+            <div className="w-24 h-4 bg-gray-600 rounded" />
+            <div className="w-16 h-4 bg-gray-600 rounded" />
           </div>
-          <div className="h-3 w-48 bg-gray-600 rounded" />
+          <div className="w-48 h-3 bg-gray-600 rounded" />
         </div>
       </div>
       <div className="space-y-2">
-        <div className="h-4 w-full bg-gray-600 rounded" />
-        <div className="h-4 w-3/4 bg-gray-600 rounded" />
+        <div className="w-full h-4 bg-gray-600 rounded" />
+        <div className="w-3/4 h-4 bg-gray-600 rounded" />
       </div>
     </div>
     <div className="px-4 pb-4">
@@ -112,7 +113,7 @@ const Trending = () => {
 
   return (
     <div>
-      <div className="text-neutral-500 text-base font-light font-helvetica leading-tight pb-4">
+      <div className="pb-4 text-base font-light leading-tight text-neutral-500 font-helvetica">
         Trending on Warpcast
       </div>
       <div className="space-y-4">
