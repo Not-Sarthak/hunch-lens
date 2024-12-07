@@ -6,7 +6,7 @@ const initialState: FormState = {
   name: '',
   basename: '',
   goal: 'profit',
-  aiType: 'default',
+  aiType: 'eliza',
   riskTolerance: 3,
   selectedStrategies: [],
   compoundProfits: false,

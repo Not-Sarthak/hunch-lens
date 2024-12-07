@@ -30,7 +30,7 @@ export const deployErc20Tool: ToolConfig = {
         }
     },
     handler: async (args: { name: string, symbol: string, initialSupply?: string }) => {
-        const baseNumber = parseFloat(args.initialSupply || '1000000000'); // 1 billion default
+        const baseNumber = parseFloat(args.initialSupply || '1000000000');
 
         const publicClient = createViemPublicClient();
         const walletClient = createViemWalletClient();

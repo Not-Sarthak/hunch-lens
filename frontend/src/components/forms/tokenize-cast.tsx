@@ -12,6 +12,7 @@ import { TriangleAlert, X } from "lucide-react";
 import React, { useState, useEffect } from "react";
 import { Loader2 } from "lucide-react";
 import { backendUrl } from "src/constants";
+
 interface PreviewData {
   name: string;
   username: string;
@@ -132,7 +133,7 @@ const formFields = [
   {
     id: "tweetUrl",
     label: "Farcaster / Tweet URL",
-    placeholder: "https://warpcast.com/jessepollak/0x4dde1942",
+    placeholder: "https://warpcast.com/robertfelt.eth/0xfd5f7fd7",
     type: "text",
   },
 ] as const;
@@ -211,7 +212,8 @@ const TokenizeCastForm = memo(({ closeModal }: { closeModal: () => void }) => {
         <button
           type="submit"
           disabled={values.isSubmitting}
-          className="w-full mt-6 !bg-white !text-[#111015] !rounded-lg !font-normal btn"
+          className="w-full mt-6 z-50 !bg-white !text-[#111015] !rounded-lg !font-normal btn"
+          onClick={() => onSubmit(watch())}
         >
           {values.isSubmitting ? "Tokenizing..." : "Create Market"}
         </button>

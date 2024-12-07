@@ -1060,6 +1060,19 @@
     react-remove-scroll "2.6.0"
     ua-parser-js "^1.0.37"
 
+"@rainbow-me/rainbowkit@^2.2.1":
+  version "2.2.1"
+  resolved "https://registry.yarnpkg.com/@rainbow-me/rainbowkit/-/rainbowkit-2.2.1.tgz#1ad672aa87be3e8e4135bc12d13b03cc0a784221"
+  integrity sha512-DvWbczNmm3BRr+EPZFwDK2vJRYxzSgHL0XzasL4RGMPsPuuRe9meLiTrznPqJvut7yNmib/ROqtblWJuxBvIKA==
+  dependencies:
+    "@vanilla-extract/css" "1.15.5"
+    "@vanilla-extract/dynamic" "2.1.2"
+    "@vanilla-extract/sprinkles" "1.6.3"
+    clsx "2.1.1"
+    qrcode "1.5.4"
+    react-remove-scroll "2.6.0"
+    ua-parser-js "^1.0.37"
+
 "@rollup/rollup-android-arm-eabi@4.21.3":
   version "4.21.3"
   resolved "https://registry.yarnpkg.com/@rollup/rollup-android-arm-eabi/-/rollup-android-arm-eabi-4.21.3.tgz#155c7d82c1b36c3ad84d9adf9b3cd520cba81a0f"
