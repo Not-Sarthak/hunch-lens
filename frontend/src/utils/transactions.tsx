@@ -9,20 +9,14 @@ export const publicClient = createPublicClient({
     transport: http(), // Use appropriate transport for your network
 });
 
-// Connect to a wallet
-export const walletClient = createWalletClient({
-    chain: baseSepolia,
-    transport: custom(window.ethereum), // MetaMask as a provider
-});
-
-export const getWalletAddress = async () => {
-    const accounts = await walletClient.getAddresses();
-    return accounts[0]; // Returns the first connected account
-};
-
-
 export const approveTokens = async (amount: bigint) => {
-    const walletAddress = await getWalletAddress();
+    // Connect to a wallet
+    const walletClient = createWalletClient({
+        chain: baseSepolia,
+        transport: custom(window.ethereum), // MetaMask as a provider
+    });
+    const accounts = await walletClient.getAddresses();
+    const walletAddress = accounts[0];
 
     const tokenContract = getContract({
         address: TOKEN_ADDRESS,
@@ -47,7 +41,13 @@ export const mintPost = async (
     likeCount: bigint,
     tokenURI: string,
 ) => {
-    const walletAddress = await getWalletAddress();
+    // Connect to a wallet
+    const walletClient = createWalletClient({
+        chain: baseSepolia,
+        transport: custom(window.ethereum), // MetaMask as a provider
+    });
+    const accounts = await walletClient.getAddresses();
+    const walletAddress = accounts[0];
 
     const contract = getContract({
         address: CONTRACT_ADDRESS,
@@ -74,7 +74,13 @@ export const buyPost = async (
     postHash: string,
     price: bigint, // Post price in wei
 ) => {
-    const walletAddress = await getWalletAddress();
+    // Connect to a wallet
+    const walletClient = createWalletClient({
+        chain: baseSepolia,
+        transport: custom(window.ethereum), // MetaMask as a provider
+    });
+    const accounts = await walletClient.getAddresses();
+    const walletAddress = accounts[0];
 
     // Approve tokens first
     await approveTokens(price);
