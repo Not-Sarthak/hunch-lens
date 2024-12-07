@@ -248,7 +248,7 @@ const MarketSection = ({ marketId }: { marketId: string }) => {
           </div>
         </div>
         <div className="flex space-x-6">
-          <div className="text-right">
+          <div className="text-right"> 
             <div className="text-sm "></div>
             <div className="text-[#787878]">
               {" "}
