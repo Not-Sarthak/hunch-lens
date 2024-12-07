@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import HowItWorksSection from "../landing/how-it-works";
 import LandingVisuals from "../landing/landing-visuals";
 import BackgroundCircle from "../landing/background-circle";
+import InfiniteScroll from "../landing/infinite-scroll";
 
 interface Particle {
   x: number;
@@ -153,6 +154,13 @@ const LandingPageSection: React.FC = () => {
           transition={{ duration: 0.5, delay: 1.25 }}
         >
           <HowItWorksSection />
+        </motion.div>
+        <motion.div
+          initial={{ opacity: 0, y: 8 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 1.5 }}
+        >
+          <InfiniteScroll />
         </motion.div>
       </div>
     </>
