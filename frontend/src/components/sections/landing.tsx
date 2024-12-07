@@ -110,7 +110,7 @@ const AnimatedContent: React.FC = () => {
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      className="flex flex-col items-center justify-center h-80"
+      className="flex flex-col items-center justify-center pt-16 h-80"
     >
       <motion.h1
         initial={{ opacity: 0, y: 8 }}
