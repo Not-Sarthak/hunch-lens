@@ -94,6 +94,11 @@ export default function RootLayout({
           type="font/otf"
           crossOrigin="anonymous"
         />
+        <script
+          defer
+          src="https://cloud.umami.is/script.js"
+          data-website-id="2bf534ac-d2a8-495c-ba24-4e9cf75aa315"
+        ></script>
       </head>
       <body className="bg-[#111015] text-white font-helvetica">
         <OnchainProviders>
