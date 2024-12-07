@@ -98,7 +98,7 @@ export default function RootLayout({
       <body className="bg-[#111015] text-white font-helvetica">
         <OnchainProviders>
           <Navbar />
-          <div className="min-h-[100vh]">{children}</div>
+          <div className="min-h-screen">{children}</div>
           <Footer />
           <Toaster position="bottom-right" />
         </OnchainProviders>

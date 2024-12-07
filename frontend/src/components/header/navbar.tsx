@@ -11,6 +11,7 @@ import { useRouter, usePathname } from "next/navigation";
 import { useAccount, useDisconnect } from "wagmi";
 import WalletWrapper from "src/components/WalletWrapper";
 import Image from "next/image";
+import { motion } from "framer-motion";
 
 interface NavItem {
   label: string;
@@ -232,6 +233,8 @@ export const Navbar: React.FC = () => {
   const router = useRouter();
   const pathname = usePathname();
 
+  const { address } = useAccount();
+
   const [activeTab, setActiveTab] = useState<number | null>(() => {
     const currentIndex = navigationItems.findIndex(
       (item) => item.path === pathname
@@ -260,51 +263,70 @@ export const Navbar: React.FC = () => {
   }, [disconnect, connectors]);
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-20 text-white py-3.5 h-20 border-b-[1px] border-[#1E1E21] backdrop-blur-lg bg-[#111015aa]">
-      <div className="flex items-center justify-between px-4">
+    <motion.nav
+      initial={{ opacity: 0, y: 8 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.25 }}
+      className={
+        pathname !== "/"
+          ? "fixed top-0 left-0 right-0 z-20 text-white py-3.5 h-20 border-b-[1px] border-[#1E1E21] backdrop-blur-lg bg-[#111015aa]"
+          : "max-w-landing z-20 text-white pt-3.5 h-20  border-[#1E1E21] backdrop-blur-lg bg-[#111015] border-x rounded-t-2xl"
+      }
+    >
+      <div
+        className={
+          pathname !== "/"
+            ? "flex items-center justify-between px-4"
+            : "flex items-center justify-between px-4 pb-3.5 border-b-[1px] border-[#1E1E21] mx-4"
+        }
+      >
         <div className="flex items-center">
           <Image src="/logo.svg" alt="logo" width={100} height={40} />
         </div>
 
-        <div className="fixed top-20 left-0 w-20 h-[calc(100vh_-_5rem)] border-r border-[#1E1E21] flex-1 flex justify-center z-30 p-4 px-2">
-          <ul className="relative flex flex-col gap-8 p-1 w-fit rounded-xl">
-            {navigationItems.map((item, index) => (
-              <Tab
-                key={item.label}
-                index={index}
-                path={item.path}
-                activeTab={activeTab}
-              >
-                {item.icon}
-              </Tab>
-            ))}
-          </ul>
-        </div>
+        {pathname !== "/" && (
+          <div className="fixed top-20 left-0 w-20 h-[calc(100vh_-_5rem)] border-r border-[#1E1E21] flex-1 flex justify-center z-30 p-4 px-2">
+            <ul className="relative flex flex-col gap-8 p-1 w-fit rounded-xl">
+              {navigationItems.map((item, index) => (
+                <Tab
+                  key={item.label}
+                  index={index}
+                  path={item.path}
+                  activeTab={activeTab}
+                >
+                  {item.icon}
+                </Tab>
+              ))}
+            </ul>
+          </div>
+        )}
 
         <div className="flex items-center justify-end gap-4">
-          <button className="disconnect-btn" onClick={handleDisconnect}>
-            <svg
-              width="20"
-              height="20"
-              viewBox="0 0 20 21"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M1.66663 12.5833V9.66667C1.66663 7.33311 1.66663 6.16634 2.12077 5.27504C2.52024 4.49103 3.15766 3.85361 3.94167 3.45414C4.83296 3 5.99974 3 8.33329 3H11.25C12.4148 3 12.9972 3 13.4567 3.1903C14.0692 3.44404 14.5559 3.93072 14.8097 4.54329C14.9824 4.96043 14.9983 5.47895 14.9998 6.44275M1.66663 12.5833C1.66663 13.6914 1.66663 14.6621 1.98379 15.4278C2.40669 16.4488 3.21783 17.2599 4.23878 17.6828C5.00449 18 5.9752 18 7.91663 18H11.0004M1.66663 12.5833C1.66663 10.6419 1.66663 9.6712 1.98379 8.90549C2.40669 7.88453 3.21783 7.07339 4.23878 6.6505C5.00449 6.33333 5.9752 6.33333 7.91663 6.33333H12.0833C13.4449 6.33333 14.329 6.33333 14.9998 6.44275M14.9998 6.44275C15.2855 6.48934 15.5324 6.55578 15.7611 6.6505C16.7821 7.07339 17.5932 7.88453 18.0161 8.90549C18.2066 9.36533 18.2827 9.89912 18.3131 10.6727M11.6666 10.5H14.1666M14.3335 18.0002L16.3335 16.0002M16.3335 16.0002L18.3335 14.0002M16.3335 16.0002L14.3335 14.0002M16.3335 16.0002L18.3335 18.0002"
-                stroke="#737373"
-                stroke-width="1.5"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              />
-            </svg>
-            <span className="pt-0.5">Disconnect</span>
-          </button>
+          {address && (
+            <button className="disconnect-btn" onClick={handleDisconnect}>
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 20 21"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M1.66663 12.5833V9.66667C1.66663 7.33311 1.66663 6.16634 2.12077 5.27504C2.52024 4.49103 3.15766 3.85361 3.94167 3.45414C4.83296 3 5.99974 3 8.33329 3H11.25C12.4148 3 12.9972 3 13.4567 3.1903C14.0692 3.44404 14.5559 3.93072 14.8097 4.54329C14.9824 4.96043 14.9983 5.47895 14.9998 6.44275M1.66663 12.5833C1.66663 13.6914 1.66663 14.6621 1.98379 15.4278C2.40669 16.4488 3.21783 17.2599 4.23878 17.6828C5.00449 18 5.9752 18 7.91663 18H11.0004M1.66663 12.5833C1.66663 10.6419 1.66663 9.6712 1.98379 8.90549C2.40669 7.88453 3.21783 7.07339 4.23878 6.6505C5.00449 6.33333 5.9752 6.33333 7.91663 6.33333H12.0833C13.4449 6.33333 14.329 6.33333 14.9998 6.44275M14.9998 6.44275C15.2855 6.48934 15.5324 6.55578 15.7611 6.6505C16.7821 7.07339 17.5932 7.88453 18.0161 8.90549C18.2066 9.36533 18.2827 9.89912 18.3131 10.6727M11.6666 10.5H14.1666M14.3335 18.0002L16.3335 16.0002M16.3335 16.0002L18.3335 14.0002M16.3335 16.0002L14.3335 14.0002M16.3335 16.0002L18.3335 18.0002"
+                  stroke="#737373"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+              <span className="pt-0.5">Disconnect</span>
+            </button>
+          )}
 
           <WalletWrapper />
         </div>
       </div>
-    </nav>
+    </motion.nav>
   );
 };
 

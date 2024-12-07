@@ -5,8 +5,8 @@ export const tokenizationSchema = z.object({
     .string()
     .min(1, "Tweet URL is required")
     .regex(
-      /^https:\/\/warpcast\.com\/[^\/]+\/[^\/]+$/,
-      "URL must be in format: https://warpcast.com/username/hash"
+      /^https?:\/\/((?:warpcast\.com\/[^\/]+\/[^\/]+)|(?:(?:twitter|x)\.com\/\w+\/status\/\d+))$/,
+      "Invalid URL format. Must be a Warpcast, Twitter, or X.com post URL"
     ),
   marketName: z.string().min(1, "Market name is required"),
   initialSupply: z
