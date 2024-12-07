@@ -338,3 +338,8 @@ div[data-testid="ockWalletDropdown"] {
 div[data-testid="ockIdentityLayout_container"] {
   padding-block: 1rem;
 }
+
+.max-w-landing {
+  width: 66.66%;
+  margin-inline: auto;
+}
