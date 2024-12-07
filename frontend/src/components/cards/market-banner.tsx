@@ -20,7 +20,7 @@ const MarketBanner = () => {
 
   const createParticles = (canvas: HTMLCanvasElement) => {
     const particlesArray: Particle[] = [];
-    const numberOfParticles = 40;
+    const numberOfParticles = 120;
 
     for (let i = 0; i < numberOfParticles; i++) {
       const radius = Math.random() * 1 + 0.5;
@@ -98,23 +98,26 @@ const MarketBanner = () => {
   }, []);
 
   return (
-    <div className="relative w-full overflow-hidden rounded-2xl bg-[#16151A] px-10 py-8 border border-[#1C1C1F]">
-      <div className="absolute -top-20 right-4 rounded-full w-[156px] h-[156px] bg-gradient-to-b from-[#6FDBB5] to-[#2A5547] blur-[50px]" />
-      <div className="absolute -bottom-24 left-0 rounded-full w-[156px] h-[156px] bg-[#2A5547] blur-[50px]" />
+    <div className="relative w-full overflow-hidden rounded-2xl bg-[#111015] p-8 py-6 border border-[#1C1C1F]">
+      <div className="absolute -top-28 right-0 rounded-full w-[156px] h-[156px] bg-[#6FDBB5] blur-[50px]" />
+      <div className="absolute -bottom-32 left-0 rounded-full w-[156px] h-[156px] bg-[#6FDBB5] blur-[50px]" />
 
-      <canvas ref={canvasRef} className="absolute inset-0" />
+      <canvas
+        ref={canvasRef}
+        className="absolute inset-0 w-full h-full opacity-50"
+      />
 
-      <div className="relative z-10 max-w-2xl">
-        <div className="text-white text-2xl font-normal font-helvetica leading-normal">
+      <div className="relative z-10 flex flex-col items-center justify-center max-w-2xl">
+        <div className="text-2xl font-normal leading-normal text-white font-helvetica">
           Create markets for banger casts
         </div>
-        <div className="text-[#737373] text-base font-normal font-helvetica leading-tight flex flex-col pt-2">
+        <div className="flex flex-col items-center justify-center pt-2 text-base font-light leading-tight text-white/50 font-helvetica">
           <span>Don't wait for popular casts to be tokenised.</span>
           <span>Tokenise them yourself and raise the bar!</span>
         </div>
         <button
           onClick={() => setIsModalOpen(true)}
-          className="inline-flex pt-4 items-center text-base font-medium text-[#6FDBB5] hover:text-[#5BC49E] transition-colors hover:underline"
+          className="inline-flex items-center px-3 py-1.5 pt-2 mt-4 text-sm font-light text-black transition-colors bg-white rounded-md"
         >
           Tokenise a cast
         </button>
@@ -123,7 +126,7 @@ const MarketBanner = () => {
       <AnimatePresence>
         {isModalOpen && (
           <motion.div
-            className="fixed inset-0 z-50 flex items-center justify-center bg-black/30 bg-opacity-50 backdrop-blur-sm"
+            className="fixed inset-0 z-50 flex items-center justify-center bg-opacity-50 bg-black/30 backdrop-blur-sm"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
