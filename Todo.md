@@ -22,12 +22,13 @@
 - Frontend
     #1
     - Onramp
+    - Basename (with Socket Protocol)
     - Dynamic Routing for Individual Casts
     - Profile [Reputation Score for the Curator]
     - Tab Content on Dashboard
     - A Dashboard for showing use of Polynomial Protocol
     - InstaMint for Minting NFT Agent
-    - Fetch Data and Display how NFT will look in Tokenize Asset Form
+    - Fetch Data and Display how NFT will look in Tokenize Asset Form, use Pinata to upload it IPFS and get URL to pass it in NFT Contract.
 
     #2
     - Okto
