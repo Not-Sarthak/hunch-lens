@@ -6,7 +6,7 @@ const StepOne = () => {
   const { name, basename, goal, aiType, aiGoal, riskTolerance, setField } =
     useFormStore();
 
-  const aiTypes: AIType[] = ["default", "custom"];
+  const aiTypes: AIType[] = ["eliza", "custom"];
   const aiGoals: Record<AIGoalType, string> = {
     aggressive: "Aggressive",
     conservative: "Conservative",

@@ -20,7 +20,7 @@ const BuyScreen = () => {
     <div className="flex flex-col gap-4">
       <div className="flex items-center justify-between">
         <p>Buy</p>
-        <div className="text-sm text-[#787878]">Balance: 0 SOL</div>
+        <div className="text-sm text-[#787878]">Balance: 0.01 ETH</div>
       </div>
       <input
         type="number"
@@ -53,7 +53,7 @@ const SellScreen = () => {
     <div className="flex flex-col gap-4">
       <div className="flex items-center justify-between">
         <p>Sell</p>
-        <div className="text-sm text-[#787878]">Balance: 0 SOL</div>
+        <div className="text-sm text-[#787878]">Balance: 0.01 ETH</div>
       </div>
       <input
         type="number"
@@ -187,7 +187,8 @@ const MarketSection = ({ marketId }: { marketId: string }) => {
     const fetchMarket = async () => {
       try {
         const response = await fetch(
-          `${backendUrl}/tokenization/markets/${marketId}`
+          // `${backendUrl}/tokenization/markets/${marketId}`
+          `${backendUrl}/tokenization/markets/3`
         );
         const data = await response.json();
         if (data.success && data.market) {
@@ -267,12 +268,12 @@ const MarketSection = ({ marketId }: { marketId: string }) => {
       </div>
 
       <div className="mt-6">
-        <p className="text-[#787878] text-sm">
+        {/* <p className="text-[#787878] text-sm">
           URL:{" "}
           <a target="_blank" href={market.url} className="hover:underline">
             {market.url}
           </a>
-        </p>
+        </p> */}
       </div>
     </div>
   );

@@ -11,22 +11,22 @@ const leaderboardStats = [
     id: 1,
     name: "Farhat Kadiwala",
     username: "@farhatkadiwala",
-    amount: 23.4,
+    amount: 2.01,
     avatar: farhatLogo,
   },
-  {
-    id: 2,
-    name: "Boidushya",
-    username: "@boi",
-    avatar: boiduLogo,
-    amount: 12.3,
-  },
-  {
-    name: "Jesse Pollak",
-    username: "@jesse",
-    avatar: jesseLogo,
-    amount: 34.5,
-  },
+  // {
+  //   id: 2,
+  //   name: "Boidushya",
+  //   username: "@boi",
+  //   avatar: boiduLogo,
+  //   amount: 12.3,
+  // },
+  // {
+  //   name: "Jesse Pollak",
+  //   username: "@jesse",
+  //   avatar: jesseLogo,
+  //   amount: 34.5,
+  // },
 ];
 
 const LeaderboardList = () => {

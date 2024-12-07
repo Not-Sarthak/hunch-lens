@@ -118,7 +118,7 @@ const AnimatedContent: React.FC = () => {
         transition={{ duration: 0.5, delay: 0.5 }}
         className="bg-gradient-to-b from-[#6FDBB5] to-[#45A176] text-5xl font-light text-transparent bg-clip-text w-1/2 text-center"
       >
-        Let AI spot viral content before everyone else
+        Spot viral content before everyone else
       </motion.h1>
       <motion.p
         initial={{ opacity: 0, y: 8 }}

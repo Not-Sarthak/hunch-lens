@@ -8,7 +8,7 @@ export type StrategyType =
   | "Maker" 
   | "Bull" 
   | "Bear"; 
-export type AIType = "default" | "custom";
+export type AIType = "eliza" | "custom";
 export type AIGoalType = "aggressive" | "conservative" | "moderate";
 
 export interface FormState {

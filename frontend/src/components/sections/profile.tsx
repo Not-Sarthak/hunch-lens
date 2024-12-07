@@ -168,43 +168,43 @@ const InvestmentLogsTab = () => {
       username: "farhat",
       ens: "farhat.base.eth",
       timestamp: "2mins ago",
-      amount: 12.3,
+      amount: 0.01,
     },
-    {
-      profileImage: baseAgentImage,
-      username: "farhat",
-      ens: "farhat.base.eth",
-      timestamp: "2mins ago",
-      amount: 12.3,
-    },
-    {
-      profileImage: baseAgentImage,
-      username: "farhat",
-      ens: "farhat.base.eth",
-      timestamp: "2mins ago",
-      amount: 12.3,
-    },
-    {
-      profileImage: baseAgentImage,
-      username: "farhat",
-      ens: "farhat.base.eth",
-      timestamp: "2mins ago",
-      amount: 12.3,
-    },
-    {
-      profileImage: baseAgentImage,
-      username: "farhat",
-      ens: "farhat.base.eth",
-      timestamp: "2mins ago",
-      amount: 12.3,
-    },
-    {
-      profileImage: baseAgentImage,
-      username: "farhat",
-      ens: "farhat.base.eth",
-      timestamp: "2mins ago",
-      amount: 12.3,
-    },
+    // {
+    //   profileImage: baseAgentImage,
+    //   username: "farhat",
+    //   ens: "farhat.base.eth",
+    //   timestamp: "2mins ago",
+    //   amount: 12.3,
+    // },
+    // {
+    //   profileImage: baseAgentImage,
+    //   username: "farhat",
+    //   ens: "farhat.base.eth",
+    //   timestamp: "2mins ago",
+    //   amount: 12.3,
+    // },
+    // {
+    //   profileImage: baseAgentImage,
+    //   username: "farhat",
+    //   ens: "farhat.base.eth",
+    //   timestamp: "2mins ago",
+    //   amount: 12.3,
+    // },
+    // {
+    //   profileImage: baseAgentImage,
+    //   username: "farhat",
+    //   ens: "farhat.base.eth",
+    //   timestamp: "2mins ago",
+    //   amount: 12.3,
+    // },
+    // {
+    //   profileImage: baseAgentImage,
+    //   username: "farhat",
+    //   ens: "farhat.base.eth",
+    //   timestamp: "2mins ago",
+    //   amount: 12.3,
+    // },
   ];
 
   return (
@@ -341,7 +341,7 @@ const RepScore = () => {
           <span>Increase your reputation score by creating markets. </span>
         </div>
       </div>
-      <p className="z-10 font-bold text-[#6FDBB5] text-5xl pt-1.5">123</p>
+      <p className="z-10 font-bold text-[#6FDBB5] text-5xl pt-1.5">89</p>
     </div>
   );
 };
