@@ -149,7 +149,7 @@ const CastContent = ({ data }: { data: string }) => {
           <img
             src={parsedData["Author PFP URL"]}
             alt="Profile"
-            className="w-12 h-12 rounded-full"
+            className="object-cover w-12 h-12 rounded-full"
           />
           <div className="flex flex-col items-start justify-between">
             <div className="font-medium text-white">
@@ -248,11 +248,11 @@ const MarketSection = ({ marketId }: { marketId: string }) => {
           </div>
         </div>
         <div className="flex space-x-6">
-          <div className="text-right"> 
+          <div className="text-right">
             <div className="text-sm "></div>
             <div className="text-[#787878]">
               {" "}
-              <LivestreamButton roomId="adp-lnnw-xns" />
+              <LivestreamButton roomId="skb-hxrs-hmy" />
             </div>
           </div>
           <div className="text-right">
