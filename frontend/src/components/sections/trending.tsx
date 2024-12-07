@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import CastCard from "../cards/cast-card";
 import { castData } from "../../utils/cast-data";
 import { toast } from "sonner";
-// import axios from "axios"; // You would need this in real implementation
+import axios from "axios"; 
 
 interface CastData {
   id: number;
@@ -66,13 +66,12 @@ const Trending = () => {
     const fetchCasts = async () => {
       try {
         // In a real implementation, you would use axios like this:
-        // const response = await axios.get('https://api.example.com/trending-casts', {
-        //   headers: {
-        //     'Authorization': `Bearer ${process.env.API_KEY}`,
-        //     'Content-Type': 'application/json'
-        //   }
-        // });
-        // setCasts(response.data.result.casts);
+        const response = await axios.get('http://localhost:8000/api/tokenization/markets', {
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        });
+        setCasts(response.data.result.casts);
 
         // This is a simulation of an API call with dummy data
         const simulatedResponse = await new Promise<{
@@ -92,16 +91,15 @@ const Trending = () => {
         setCasts(simulatedResponse.data.result.casts);
         setLoading(false);
       } catch (err) {
-        // In a real implementation, you might want to handle specific error types:
-        // if (axios.isAxiosError(err)) {
-        //   if (err.response?.status === 401) {
-        //     toast.error("Authentication failed. Please login again.");
-        //   } else if (err.response?.status === 429) {
-        //     toast.error("Rate limit exceeded. Please try again later.");
-        //   } else {
-        //     toast.error("Failed to fetch trending casts");
-        //   }
-        // }
+        if (axios.isAxiosError(err)) {
+          if (err.response?.status === 401) {
+            toast.error("Authentication failed. Please login again.");
+          } else if (err.response?.status === 429) {
+            toast.error("Rate limit exceeded. Please try again later.");
+          } else {
+            toast.error("Failed to fetch trending casts");
+          }
+        }
         setError("Failed to fetch trending casts.");
         toast.error("Failed to fetch trending casts");
         setLoading(false);

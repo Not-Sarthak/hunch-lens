@@ -61,7 +61,7 @@ router.get("/markets", async (req: Request, res: Response) => {
     const markets = await prisma.tokenizedAsset.findMany({
       orderBy: { createdAt: "desc" },
     });
-
+    console.log(markets)
     res.status(200).json({ success: true, markets });
   } catch (error) {
     console.error("Error fetching markets:", error);

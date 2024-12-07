@@ -14,8 +14,8 @@ export async function fundWallet(walletId: string): Promise<string> {
     await faucetTransaction.wait();
 
     console.log("Faucet transaction completed successfully.", faucetTransaction.getTransactionHash());
-    const faucetTransactionAgain = await wallet.faucet();
-    await faucetTransactionAgain.wait();
+    // const faucetTransactionAgain = await wallet.faucet();
+    // await faucetTransactionAgain.wait();
 
     return faucetTransaction.getTransactionHash();
   } catch (error) {

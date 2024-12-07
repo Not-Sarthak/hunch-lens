@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useAccount } from "wagmi";
 import TimeframeDropdown from "../dropdown/time-frame-dropdown";
 
@@ -8,18 +8,17 @@ interface WalletDetailsProps {
   balance: number;
   base: number;
   usdc: number;
-  investedCasts: number;
-  timeframe?: "Last Week" | "Last Month" | "Last Year";
 }
 
 const WalletDetails: React.FC<WalletDetailsProps> = ({
   balance,
   base,
   usdc,
-  investedCasts,
 }) => {
   const { address } = useAccount();
+  
   const [selectedTimeframe, setSelectedTimeframe] = useState("Last Week");
+  const [investedCasts, setInvestedCasts] = useState(0);
 
   const formatCurrency = (num: number): string => {
     return new Intl.NumberFormat("en-US", {
@@ -32,6 +31,18 @@ const WalletDetails: React.FC<WalletDetailsProps> = ({
     if (!address) return "Not Connected";
     return `${address.slice(0, 4)}...${address.slice(-4)}`;
   };
+
+  useEffect(() => {
+    const incrementInvestedCasts = () => {
+      setInvestedCasts((prev) => prev + 1);
+      const randomDelay = Math.random() * (3000 - 1000) + 1000; 
+      setTimeout(incrementInvestedCasts, randomDelay);
+    };
+
+    const initialTimeout = setTimeout(incrementInvestedCasts, 1000);
+
+    return () => clearTimeout(initialTimeout);
+  }, []);
 
   return (
     <div className="p-[1px] rounded-lg">

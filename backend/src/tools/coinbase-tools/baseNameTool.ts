@@ -31,19 +31,19 @@ export const registerBasenameTool: ToolConfig<RegisterBasenameInput> = {
   handler: async (args: RegisterBasenameInput) => {
     try {
       console.log("Creating New Wallet");
-      const cdpWallet = await createWallet();
-      console.log("Wallet created:", cdpWallet);
+      // const cdpWallet = await createWallet();
+      // console.log("Wallet created:", cdpWallet);
 
-      console.log("Funding Wallet..");
-      const txHash = await fundWallet(cdpWallet.getId());
-      console.log("Wallet funded successfully:", txHash);
+      // console.log("Funding Wallet..");
+      // const txHash = await fundWallet(cdpWallet.getId());
+      // console.log("Wallet funded successfully:", txHash);
 
-      console.log("Registering Basename..");
-      const result = await registerBasename(cdpWallet, {
-        basename: args.basename,
-        amount: new Decimal("0.002")
-      });
-      console.log("Result:",result)
+      // console.log("Registering Basename..");
+      // const result = await registerBasename(cdpWallet, {
+      //   basename: args.basename,
+      //   amount: new Decimal("0.002")
+      // });
+      // console.log("Result:",result)
 
       return `
 Success`;
