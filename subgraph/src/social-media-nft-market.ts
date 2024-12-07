@@ -71,7 +71,7 @@ export function handleMarketUpdated(event: MarketUpdatedEvent): void {
   let entity = new MarketUpdated(
     event.transaction.hash.concatI32(event.logIndex.toI32())
   )
-  entity.postHash = event.params.postHash
+  entity.postHash = event.params.postHash.toString();
   entity.totalVolume = event.params.totalVolume
   entity.totalTrades = event.params.totalTrades
 
@@ -115,7 +115,7 @@ export function handlePostMinted(event: PostMintedEvent): void {
   let entity = new PostMinted(
     event.transaction.hash.concatI32(event.logIndex.toI32())
   )
-  entity.postHash = event.params.postHash
+  entity.postHash = event.params.postHash.toString();
   entity.authorHandle = event.params.authorHandle
   entity.price = event.params.price
   entity.timestamp = event.params.timestamp
@@ -131,7 +131,7 @@ export function handlePostTraded(event: PostTradedEvent): void {
   let entity = new PostTraded(
     event.transaction.hash.concatI32(event.logIndex.toI32())
   )
-  entity.postHash = event.params.postHash
+  entity.postHash = event.params.postHash.toString();
   entity.seller = event.params.seller
   entity.buyer = event.params.buyer
   entity.price = event.params.price
