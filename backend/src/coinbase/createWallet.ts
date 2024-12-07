@@ -6,7 +6,7 @@ export interface WalletDetails {
   address: string;
 }
 
-export async function createWallet(): Promise<WalletDetails> {
+export async function createWallet(): Promise<any> {
   try {
     initializeSDK();
 
@@ -18,10 +18,7 @@ export async function createWallet(): Promise<WalletDetails> {
       throw new Error("Failed to retrieve wallet ID or address.");
     }
 
-    return {
-      walletId,
-      address: address.toString(),
-    };
+    return wallet;
   } catch (error) {
     console.error("Error creating wallet:", error);
     throw error;
