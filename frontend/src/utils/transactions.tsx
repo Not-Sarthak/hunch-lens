@@ -74,11 +74,12 @@ export const buyPost = async (
 ) => {
     const walletClient = createWalletClient({
         chain: baseSepolia,
-        transport: custom(window.ethereum),
+        transport: custom(window.ethereum), // MetaMask as a provider
     });
     const accounts = await walletClient.getAddresses();
     const walletAddress = accounts[0];
 
+    // Approve tokens first
     await approveTokens(price);
 
     const contract = getContract({

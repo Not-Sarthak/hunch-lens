@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { backendUrl } from "src/constants";
+import LivestreamButton from "../huddle-01/huddle";
 
 interface Market {
   id: number;
@@ -247,6 +248,13 @@ const MarketSection = ({ marketId }: { marketId: string }) => {
           </div>
         </div>
         <div className="flex space-x-6">
+          <div className="text-right">
+            <div className="text-sm "></div>
+            <div className="text-[#787878]">
+              {" "}
+              <LivestreamButton roomId="adp-lnnw-xns" />
+            </div>
+          </div>
           <div className="text-right">
             <div className="text-sm ">Type</div>
             <div className="text-[#787878]">{market.type}</div>

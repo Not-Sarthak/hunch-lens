@@ -439,6 +439,22 @@
   resolved "https://registry.yarnpkg.com/@hookform/resolvers/-/resolvers-3.9.1.tgz#a23883c40bfd449cb6c6ab5a0fa0729184c950ff"
   integrity sha512-ud2HqmGBM0P0IABqoskKWI6PEf6ZDDBZkFqe2Vnl+mTHCEHzr3ISjjZyCwTjC/qpL25JC9aIDkloQejvMeq0ug==
 
+"@huddle01/iframe@^0.0.15":
+  version "0.0.15"
+  resolved "https://registry.yarnpkg.com/@huddle01/iframe/-/iframe-0.0.15.tgz#3db7bba29fe671724cea20532413480e5210d56b"
+  integrity sha512-Jj+hqy3+GrC3IdqaC/MOMpUZ+pnvkIbDBIyR164welAGy/9FufBiSyhi4sP++mFcO1FTrYQFpF7a8Tph1uuCJQ==
+  dependencies:
+    zod "^3.23.8"
+
+"@huddle01/server-sdk@^2.5.5":
+  version "2.5.5"
+  resolved "https://registry.yarnpkg.com/@huddle01/server-sdk/-/server-sdk-2.5.5.tgz#afb71b2e709bc6ae07278c86eedc319c9ea8cb13"
+  integrity sha512-ws8xAhlAkcQrmmGHfraHd70N0sUUsxJEBUPpWlW1w4dIFLCU9NmQXgplSj1RH/idQgvHzEArabnlQaoCZA9rWA==
+  dependencies:
+    hono "^4.6.9"
+    jose "^5.9.3"
+    zod "^3.23.8"
+
 "@isaacs/cliui@^8.0.2":
   version "8.0.2"
   resolved "https://registry.npmjs.org/@isaacs/cliui/-/cliui-8.0.2.tgz"
@@ -844,6 +860,14 @@
   dependencies:
     "@nodelib/fs.scandir" "2.1.5"
     fastq "^1.6.0"
+
+"@number-flow/react@^0.4.2":
+  version "0.4.2"
+  resolved "https://registry.yarnpkg.com/@number-flow/react/-/react-0.4.2.tgz#54033fa45b1523e41bf5324522f9b89a9e1b1928"
+  integrity sha512-lCAkLuK/3+Nlhb/oy1tpRnadp1vvfc/cWTtWUL9hMksHsJOGh+1T5Y/dyeQhyCD0heaWTjNYWX2ndBKLJwuC0A==
+  dependencies:
+    esm-env "^1.1.4"
+    number-flow "0.4.1"
 
 "@parcel/watcher-android-arm64@2.4.1":
   version "2.4.1"
@@ -2850,6 +2874,11 @@ escape-string-regexp@^1.0.5:
   resolved "https://registry.npmjs.org/escape-string-regexp/-/escape-string-regexp-1.0.5.tgz"
   integrity sha512-vbRorB5FUQWvla16U8R/qgaFIya2qGzwDrNmCZuYKrbdSUMG6I1ZCGQRefkRVhuOkIGVne7BQ35DSfo1qvJqFg==
 
+esm-env@^1.1.4:
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/esm-env/-/esm-env-1.2.1.tgz#34c2a0ba60582948afbe7bd779bc66f9d3aece7e"
+  integrity sha512-U9JedYYjCnadUlXk7e1Kr+aENQhtUaoaV9+gZm1T8LC/YBAPJx3NSPIAurFOC0U5vrdSevnUJS2/wUVxGwPhng==
+
 estree-walker@^3.0.3:
   version "3.0.3"
   resolved "https://registry.npmjs.org/estree-walker/-/estree-walker-3.0.3.tgz"
@@ -3274,6 +3303,11 @@ hmac-drbg@^1.0.1:
     minimalistic-assert "^1.0.0"
     minimalistic-crypto-utils "^1.0.1"
 
+hono@^4.6.9:
+  version "4.6.13"
+  resolved "https://registry.yarnpkg.com/hono/-/hono-4.6.13.tgz#e92b328c80823802f0b346a5c4b56470adb242bc"
+  integrity sha512-haV0gaMdSjy9URCRN9hxBPlqHa7fMm/T72kAImIxvw4eQLbNz1rgjN4hHElLJSieDiNuiIAXC//cC6YGz2KCbg==
+
 html-encoding-sniffer@^4.0.0:
   version "4.0.0"
   resolved "https://registry.npmjs.org/html-encoding-sniffer/-/html-encoding-sniffer-4.0.0.tgz"
@@ -3653,6 +3687,11 @@ jiti@^1.21.0:
   version "1.21.6"
   resolved "https://registry.npmjs.org/jiti/-/jiti-1.21.6.tgz"
   integrity sha512-2yTgeWTWzMWkHu6Jp9NKgePDaYHbntiwvYuuJLbbN9vl7DC9DvXKOB2BC3ZZ92D3cvV/aflH0osDfwpHepQ53w==
+
+jose@^5.9.3:
+  version "5.9.6"
+  resolved "https://registry.yarnpkg.com/jose/-/jose-5.9.6.tgz#77f1f901d88ebdc405e57cce08d2a91f47521883"
+  integrity sha512-AMlnetc9+CV9asI19zHmrgS/WYsWUwCn2R7RzlbJWD7F9eWYUTGyBmU9o6PxngtLGOiDGPRu+Uc4fhKzbpteZQ==
 
 joycon@^3.1.1:
   version "3.1.1"
@@ -4131,6 +4170,13 @@ npm-run-path@^5.1.0:
   integrity sha512-ppwTtiJZq0O/ai0z7yfudtBpWIoxM8yE6nHi1X47eFR2EWORqfbu6CnPlNsjeN683eT0qG6H/Pyf9fCcvjnnnQ==
   dependencies:
     path-key "^4.0.0"
+
+number-flow@0.4.1:
+  version "0.4.1"
+  resolved "https://registry.yarnpkg.com/number-flow/-/number-flow-0.4.1.tgz#592b74100538dc38bf05b9ee7132c00a369e0003"
+  integrity sha512-d39o1tWL7mMMBLuOfHswtQ8r0fj9eUcatb4G1Spdv0ZO/I30kg9DBdSzSPjNG6hrj1slQ6KA3TQXk1RmOq4qOA==
+  dependencies:
+    esm-env "^1.1.4"
 
 nwsapi@^2.2.12:
   version "2.2.12"

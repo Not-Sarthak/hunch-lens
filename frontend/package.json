@@ -19,6 +19,8 @@
   "dependencies": {
     "@coinbase/onchainkit": "^0.35.2",
     "@hookform/resolvers": "^3.9.1",
+    "@huddle01/iframe": "^0.0.15",
+    "@huddle01/server-sdk": "^2.5.5",
     "@number-flow/react": "^0.4.2",
     "@radix-ui/react-slider": "^1.2.1",
     "@rainbow-me/rainbowkit": "^2.2.1",
