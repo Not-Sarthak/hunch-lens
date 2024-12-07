@@ -127,15 +127,14 @@ interface Post {
 }
 
 interface Tab {
-  id: "collection" | "authored" | "launched" | "rewards";
+  id: "collection" | "launched" | "investment-logs";
   label: string;
 }
 
 const tabs: Tab[] = [
   { id: "collection", label: "Collection" },
-  { id: "authored", label: "Authored" },
   { id: "launched", label: "Launched" },
-  { id: "rewards", label: "Rewards" },
+  { id: "investment-logs", label: "Investment Logs" },
 ];
 
 const ThreeDotsIcon = () => (
