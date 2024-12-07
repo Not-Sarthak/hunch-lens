@@ -4,6 +4,7 @@ import HowItWorksSection from "../landing/how-it-works";
 import LandingVisuals from "../landing/landing-visuals";
 import BackgroundCircle from "../landing/background-circle";
 import InfiniteScroll from "../landing/infinite-scroll";
+import Live from "../landing/live";
 
 interface Particle {
   x: number;
@@ -136,8 +137,8 @@ const AnimatedContent: React.FC = () => {
 const LandingPageSection: React.FC = () => {
   return (
     <>
-      <ParticleBackground />
       <BackgroundCircle />
+      <ParticleBackground />
       <div className="relative max-w-landing border-x border-b rounded-b-2xl border-[#1E1E21] min-h-screen bg-[#111015] bg-opacity-95">
         <AnimatedContent />
         <motion.div
@@ -161,6 +162,13 @@ const LandingPageSection: React.FC = () => {
           transition={{ duration: 0.5, delay: 1.5 }}
         >
           <InfiniteScroll />
+        </motion.div>
+        <motion.div
+          initial={{ opacity: 0, y: 8 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 1.75 }}
+        >
+          <Live />
         </motion.div>
       </div>
     </>

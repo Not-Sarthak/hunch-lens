@@ -10,7 +10,7 @@ interface CardProps {
 
 const Card: React.FC<CardProps> = ({ title, subtitle, effect }) => (
   <div className="flex-shrink-0 flex-grow-0 flex items-center mx-4 gap-8 rounded-lg w-[500px]">
-    <div className="flex-shrink-0 w-[200px] h-[140px] rounded-2xl overflow-hidden">
+    <div className="flex-shrink-0 w-[200px] h-[140px] rounded-2xl overflow-hidden border border-[#1E1E21]">
       {effect}
     </div>
     <div className="flex flex-col items-start justify-between flex-grow-0 h-full">
@@ -140,13 +140,15 @@ const AgentElement: React.FC = () => {
       <motion.h1 className="absolute z-10 font-normal top-6 left-7">
         {Array.from("daku.base.eth").map((char, index) => (
           <motion.span
-            className="inline-block text-transparent bg-gradient-to-b from-[#fff] to-[#fafafa8a] bg-clip-text "
+            layout="preserve-aspect"
+            className="inline-block text-transparent bg-gradient-to-b from-[#fff] to-[#fafafa8a] bg-clip-text"
             key={index}
             animate={{
               opacity: [0, 1, 1, 0],
               x: [-8, 0, 0, -8],
               y: [-8, 0, 0, 0],
               filter: ["blur(4px)", "blur(0px)", "blur(0px)", "blur(4px)"],
+              willChange: "transform, opacity, filter",
             }}
             transition={{
               duration: 4,
@@ -317,6 +319,12 @@ const StyleElement = () => {
   );
 };
 
+interface CardProps {
+  title: string;
+  subtitle: React.ReactNode;
+  effect: React.ReactNode;
+}
+
 const InfiniteScroll: React.FC = () => {
   const scrollRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
@@ -324,38 +332,32 @@ const InfiniteScroll: React.FC = () => {
   useEffect(() => {
     const scroll = scrollRef.current;
     const content = contentRef.current;
-
     if (!scroll || !content) return;
 
-    const clone1 = content.cloneNode(true) as HTMLDivElement;
-    const clone2 = content.cloneNode(true) as HTMLDivElement;
-    scroll.appendChild(clone1);
-    scroll.appendChild(clone2);
-
-    let animationFrameId: number;
-    let scrollPos = 0;
+    const totalWidth = content.offsetWidth;
+    scroll.style.transform = "translateX(0)";
 
     const animate = () => {
-      scrollPos += 0.5;
-      if (scrollPos >= content.offsetWidth) {
-        scrollPos = 0;
+      const currentTransform = getComputedStyle(scroll).transform;
+      const matrix = new DOMMatrix(currentTransform);
+      const currentX = matrix.m41;
+
+      let newX = currentX - 0.5;
+      if (newX <= -totalWidth) {
+        newX = 0;
       }
-      scroll.style.transform = `translateX(${-scrollPos}px)`;
-      animationFrameId = requestAnimationFrame(animate);
+
+      scroll.style.transform = `translateX(${newX}px)`;
+      requestAnimationFrame(animate);
     };
 
-    animate();
-
-    return () => {
-      if (animationFrameId) {
-        cancelAnimationFrame(animationFrameId);
-      }
-    };
+    const animationId = requestAnimationFrame(animate);
+    return () => cancelAnimationFrame(animationId);
   }, []);
 
   return (
     <div className="w-full mt-12 mb-24 overflow-hidden gradient-mask">
-      <div ref={scrollRef} className="flex whitespace-nowrap">
+      <div ref={scrollRef} className="flex">
         <div ref={contentRef} className="flex">
           <Card
             title="Name your agent"
@@ -363,7 +365,7 @@ const InfiniteScroll: React.FC = () => {
               <div>
                 <p>Give it a personality, make it yours.</p>
                 <p className="mt-4 leading-tight">
-                  We’ll create a basename for the agent because why not ;p
+                  We'll create a basename for the agent because why not ;p
                 </p>
               </div>
             }
@@ -392,7 +394,51 @@ const InfiniteScroll: React.FC = () => {
                   From conservative to aggressive, you're in control.
                 </p>
                 <p className="mt-4 leading-tight">
-                  Remember, higher risks higher rewards. No, don’t quote us.
+                  Remember, higher risks higher rewards. No, don't quote us.
+                </p>
+              </div>
+            }
+            effect={<ControlElement />}
+          />
+        </div>
+        {/* Duplicate content for seamless scrolling */}
+        <div className="flex">
+          <Card
+            title="Name your agent"
+            subtitle={
+              <div>
+                <p>Give it a personality, make it yours.</p>
+                <p className="mt-4 leading-tight">
+                  We'll create a basename for the agent because why not ;p
+                </p>
+              </div>
+            }
+            effect={<AgentElement />}
+          />
+          <Card
+            title="Set your style"
+            subtitle={
+              <div>
+                <p className="leading-tight">
+                  Profit-focused or value-driven? You choose.
+                </p>
+                <p className="mt-4 leading-tight">
+                  Choose from a list of trending topics. Human intelligence{" "}
+                  {">>"}
+                </p>
+              </div>
+            }
+            effect={<StyleElement />}
+          />
+          <Card
+            title="Pick your risk-level"
+            subtitle={
+              <div>
+                <p className="leading-tight">
+                  From conservative to aggressive, you're in control.
+                </p>
+                <p className="mt-4 leading-tight">
+                  Remember, higher risks higher rewards. No, don't quote us.
                 </p>
               </div>
             }

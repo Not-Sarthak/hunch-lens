@@ -14,7 +14,7 @@ const BackgroundCircle = () => {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 2, delay: 1.25 }}
-        className="bg-[#6FDBB5] size-[250px] blur-[100px] absolute -bottom-44 left-72"
+        className="bg-[#6FDBB5] size-[250px] blur-[100px] absolute -bottom-[540px] left-64"
       />
       <motion.div
         initial={{ opacity: 0 }}
