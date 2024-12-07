@@ -4,7 +4,7 @@ version = "1.0.0"
 authors = []
 
 [addresses]
-exampleAddress ="0x5f973ce279537f4b78166f0e495908ad321bae2a01aaf0d4ec6aa8e540cb631c"
+hunch ="0x5f973ce279537f4b78166f0e495908ad321bae2a01aaf0d4ec6aa8e540cb631c"
 
 [dev-addresses]
 
@@ -14,4 +14,3 @@ rev = "dev"
 subdir = "aptos-move/framework/supra-framework"
 
 [dev-dependencies]
-# git = "https://github.com/SUPRANolan/aptos-core.git"

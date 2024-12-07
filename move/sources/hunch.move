@@ -1,7 +1,7 @@
-module exampleAddress::transfer {
+module hunch::SocialPostTrading {
 
     use supra_framework::supra_coin;
-    use supra_framework::coin::{Self, BurnCapability, FreezeCapability, MintCapability};
+    use supra_framework::coin::{Self, Coin, BurnCapability, FreezeCapability, MintCapability};
     use std::signer;
     use std::account;
     use std::string::String;
@@ -114,7 +114,7 @@ module exampleAddress::transfer {
         platform_data.token_id_counter = token_id + 1;
     }
 
-    public entry fun buy_post<Money>(account: &signer, token_id: u64, payment: coin::Coin<Money>) acquires PlatformData {
+    public fun buy_post<Money>(account: &signer, token_id: u64, payment: Coin<Money>) acquires PlatformData {
         let platform_data = borrow_global_mut<PlatformData>(signer::address_of(account));
         let post = table::borrow_mut(&mut platform_data.posts, token_id);
         assert!(post.is_active, 2);
