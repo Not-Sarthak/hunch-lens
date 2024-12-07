@@ -22,13 +22,14 @@ export async function retrieveTweetFromURL(url: string): Promise<string> {
       throw new Error('Tweet data is missing in the response.');
     }
 
+    const username = tweet.username || 'N/A';
+    const name = tweet.name || 'N/A';
+    const profileImage = tweet.user?.profile_image_url_https || tweet.avatar || 'N/A';
     const text = tweet.text || 'N/A';
     const mediaUrl = tweet.mediaDetails?.[0]?.media_url_https || 'N/A';
     const likes = tweet.likes || 0;
     const replies = tweet.replies || 0;
     const createdAt = tweet.createdAt ? new Date(tweet.createdAt).toLocaleString() : 'N/A';
-    const avatar = tweet.avatar || 'N/A';
-    const username = tweet.username || 'N/A';
     const isBlueVerified = tweet.isBlueVerified ? 'Yes' : 'No';
 
     const images = tweet.images?.join(', ') || 'N/A';
@@ -38,12 +39,13 @@ export async function retrieveTweetFromURL(url: string): Promise<string> {
 
     const result = `
 Username: ${username}
+Name: ${name}
+Profile Picture: ${profileImage}
 Text: ${text}
 Likes: ${likes}
 Replies: ${replies}
 Total Interactions: ${totalInteractions}
 Created At: ${createdAt}
-Avatar: ${avatar}
 Blue Verified: ${isBlueVerified}
 Images: ${images}
 Videos: ${videos}

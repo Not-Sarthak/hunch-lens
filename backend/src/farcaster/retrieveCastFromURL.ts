@@ -26,6 +26,8 @@ interface CastData {
         connectedAddress: string;
       }>;
       author: {
+        username: string;
+        displayName: string;
         followingCount: number;
         followerCount: number;
         pfp: {
@@ -95,6 +97,8 @@ export async function retrieveCastFromURL(url: string): Promise<string> {
       Text: ${cast.text},
       Images: ${images},
       Mentions: ${mentions},
+      Author Username: ${author.username},
+      Author Display Name: ${author.displayName},
       Author Following Count: ${author.followingCount},
       Author Follower Count: ${author.followerCount},
       Author PFP URL: ${author.pfp.url},
