@@ -94,7 +94,7 @@ const TokenizeCastForm = memo(({ closeModal }: { closeModal: () => void }) => {
           disabled={values.isSubmitting}
           className="w-full btn btn-green mt-6"
         >
-          {values.isSubmitting ? "Tokenizing..." : "Create Market"}
+          {values.isSubmitting ? "Tokenizing..." : "Hunch It!"}
         </button>
       </form>
     </div>

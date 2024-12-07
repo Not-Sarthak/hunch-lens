@@ -11,6 +11,7 @@
     - Implementation Options
         - Off-chain Model with on-chain execution [Chainlink Automation]
     - Use Polynomial Protocol for Indexing Smart Contracts [Optimistic Indexer]
+    - Eliza
 
 - Smart Contract
     - AgentNFT Contract
