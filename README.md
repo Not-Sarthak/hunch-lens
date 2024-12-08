@@ -1,10 +1,13 @@
 # Hunch
 
 ![image](https://github.com/user-attachments/assets/2af76877-ae51-4ad9-b874-775c7ca93083)
+
 Hunch is a social trading platform connecting people who spot viral content early with those who want to profit from it. Create markets, trade on insights, and let AI automate your strategy.
 
-## For Curators
+### For Curators
+
 ![image](https://github.com/user-attachments/assets/26741ed3-db99-4f6f-8ede-9a85bc364984)
+
 If you're good at spotting viral posts before they blow up:
 
 Create markets for promising posts
@@ -12,52 +15,47 @@ Let others trade on your insights
 Earn fees from all transactions
 Train an AI to extend your curation style
 
-## For Traders
-Want to profit from viral content but don't have time to monitor feeds?
+#### How it Works for Curators
 
-Trade on markets created by top curators
-Get in early on trending content
-Set your risk tolerance and preferences
-Let AI agents trade based on your strategy
+1. **Spot Potential**: Find a promising cast early on and create a market for it.
+2. **Let Others Trade**: As the post gains traction, traders buy in
+3. **Earn Curator Fees**: Get a 2% cut of all transaction volume in your market.
 
-## How it Works
+### For Traders
+![image](https://github.com/user-attachments/assets/21227c21-e7c7-46f9-a427-3432c6b04581)
 
-1. **Spot Potential**: Find a promising cast early
-2. **Create Market**: Set up trading rules and fees
-3. **Let Others Trade**: As the post gains traction, traders buy in
-4. **Earn Fees**: Get paid for your early insights
+If you're tired of being a slave to Twitter's algorithm, Hunch is the place to be. Monetise on your own terms.
+
+#### How it Works
+
+1. **Name your based agent**: Give your agent a personality.
+2. **Set up a risk tolerance**: Decide your parameters and stick to them.
+3. **Automated compound investments**: Watch your agent make intelligent decisions on existing markets and grow your portfolio.
+
+## A quick overview
+
+![image](https://github.com/user-attachments/assets/a7b91fe0-f476-4346-9e3a-7c6b8704e4b9)
+
 
 ## Tech Stack
 
-- Frontend: React
-- Smart Contracts: Solidity
-- Network: Farcaster
-- AI: Base AI Agent Kit
+- AgentKit
+- OnchainKit
+- CDP
+- 
 
-## Installation
+## Contract addresses
 
-```bash
-git clone https://github.com/yourusername/hunch.git
-cd hunch
-npm install
-npm run dev
-```
+BASE_CONTRACT_ADDRESS = https://sepolia.basescan.org/address/0x5D7B612dF2FA9f4B945196921AA233AedFCe8e79
+AKAVE_CONTRACT_ADDRESS = http://explorer.akave.ai/address/0xA565791ECA540744f4cD08D24B89BED49E863211
 
-## Environment Variables
+SUBGRAPH_URL = https://testnet.thegraph.com/explorer/subgraphs/6RTPrpxWdKcWvND1aYKmMoYyED118zWVpfsvB9wMNHoc?view=Query&chain=arbitrum-sepolia
+TRUE_NETWORK
 
-```env
-FARCASTER_API_KEY=your_key_here
-CONTRACT_ADDRESS=your_contract_address
-```
+### Akave
 
-## Contributing
+```curl http://localhost:8000/buckets {"success":true,"data": [{"ID": "adec3d3dc146c6f8049d8d75d1727be9c687931b361c1e91bf2f627d2170e2a5", "Name": "sarthak", "CreatedAt":"2024-11-16 15:32:56+0000 UTC"}]}```
 
-This is a hackathon project built in 48 hours. Feel free to fork and experiment!
+## MIT License
 
-## License
-
-MIT
-
-## Acknowledgments
-
-Built during ETHIndia by Sarthak, Farhad, Boidu, Manish & Debjit
+Built during ETHIndia by Sarthak, Farhat, Boidu, Manish & Debjit
