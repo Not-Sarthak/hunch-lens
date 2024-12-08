@@ -32,7 +32,7 @@ Let AI agents trade based on your strategy
 - Frontend: React
 - Smart Contracts: Solidity
 - Network: Farcaster
-- AI: [Your AI Stack]
+- AI: Base AI Agent Kit
 
 ## Installation
 
@@ -60,4 +60,4 @@ MIT
 
 ## Acknowledgments
 
-Built during [Hackathon Name] by [Team Members]
+Built during ETHIndia by Sarthak, Farhad, Boidu, Manish & Debjit
