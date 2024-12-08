@@ -35,11 +35,11 @@ const WalletDetails: React.FC<WalletDetailsProps> = ({
   useEffect(() => {
     const incrementInvestedCasts = () => {
       setInvestedCasts((prev) => prev + 1);
-      const randomDelay = Math.random() * (3000 - 1000) + 1000; 
+      const randomDelay = Math.random() * (30000 - 10000) + 1000; 
       setTimeout(incrementInvestedCasts, randomDelay);
     };
 
-    const initialTimeout = setTimeout(incrementInvestedCasts, 1000);
+    const initialTimeout = setTimeout(incrementInvestedCasts, 10000);
 
     return () => clearTimeout(initialTimeout);
   }, []);
