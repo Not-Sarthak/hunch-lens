@@ -22,11 +22,10 @@ export const viewport = {
 
 export const metadata: Metadata = {
   title: "Hunch",
-  description: "",
+  description: "Monetise your social virality on your own terms",
   openGraph: {
     title: "Hunch",
-    description: "",
-    images: [`${NEXT_PUBLIC_URL}/vibes/vibes-19.png`],
+    description: "Monetise your social virality on your own terms",
   },
 };
 
@@ -38,6 +37,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
+      <link rel="icon" href="/favicon.png" sizes="any" />
         <link
           rel="preload"
           href="/fonts/HelveticaNeueUltraLight.otf"
