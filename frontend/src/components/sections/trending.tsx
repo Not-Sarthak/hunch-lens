@@ -49,7 +49,7 @@ const Trending = () => {
     const fetchCasts = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:8000/api/tokenization/markets",
+          "https://hunch-1.onrender.com/api/tokenization/markets",
           {
             headers: {
               "Content-Type": "application/json",

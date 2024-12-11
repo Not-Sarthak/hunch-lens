@@ -13,7 +13,7 @@ async function storeTokenizedAssets() {
     try {
         await client.createBucket(BUCKET_NAME);
         
-        const response = await axios.get('http://localhost:8000/api/tokenization/markets');
+        const response = await axios.get('https://hunch-1.onrender.com/api/tokenization/markets');
         const tokenizedAssets: TokenizedAsset[] = response.data;
         
         for (const asset of tokenizedAssets) {

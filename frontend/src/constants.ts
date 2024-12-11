@@ -4,7 +4,7 @@ export const marketFactoryAddress =
 export const marketFactoryAbi = [] as const;
 
 export const backendUrl =
-  process.env.NODE_ENV === "production" ? "" : "http://localhost:8000/api";
+  process.env.NODE_ENV === "production" ? "" : "https://hunch-1.onrender.com/api";
 
 export const CONTRACT_ADDRESS = "0x5D7B612dF2FA9f4B945196921AA233AedFCe8e79";
 export const TOKEN_ADDRESS = "0xCA455A543014dA31bd080912FaC6bC323fbbb672";
