@@ -92,6 +92,7 @@ const Trending = () => {
         ) : (
           casts.map((cast) => (
             <CastCard
+              marketId={cast.id}
               key={cast.url}
               platform={cast.type.toLowerCase() as PlatformType}
               data={cast.data}

@@ -188,8 +188,7 @@ const MarketSection = ({ marketId }: { marketId: string }) => {
     const fetchMarket = async () => {
       try {
         const response = await fetch(
-          // `${backendUrl}/tokenization/markets/${marketId}`
-          `${backendUrl}/tokenization/markets/3`
+          `${backendUrl}/tokenization/markets/${marketId}`
         );
         const data = await response.json();
         if (data.success && data.market) {

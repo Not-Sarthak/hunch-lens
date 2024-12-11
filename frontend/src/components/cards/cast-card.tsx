@@ -87,6 +87,7 @@ const parseFarcasterString = (data: string): any => {
 // Transformation functions for different platforms
 const normalizeTwitterPost = (rawData: string): NormalizedPost => {
   const data = parseTwitterString(rawData);
+
   return {
     id: data.publicAddress || "unknown",
     platform: "twitter",
@@ -115,6 +116,7 @@ const normalizeTwitterPost = (rawData: string): NormalizedPost => {
 
 const normalizeFarcasterPost = (rawData: string): NormalizedPost => {
   const data = parseFarcasterString(rawData);
+
   return {
     id: data.Hash?.trim() || "unknown",
     platform: "farcaster",
@@ -161,9 +163,10 @@ const normalizeFarcasterPost = (rawData: string): NormalizedPost => {
 interface CastCardProps {
   data: string;
   platform: "twitter" | "farcaster";
+  marketId: number;
 }
 
-const CastCard = ({ data, platform }: CastCardProps) => {
+const CastCard = ({ data, platform, marketId }: CastCardProps) => {
   const [isHovered, setIsHovered] = React.useState(false);
   const router = useRouter();
 
@@ -299,7 +302,7 @@ const CastCard = ({ data, platform }: CastCardProps) => {
                   Buy this cast
                 </button>
                 <button
-                  onClick={() => router.push(`/markets/${normalizedData.id}`)}
+                  onClick={() => router.push(`/markets/${marketId}`)}
                   className="w-full flex items-center gap-2 justify-center mt-4 py-2 bg-gradient-to-b from-[#26262A] to-[#16151A] text-[#737373] rounded-lg transition-colors"
                 >
                   View Details <MoveUpRight />
