@@ -50,11 +50,6 @@ BASE_CONTRACT_ADDRESS = https://sepolia.basescan.org/address/0x5D7B612dF2FA9f4B9
 AKAVE_CONTRACT_ADDRESS = http://explorer.akave.ai/address/0xA565791ECA540744f4cD08D24B89BED49E863211
 
 SUBGRAPH_URL = https://testnet.thegraph.com/explorer/subgraphs/6RTPrpxWdKcWvND1aYKmMoYyED118zWVpfsvB9wMNHoc?view=Query&chain=arbitrum-sepolia
-TRUE_NETWORK
-
-### Akave
-
-```curl http://localhost:8000/buckets {"success":true,"data": [{"ID": "adec3d3dc146c6f8049d8d75d1727be9c687931b361c1e91bf2f627d2170e2a5", "Name": "sarthak", "CreatedAt":"2024-11-16 15:32:56+0000 UTC"}]}```
 
 ## MIT License
 
