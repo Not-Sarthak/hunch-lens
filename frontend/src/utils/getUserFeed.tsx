@@ -8,7 +8,7 @@ const getUserFeed = async (profileId: string): Promise<any> => {
     const result = await client.query({
       query: getFeed,
       variables: {
-        profileId: "0x28a2",
+        profileId: profileId,
       },
       fetchPolicy: "network-only",
     });
