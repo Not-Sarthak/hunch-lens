@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { backendUrl } from "src/constants";
-import LivestreamButton from "../huddle-01/huddle";
 
 interface Market {
   id: number;
@@ -20,7 +19,7 @@ const BuyScreen = () => {
   return (
     <div className="flex flex-col gap-4">
       <div className="flex items-center justify-between">
-        <p>Buy</p>
+        <div>Buy</div>
         <div className="text-sm text-[#787878]">Balance: 0.01 ETH</div>
       </div>
       <input
@@ -53,7 +52,7 @@ const SellScreen = () => {
   return (
     <div className="flex flex-col gap-4">
       <div className="flex items-center justify-between">
-        <p>Sell</p>
+        <div>Sell</div>
         <div className="text-sm text-[#787878]">Balance: 0.01 ETH</div>
       </div>
       <input
@@ -251,7 +250,6 @@ const MarketSection = ({ marketId }: { marketId: string }) => {
             <div className="text-sm "></div>
             <div className="text-[#787878]">
               {" "}
-              <LivestreamButton roomId="skb-hxrs-hmy" />
             </div>
           </div>
           <div className="text-right">

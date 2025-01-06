@@ -6,9 +6,10 @@ const getProfiles = async (
   limit = 10,
   cursor = null
 ): Promise<any> => {
-  console.log("got the address", address);
+  console.log("Address: ", address);
 
   try {
+    console.log("Getting the Profiles");
     const result = await client.query({
       query: getProfile,
       variables: {
@@ -16,7 +17,7 @@ const getProfiles = async (
       },
       fetchPolicy: "network-only",
     });
-    console.log("Got the Profiles", result?.data?.ownedHandles?.items);
+    console.log("Got the Profile", result?.data?.ownedHandles?.items);
     return result?.data?.ownedHandles?.items || [];
   } catch (error) {
     console.error("Error in getting profiles", error);

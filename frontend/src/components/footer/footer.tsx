@@ -29,9 +29,8 @@ export default function Footer() {
             rel="noreferrer"
             className="text-[#6FDBB5] hover:underline transition-colors"
           >
-            Sarthak and Farhat
+            Sarthak and Sahil
           </a>{" "}
-          and Diffie-Hellman
         </p>
       </div>
     </motion.footer>

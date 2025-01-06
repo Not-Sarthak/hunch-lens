@@ -5,7 +5,7 @@ const genChallenge = async (
   profileId: string,
   address: string
 ): Promise<any> => {
-  console.log("got the address", profileId);
+  console.log("Got the Address", profileId);
 
   try {
     const result = await client.query({
@@ -16,7 +16,7 @@ const genChallenge = async (
       },
       fetchPolicy: "network-only",
     });
-    console.log("Got the challenge", result?.data.challenge.text);
+    console.log("Got the Challenge", result?.data.challenge.text);
     return result?.data.challenge || [];
   } catch (error) {
     console.error("Error in getting profiles", error);

@@ -363,10 +363,10 @@ const InfiniteScroll: React.FC = () => {
             title="Name your agent"
             subtitle={
               <div>
-                <p>Give it a personality, make it yours.</p>
-                <p className="mt-4 leading-tight">
+                <div>Give it a personality, make it yours.</div>
+                <div className="mt-4 leading-tight">
                   We'll create a basename for the agent because why not ;p
-                </p>
+                </div>
               </div>
             }
             effect={<AgentElement />}
@@ -401,16 +401,15 @@ const InfiniteScroll: React.FC = () => {
             effect={<ControlElement />}
           />
         </div>
-        {/* Duplicate content for seamless scrolling */}
         <div className="flex">
           <Card
             title="Name your agent"
             subtitle={
               <div>
-                <p>Give it a personality, make it yours.</p>
-                <p className="mt-4 leading-tight">
+                <div>Give it a personality, make it yours.</div>
+                <div className="mt-4 leading-tight">
                   We'll create a basename for the agent because why not ;p
-                </p>
+                </div>
               </div>
             }
             effect={<AgentElement />}

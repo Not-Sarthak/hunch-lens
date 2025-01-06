@@ -1,21 +1,14 @@
 "use client";
 
-import React, {
-  useRef,
-  useState,
-  useEffect,
-  useLayoutEffect,
-  useCallback,
-} from "react";
+import React, { useRef, useState, useEffect, useLayoutEffect, useCallback } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import { useAccount, useDisconnect, useSignMessage } from "wagmi";
-import WalletWrapper from "src/components/WalletWrapper";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { ConnectKitButton } from "connectkit";
 import getProfiles from "src/utils/getLensProfile";
 import genChallenge from "src/utils/generateChallenge";
-import authenticateUser from "src/utils/authenticateUser";
+import authenticateUser, { getStoredToken } from "src/utils/authenticateUser";
 
 interface NavItem {
   label: string;
@@ -228,7 +221,6 @@ const LeaderboardIcon = ({ className }: { className?: string }) => {
 
 const navigationItems: NavItem[] = [
   { label: "Dashboard", path: "/dashboard", icon: <DashboardIcon /> },
-  { label: "AI", path: "/launch-ai", icon: <AnalyticsIcon /> },
   { label: "Profile", path: "/profile", icon: <ProfileIcon /> },
   { label: "Leaderboard", path: "/leaderboard", icon: <LeaderboardIcon /> },
 ];
@@ -236,6 +228,7 @@ const navigationItems: NavItem[] = [
 export const Navbar: React.FC = () => {
   const router = useRouter();
   const pathname = usePathname();
+  const [isLensAuthenticated, setIsLensAuthenticated] = useState(false);
 
   const { address } = useAccount();
   const { signMessageAsync } = useSignMessage();
@@ -248,6 +241,15 @@ export const Navbar: React.FC = () => {
   });
 
   const { isConnected } = useAccount();
+
+  useEffect(() => {
+    const checkLensAuth = () => {
+      const token = getStoredToken();
+      setIsLensAuthenticated(!!token);
+    };
+
+    checkLensAuth();
+  }, [address]);
 
   useLayoutEffect(() => {
     if (isConnected && pathname === "/") {
@@ -270,21 +272,41 @@ export const Navbar: React.FC = () => {
   const handleLensSignIn = async () => {
     try {
       const ownedProfiles = await getProfiles(address as string);
-      console.log("owned profiles", ownedProfiles);
+      console.log("Lens Profiles:", ownedProfiles);
+
+      if (!ownedProfiles || ownedProfiles.length === 0) {
+        console.error("No Lens Profiles Found");
+        return;
+      }
+
       const challengeResult = await genChallenge(
         ownedProfiles[0].linkedTo.nftTokenId,
         address as string
       );
-      const sig = await signMessageAsync({
+      console.log("Challenge Generated Successfully");
+
+      const signature = await signMessageAsync({
         account: address,
         message: challengeResult.text,
       });
-      console.log(sig, "signature");
-      const result = await authenticateUser(challengeResult.id, sig);
-      console.log("auth result", result);
+      console.log("Message Signed Successfully");
+
+      const authResult = await authenticateUser(challengeResult.id, signature);
+      console.log("Lens Authentication Successful");
+
+      if (authResult) {
+        setIsLensAuthenticated(true);
+        router.push('/profile');
+      }
     } catch (error) {
-      console.log("error signing in", error);
+      console.error("Error signing in with Lens:", error);
+      setIsLensAuthenticated(false);
     }
+  };
+
+  const handleProfileClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    router.push('/profile');
   };
 
   return (
@@ -295,7 +317,7 @@ export const Navbar: React.FC = () => {
       className={
         pathname !== "/"
           ? "fixed top-0 left-0 right-0 z-20 text-white py-3.5 h-20 border-b-[1px] border-[#1E1E21] backdrop-blur-lg bg-[#111015aa]"
-          : "max-w-landing z-20 text-white pt-3.5 h-20  border-[#1E1E21] backdrop-blur-lg bg-[#111015] border-x rounded-t-2xl"
+          : "max-w-landing z-20 text-white pt-3.5 h-20 border-[#1E1E21] backdrop-blur-lg bg-[#111015] border-x rounded-t-2xl"
       }
     >
       <div
@@ -328,23 +350,33 @@ export const Navbar: React.FC = () => {
 
         <div className="flex items-center justify-end gap-4">
           {address && (
-            <button className="disconnect-btn" onClick={handleLensSignIn}>
-              <svg
-                width="20"
-                height="20"
-                viewBox="0 0 20 21"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M1.66663 12.5833V9.66667C1.66663 7.33311 1.66663 6.16634 2.12077 5.27504C2.52024 4.49103 3.15766 3.85361 3.94167 3.45414C4.83296 3 5.99974 3 8.33329 3H11.25C12.4148 3 12.9972 3 13.4567 3.1903C14.0692 3.44404 14.5559 3.93072 14.8097 4.54329C14.9824 4.96043 14.9983 5.47895 14.9998 6.44275M1.66663 12.5833C1.66663 13.6914 1.66663 14.6621 1.98379 15.4278C2.40669 16.4488 3.21783 17.2599 4.23878 17.6828C5.00449 18 5.9752 18 7.91663 18H11.0004M1.66663 12.5833C1.66663 10.6419 1.66663 9.6712 1.98379 8.90549C2.40669 7.88453 3.21783 7.07339 4.23878 6.6505C5.00449 6.33333 5.9752 6.33333 7.91663 6.33333H12.0833C13.4449 6.33333 14.329 6.33333 14.9998 6.44275M14.9998 6.44275C15.2855 6.48934 15.5324 6.55578 15.7611 6.6505C16.7821 7.07339 17.5932 7.88453 18.0161 8.90549C18.2066 9.36533 18.2827 9.89912 18.3131 10.6727M11.6666 10.5H14.1666M14.3335 18.0002L16.3335 16.0002M16.3335 16.0002L18.3335 14.0002M16.3335 16.0002L14.3335 14.0002M16.3335 16.0002L18.3335 18.0002"
-                  stroke="#737373"
-                  stroke-width="1.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
-              <span className="pt-0.5">Sign In With Lens</span>
+            <button
+              className={`disconnect-btn ${isLensAuthenticated ? "bg-green-500/10" : ""}`}
+              onClick={isLensAuthenticated ? handleProfileClick : handleLensSignIn}
+            >
+              {isLensAuthenticated ? (
+                <ProfileIcon className="active-gradient" />
+              ) : (
+                <svg
+                  width="20"
+                  height="20"
+                  viewBox="0 0 20 21"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M1.66663 12.5833V9.66667C1.66663 7.33311 1.66663 6.16634 2.12077 5.27504C2.52024 4.49103 3.15766 3.85361 3.94167 3.45414C4.83296 3 5.99974 3 8.33329 3H11.25C12.4148 3 12.9972 3 13.4567 3.1903C14.0692 3.44404 14.5559 3.93072 14.8097 4.54329C14.9824 4.96043 14.9983 5.47895 14.9998 6.44275M1.66663 12.5833C1.66663 13.6914 1.66663 14.6621 1.98379 15.4278C2.40669 16.4488 3.21783 17.2599 4.23878 17.6828C5.00449 18 5.9752 18 7.91663 18H11.0004M1.66663 12.5833C1.66663 10.6419 1.66663 9.6712 1.98379 8.90549C2.40669 7.88453 3.21783 7.07339 4.23878 6.6505C5.00449 6.33333 5.9752 6.33333 7.91663 6.33333H12.0833C13.4449 6.33333 14.329 6.33333 14.9998 6.44275M14.9998 6.44275C15.2855 6.48934 15.5324 6.55578 15.7611 6.6505C16.7821 7.07339 17.5932 7.88453 18.0161 8.90549C18.2066 9.36533 18.2827 9.89912 18.3131 10.6727M11.6666 10.5H14.1666M14.3335 18.0002L16.3335 16.0002M16.3335 16.0002L18.3335 14.0002M16.3335 16.0002L14.3335 14.0002M16.3335 16.0002L18.3335 18.0002"
+                    stroke={"#737373"}
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              )}
+
+              <span className="pt-0.5">
+                {isLensAuthenticated ? "Profile" : "Sign In With Lens"}
+              </span>
             </button>
           )}
           {pathname === "/" ? <ConnectKitButton /> : <ConnectKitButton />}

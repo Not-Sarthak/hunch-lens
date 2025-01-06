@@ -1,10 +1,12 @@
 import authenticate from "src/graphql/authenticate";
 import { client } from "src/graphql/client";
 
+const AUTH_TOKEN_KEY = "auth_token";
+
 const authenticateUser = async (
   id: string,
   signature: string
-): Promise<any> => {
+): Promise<string> => {
   try {
     const result = await client.mutate({
       mutation: authenticate,
@@ -14,12 +16,31 @@ const authenticateUser = async (
       },
       fetchPolicy: "network-only",
     });
-    console.log("Got the challenge", result);
-    return result || [];
+
+    const accessToken = result.data.authenticate.accessToken;
+    console.log("Authenticate User:", accessToken);
+
+    if (accessToken) {
+      localStorage.setItem(AUTH_TOKEN_KEY, accessToken);
+      console.log("Token Stored Successfully!");
+    }
+
+    return accessToken || "";
   } catch (error) {
-    console.error("Error in getting profiles", error);
+    console.error("Error in Authentication:", error);
     throw error;
   }
+};
+
+export const getStoredToken = (): string | null => {
+  const token = localStorage.getItem(AUTH_TOKEN_KEY);
+  console.log("Retrieved stored token:", token ? "exists" : "not found");
+  return token;
+};
+
+export const removeStoredToken = (): void => {
+  localStorage.removeItem(AUTH_TOKEN_KEY);
+  console.log("Access Token Removed Successfully");
 };
 
 export default authenticateUser;
