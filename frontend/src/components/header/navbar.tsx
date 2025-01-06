@@ -8,11 +8,14 @@ import React, {
   useCallback,
 } from "react";
 import { useRouter, usePathname } from "next/navigation";
-import { useAccount, useDisconnect } from "wagmi";
+import { useAccount, useDisconnect, useSignMessage } from "wagmi";
 import WalletWrapper from "src/components/WalletWrapper";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { ConnectKitButton } from "connectkit";
+import getProfiles from "src/utils/getLensProfile";
+import genChallenge from "src/utils/generateChallenge";
+import authenticateUser from "src/utils/authenticateUser";
 
 interface NavItem {
   label: string;
@@ -235,6 +238,7 @@ export const Navbar: React.FC = () => {
   const pathname = usePathname();
 
   const { address } = useAccount();
+  const { signMessageAsync } = useSignMessage();
 
   const [activeTab, setActiveTab] = useState<number | null>(() => {
     const currentIndex = navigationItems.findIndex(
@@ -262,6 +266,26 @@ export const Navbar: React.FC = () => {
   const handleDisconnect = useCallback(() => {
     connectors.map((connector) => disconnect({ connector }));
   }, [disconnect, connectors]);
+
+  const handleLensSignIn = async () => {
+    try {
+      const ownedProfiles = await getProfiles(address as string);
+      console.log("owned profiles", ownedProfiles);
+      const challengeResult = await genChallenge(
+        ownedProfiles[0].linkedTo.nftTokenId,
+        address as string
+      );
+      const sig = await signMessageAsync({
+        account: address,
+        message: challengeResult.text,
+      });
+      console.log(sig, "signature");
+      const result = await authenticateUser(challengeResult.id, sig);
+      console.log("auth result", result);
+    } catch (error) {
+      console.log("error signing in", error);
+    }
+  };
 
   return (
     <motion.nav
@@ -304,7 +328,7 @@ export const Navbar: React.FC = () => {
 
         <div className="flex items-center justify-end gap-4">
           {address && (
-            <button className="disconnect-btn" onClick={handleDisconnect}>
+            <button className="disconnect-btn" onClick={handleLensSignIn}>
               <svg
                 width="20"
                 height="20"
@@ -320,14 +344,10 @@ export const Navbar: React.FC = () => {
                   strokeLinejoin="round"
                 />
               </svg>
-              <span className="pt-0.5">Disconnect</span>
+              <span className="pt-0.5">Sign In With Lens</span>
             </button>
           )}
-          {pathname === "/" ? (
-            <ConnectKitButton />
-          ) : (
-            <ConnectKitButton />
-          )}
+          {pathname === "/" ? <ConnectKitButton /> : <ConnectKitButton />}
         </div>
       </div>
     </motion.nav>
