@@ -1,6 +1,12 @@
 "use client";
 
-import React, { useRef, useState, useEffect, useLayoutEffect, useCallback } from "react";
+import React, {
+  useRef,
+  useState,
+  useEffect,
+  useLayoutEffect,
+  useCallback,
+} from "react";
 import { useRouter, usePathname } from "next/navigation";
 import { useAccount, useDisconnect, useSignMessage } from "wagmi";
 import Image from "next/image";
@@ -8,7 +14,11 @@ import { motion } from "framer-motion";
 import { ConnectKitButton } from "connectkit";
 import getProfiles from "src/utils/getLensProfile";
 import genChallenge from "src/utils/generateChallenge";
-import authenticateUser, { getStoredToken } from "src/utils/authenticateUser";
+import authenticateUser, {
+  getStoredId,
+  getStoredToken,
+} from "src/utils/authenticateUser";
+import getUserFeed from "src/utils/getUserFeed";
 
 interface NavItem {
   label: string;
@@ -246,6 +256,10 @@ export const Navbar: React.FC = () => {
     const checkLensAuth = () => {
       const token = getStoredToken();
       setIsLensAuthenticated(!!token);
+      const profileId = getStoredId();
+      if (profileId) {
+        getUserFeed(profileId);
+      }
     };
 
     checkLensAuth();
@@ -291,12 +305,17 @@ export const Navbar: React.FC = () => {
       });
       console.log("Message Signed Successfully");
 
-      const authResult = await authenticateUser(challengeResult.id, signature);
+      const authResult = await authenticateUser(
+        challengeResult.id,
+        signature,
+        ownedProfiles[0].linkedTo.nftTokenId
+      );
       console.log("Lens Authentication Successful");
+      await getUserFeed(ownedProfiles[0].linkedTo.nftTokenId);
 
       if (authResult) {
         setIsLensAuthenticated(true);
-        router.push('/profile');
+        router.push("/profile");
       }
     } catch (error) {
       console.error("Error signing in with Lens:", error);
@@ -306,7 +325,7 @@ export const Navbar: React.FC = () => {
 
   const handleProfileClick = (e: React.MouseEvent) => {
     e.preventDefault();
-    router.push('/profile');
+    router.push("/profile");
   };
 
   return (
@@ -352,7 +371,9 @@ export const Navbar: React.FC = () => {
           {address && (
             <button
               className={`disconnect-btn ${isLensAuthenticated ? "bg-green-500/10" : ""}`}
-              onClick={isLensAuthenticated ? handleProfileClick : handleLensSignIn}
+              onClick={
+                isLensAuthenticated ? handleProfileClick : handleLensSignIn
+              }
             >
               {isLensAuthenticated ? (
                 <ProfileIcon className="active-gradient" />

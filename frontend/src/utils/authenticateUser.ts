@@ -1,11 +1,13 @@
 import authenticate from "src/graphql/authenticate";
 import { client } from "src/graphql/client";
 
-const AUTH_TOKEN_KEY = "auth_token";
+export const AUTH_TOKEN_KEY = "auth_token";
+export const PROFILE_ID_KEY = "profile_id";
 
 const authenticateUser = async (
   id: string,
-  signature: string
+  signature: string,
+  profileId: string
 ): Promise<string> => {
   try {
     const result = await client.mutate({
@@ -20,9 +22,11 @@ const authenticateUser = async (
     const accessToken = result.data.authenticate.accessToken;
     console.log("Authenticate User:", accessToken);
 
-    if (accessToken) {
+    if (accessToken && profileId) {
       localStorage.setItem(AUTH_TOKEN_KEY, accessToken);
       console.log("Token Stored Successfully!");
+      localStorage.setItem(PROFILE_ID_KEY, profileId);
+      console.log("ProfileId Stored Successfully!");
     }
 
     return accessToken || "";
@@ -41,6 +45,17 @@ export const getStoredToken = (): string | null => {
 export const removeStoredToken = (): void => {
   localStorage.removeItem(AUTH_TOKEN_KEY);
   console.log("Access Token Removed Successfully");
+};
+
+export const getStoredId = (): string | null => {
+  const token = localStorage.getItem(PROFILE_ID_KEY);
+  console.log("Retrieved profileId:", token ? "exists" : "not found");
+  return token;
+};
+
+export const removeStoredId = (): void => {
+  localStorage.removeItem(PROFILE_ID_KEY);
+  console.log("Profile Id Removed Successfully");
 };
 
 export default authenticateUser;
