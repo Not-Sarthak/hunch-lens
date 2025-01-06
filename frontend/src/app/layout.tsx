@@ -1,19 +1,9 @@
 import type { Metadata } from "next";
-import { NEXT_PUBLIC_URL } from "../config";
-
 import "./global.css";
-import "@coinbase/onchainkit/styles.css";
-import dynamic from "next/dynamic";
-import Navbar from "src/components/header/navbar";
-import Footer from "src/components/footer/footer";
+import Navbar from "../components/header/navbar";
+import Footer from "../components/footer/footer";
 import { Toaster } from "sonner";
-
-const OnchainProviders = dynamic(
-  () => import("src/components/OnchainProviders"),
-  {
-    ssr: false,
-  }
-);
+import { Providers } from "./providers";
 
 export const viewport = {
   width: "device-width",
@@ -37,7 +27,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-      <link rel="icon" href="/favicon.png" sizes="any" />
+        <link rel="icon" href="/favicon.png" sizes="any" />
         <link
           rel="preload"
           href="/fonts/HelveticaNeueUltraLight.otf"
@@ -101,12 +91,12 @@ export default function RootLayout({
         ></script>
       </head>
       <body className="bg-[#111015] text-white font-helvetica">
-        <OnchainProviders>
+        <Providers>
           <Navbar />
           <div className="min-h-screen">{children}</div>
           <Footer />
           <Toaster position="bottom-right" />
-        </OnchainProviders>
+        </Providers>
       </body>
     </html>
   );

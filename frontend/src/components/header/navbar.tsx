@@ -12,6 +12,7 @@ import { useAccount, useDisconnect } from "wagmi";
 import WalletWrapper from "src/components/WalletWrapper";
 import Image from "next/image";
 import { motion } from "framer-motion";
+import { ConnectKitButton } from "connectkit";
 
 interface NavItem {
   label: string;
@@ -323,30 +324,9 @@ export const Navbar: React.FC = () => {
             </button>
           )}
           {pathname === "/" ? (
-            <WalletWrapper
-              text={
-                <div className="flex items-center gap-2">
-                  <svg
-                    width="20"
-                    height="21"
-                    viewBox="0 0 20 21"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M8.33176 5.26375C10.4878 4.94094 12.6718 4.89854 14.8292 5.13694C15.0143 5.1574 15.1792 5.23997 15.3029 5.36369M15.4028 12.3348C15.7256 10.1788 15.768 7.99474 15.5296 5.83736C15.5092 5.65229 15.4266 5.48741 15.3029 5.36369M15.3029 5.36369L4.69629 15.9703"
-                      stroke="white"
-                      strokeWidth="1.5"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                  </svg>
-                  <span>Launch App</span>
-                </div>
-              }
-            />
+            <ConnectKitButton />
           ) : (
-            <WalletWrapper />
+            <ConnectKitButton />
           )}
         </div>
       </div>
