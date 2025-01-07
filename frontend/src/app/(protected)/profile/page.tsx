@@ -17,6 +17,7 @@ const Profile = () => {
       className="flex items-center justify-center w-full py-32 pl-20"
     >
       <ProfileSection />
+
     </motion.div>
   );
 };

@@ -1,17 +1,11 @@
-import React, { useEffect, useRef, useState } from "react";
-import farhatAltImage from "../../assets/farhat-alt.png";
-import farhatImage from "../../assets/farhat.png";
-import baseAgentImage from "../../assets/base-agent.png";
+import React, { useEffect, useState } from "react";
+import sarthakLogo from "../../assets/sarthak.png";
+import lensImage from "../../assets/lens.svg";
 import Image, { StaticImageData } from "next/image";
-import { useAccount } from "wagmi";
-
-interface Particle {
-  x: number;
-  y: number;
-  dx: number;
-  dy: number;
-  radius: number;
-}
+import { useAccount, useBalance } from "wagmi";
+import getProfiles from "src/utils/getLensProfile";
+import RepScore from "../cards/rep-score";
+import LogCard from "../cards/log-card";
 
 interface Post {
   author: {
@@ -142,69 +136,15 @@ interface LogItem {
   amount: number;
 }
 
-const LogCard = ({ log }: { log: LogItem }) => (
-  <div className="flex items-center justify-between p-4 bg-[#111015] rounded-2xl border border-[#1C1C1F]">
-    <div className="flex items-center gap-3">
-      <Image
-        src={log.profileImage}
-        alt={log.username}
-        width={32}
-        height={32}
-        className="rounded-full"
-      />
-      <div className="flex flex-col">
-        <span className="font-normal text-white">{log.ens}</span>
-        <span className="text-sm text-[#737373]">{log.timestamp}</span>
-      </div>
-    </div>
-    <span className="text-xl text-white">${log.amount}</span>
-  </div>
-);
-
 const InvestmentLogsTab = () => {
   const logsData: LogItem[] = [
     {
-      profileImage: baseAgentImage,
-      username: "farhat",
-      ens: "farhat.base.eth",
+      profileImage: lensImage,
+      username: "sarthak13",
+      ens: "sarthak.eth",
       timestamp: "2mins ago",
       amount: 0.01,
     },
-    // {
-    //   profileImage: baseAgentImage,
-    //   username: "farhat",
-    //   ens: "farhat.base.eth",
-    //   timestamp: "2mins ago",
-    //   amount: 12.3,
-    // },
-    // {
-    //   profileImage: baseAgentImage,
-    //   username: "farhat",
-    //   ens: "farhat.base.eth",
-    //   timestamp: "2mins ago",
-    //   amount: 12.3,
-    // },
-    // {
-    //   profileImage: baseAgentImage,
-    //   username: "farhat",
-    //   ens: "farhat.base.eth",
-    //   timestamp: "2mins ago",
-    //   amount: 12.3,
-    // },
-    // {
-    //   profileImage: baseAgentImage,
-    //   username: "farhat",
-    //   ens: "farhat.base.eth",
-    //   timestamp: "2mins ago",
-    //   amount: 12.3,
-    // },
-    // {
-    //   profileImage: baseAgentImage,
-    //   username: "farhat",
-    //   ens: "farhat.base.eth",
-    //   timestamp: "2mins ago",
-    //   amount: 12.3,
-    // },
   ];
 
   return (
@@ -222,19 +162,9 @@ const PostFeed = () => {
   const posts: Post[] = [
     {
       author: {
-        name: "Farhat Kadiwala",
-        username: "@farhatkadiwala",
-        avatar: farhatImage,
-      },
-      content:
-        "Exploring the intersection of consumer crypto reveals a future where online interactions are not just transparent but also owner the intersection of consumer crypto reveals a future...",
-      timestamp: "2mins ago",
-    },
-    {
-      author: {
-        name: "Farhat Kadiwala",
-        username: "@farhatkadiwala",
-        avatar: farhatImage,
+        name: "Sarthak Shah",
+        username: "@sarthak13",
+        avatar: sarthakLogo,
       },
       content:
         "Exploring the intersection of consumer crypto reveals a future where online interactions are not just transparent but also owner the intersection of consumer crypto reveals a future...",
@@ -252,108 +182,27 @@ const PostFeed = () => {
   );
 };
 
-const RepScore = () => {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-  const particles = useRef<Particle[]>([]);
-  const animationFrameId = useRef<number>();
-
-  const createParticles = (canvas: HTMLCanvasElement) => {
-    const particlesArray: Particle[] = [];
-    const numberOfParticles = 40;
-
-    for (let i = 0; i < numberOfParticles; i++) {
-      const radius = Math.random() * 1 + 0.5;
-      const x = Math.random() * canvas.width;
-      const y = Math.random() * canvas.height;
-      const dx = (Math.random() - 0.5) * 0.5;
-      const dy = (Math.random() - 0.5) * 0.5;
-
-      particlesArray.push({ x, y, dx, dy, radius });
-    }
-
-    return particlesArray;
-  };
-
-  const animate = (
-    canvas: HTMLCanvasElement,
-    ctx: CanvasRenderingContext2D
-  ) => {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-    particles.current.forEach((particle) => {
-      particle.x += particle.dx;
-      particle.y += particle.dy;
-
-      if (particle.x < 0 || particle.x > canvas.width) particle.dx *= -1;
-      if (particle.y < 0 || particle.y > canvas.height) particle.dy *= -1;
-
-      ctx.beginPath();
-      ctx.arc(particle.x, particle.y, particle.radius, 0, Math.PI * 2);
-      ctx.fillStyle = "#737373";
-      ctx.fill();
-    });
-
-    animationFrameId.current = requestAnimationFrame(() =>
-      animate(canvas, ctx)
-    );
-  };
-
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-
-    const ctx = canvas.getContext("2d");
-    if (!ctx) return;
-
-    const handleResize = () => {
-      const container = canvas.parentElement;
-      if (!container) return;
-
-      canvas.width = container.clientWidth;
-      canvas.height = container.clientHeight;
-
-      particles.current = createParticles(canvas);
-    };
-
-    handleResize();
-    window.addEventListener("resize", handleResize);
-    particles.current = createParticles(canvas);
-    animate(canvas, ctx);
-
-    return () => {
-      window.removeEventListener("resize", handleResize);
-      if (animationFrameId.current) {
-        cancelAnimationFrame(animationFrameId.current);
-      }
-    };
-  }, []);
-
-  return (
-    <div className="relative w-full overflow-hidden rounded-2xl bg-[#16151A] px-6 py-8 border border-[#1C1C1F] mt-8 flex items-center justify-between">
-      <div className="absolute -top-28 -right-20 rounded-full w-[200px] h-[200px] bg-gradient-to-b from-[#6FDBB5] to-[#2A5547] blur-[50px]" />
-      <div className="absolute -bottom-36 -left-4 rounded-full w-[156px] h-[156px] bg-[#2A5547] blur-[50px]" />
-      <canvas ref={canvasRef} className="absolute inset-0" />
-      <div className="relative z-10 max-w-2xl">
-        <div className="text-xl font-medium leading-normal text-white font-helvetica">
-          Your Reputation Score
-        </div>
-        <div className="text-[#737373] text-base font-normal font-helvetica leading-tight flex flex-col pt-1">
-          <span>Increase your reputation score by creating markets. </span>
-        </div>
-      </div>
-      <p className="z-10 font-bold text-[#6FDBB5] text-5xl pt-1.5">89</p>
-    </div>
-  );
-};
+interface Profile {
+  localName: string;
+  ownedBy: string;
+}
 
 const ProfileSection = () => {
   const { address } = useAccount();
+  const [profileData, setProfileData] = useState<Profile | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-  const formatCurrency = (num: number): string => {
+  const { data: balanceData, isLoading: isBalanceLoading } = useBalance({
+    address: address,
+  });
+
+  const formatCurrency = (num: string | number): string => {
+    const numValue = typeof num === 'string' ? parseFloat(num) : num;
     return new Intl.NumberFormat("en-US", {
       style: "currency",
       currency: "USD",
-    }).format(num);
+    }).format(numValue);
   };
 
   const formatAddress = (address: string | undefined): string => {
@@ -361,20 +210,67 @@ const ProfileSection = () => {
     return `${address.slice(0, 4)}...${address.slice(-4)}`;
   };
 
-  const balance = 1234.56;
+  const getFormattedBalance = (): string => {
+    if (isBalanceLoading || !balanceData) return "$0.00";
+    try {
+      return formatCurrency(balanceData.formatted);
+    } catch (error) {
+      console.error("Error formatting balance:", error);
+      return "$0.00";
+    }
+  };
+
+  useEffect(() => {
+    const fetchProfile = async () => {
+      try {
+        setIsLoading(true);
+        const data = await getProfiles(
+          "0x61758e064B4Bc0269BD94e30Ce3c97D21213c410"
+        );
+        if (data && data.length > 0) {
+          setProfileData(data[0]);
+        } else {
+          setError("No profile data found");
+        }
+      } catch (err) {
+        setError("Failed to fetch profile data");
+        console.error("Error fetching profile:", err);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchProfile();
+  }, []);
+
+  if (isLoading) {
+    return <div className="min-w-[50vw] flex justify-center">Loading...</div>;
+  }
+
+  if (error) {
+    return (
+      <div className="min-w-[50vw] flex justify-center text-red-500">
+        {error}
+      </div>
+    );
+  }
 
   return (
     <div className="min-w-[50vw]">
       <div className="flex flex-col items-center justify-center">
         <Image
-          src={farhatAltImage}
-          alt="Farhat"
+          src={sarthakLogo}
+          alt="Sarthak"
           width={75}
           height={75}
           className="rounded-lg"
         />
-        <h1 className="mt-4 font-medium">Farhat Kadiwala</h1>
-        <p className="text-[#737373] text-sm">{formatAddress(address)}</p>
+        <h1 className="mt-4 font-medium">
+          {profileData?.localName || "Unknown User"}
+        </h1>
+        <p className="text-[#737373] text-sm">
+          {formatAddress(profileData?.ownedBy)}
+        </p>
       </div>
       <div className="flex items-start justify-between space-y-1">
         <div>
@@ -386,7 +282,7 @@ const ProfileSection = () => {
               {formatAddress(address)}
             </span>
             <span className="bg-gradient-to-b from-[#6FDBB5] to-[#45A176] inline-block text-transparent bg-clip-text font-normal tracking-tight text-[44px] leading-[44px]">
-              / {formatCurrency(balance)}
+              / {getFormattedBalance()}
             </span>
           </div>
         </div>

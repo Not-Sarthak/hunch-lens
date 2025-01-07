@@ -1,9 +1,9 @@
 "use client";
 
 import React, { useState } from "react";
-import farhatLogo from "../../assets/farhat.png";
-import boiduLogo from "../../assets/boidu.jpeg";
-import jesseLogo from "../../assets/jesse.png";
+import sahilLogo from "../../assets/sahil.png";
+import sarthakLogo from "../../assets/sarthak.png";
+import staniLogo from "../../assets/stani.png";
 
 import fireImage from "../../assets/fire-img.png";
 import Image, { StaticImageData } from "next/image";
@@ -33,9 +33,9 @@ const posts: Post[] = [
   {
     id: 1,
     author: {
-      name: "Farhat Kadiwala",
-      username: "@farhatkadiwala",
-      avatar: farhatLogo,
+      name: "Sahil Kakwani",
+      username: "@sahilkakwani9",
+      avatar: sahilLogo,
     },
     content:
       "Exploring the intersection of consumer crypto reveals a future where online interactions are not just transparent but also owner...",
@@ -45,9 +45,9 @@ const posts: Post[] = [
   {
     id: 2,
     author: {
-      name: "Boidushya",
-      username: "@boi",
-      avatar: boiduLogo,
+      name: "Sarthak",
+      username: "@sarthak13",
+      avatar: sarthakLogo,
     },
     content:
       "Found this cool cat today, I psss'd at it and it meow'd back. Day made <3...",
@@ -56,11 +56,11 @@ const posts: Post[] = [
   {
     id: 3,
     author: {
-      name: "Jesse Pollak",
-      username: "@jesse",
-      avatar: jesseLogo,
+      name: "Stani Kulechov",
+      username: "@stani",
+      avatar: staniLogo,
     },
-    content: "Base good",
+    content: "Lens good",
     timestamp: 1733511503000,
   },
 ];

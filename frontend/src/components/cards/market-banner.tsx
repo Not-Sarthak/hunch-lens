@@ -29,22 +29,13 @@ const MarketBanner = () => {
       const dx = (Math.random() - 0.5) * 0.5;
       const dy = (Math.random() - 0.5) * 0.5;
 
-      particlesArray.push({
-        x,
-        y,
-        dx,
-        dy,
-        radius,
-      });
+      particlesArray.push({ x, y, dx, dy, radius });
     }
 
     return particlesArray;
   };
 
-  const animate = (
-    canvas: HTMLCanvasElement,
-    ctx: CanvasRenderingContext2D
-  ) => {
+  const animate = (canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D) => {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     particles.current.forEach((particle) => {
@@ -60,9 +51,7 @@ const MarketBanner = () => {
       ctx.fill();
     });
 
-    animationFrameId.current = requestAnimationFrame(() =>
-      animate(canvas, ctx)
-    );
+    animationFrameId.current = requestAnimationFrame(() => animate(canvas, ctx));
   };
 
   useEffect(() => {
@@ -84,9 +73,7 @@ const MarketBanner = () => {
 
     handleResize();
     window.addEventListener("resize", handleResize);
-
     particles.current = createParticles(canvas);
-
     animate(canvas, ctx);
 
     return () => {
@@ -97,36 +84,40 @@ const MarketBanner = () => {
     };
   }, []);
 
+  useEffect(() => {
+    document.body.style.overflow = isModalOpen ? "hidden" : "unset";
+    return () => {
+      document.body.style.overflow = "unset";
+    };
+  }, [isModalOpen]);
+
   return (
     <div className="relative w-full overflow-hidden rounded-2xl bg-[#111015] p-8 py-6 border border-[#1C1C1F]">
       <div className="absolute -top-28 right-0 rounded-full w-[156px] h-[156px] bg-[#6FDBB5] blur-[50px]" />
       <div className="absolute -bottom-32 left-0 rounded-full w-[156px] h-[156px] bg-[#6FDBB5] blur-[50px]" />
-
-      <canvas
-        ref={canvasRef}
-        className="absolute inset-0 w-full h-full opacity-50"
-      />
+      
+      <canvas ref={canvasRef} className="absolute inset-0 w-full h-full opacity-50" />
 
       <div className="relative z-10 flex flex-col items-center justify-center max-w-2xl">
         <div className="text-2xl font-normal leading-normal text-white font-helvetica">
-          Create markets for banger casts
+          Create markets for banger posts
         </div>
         <div className="flex flex-col items-center justify-center pt-2 text-base font-light leading-tight text-white/50 font-helvetica">
-          <span>Don't wait for popular casts to be tokenised.</span>
+          <span>Don't wait for popular posts to be tokenised.</span>
           <span>Tokenise them yourself and raise the bar!</span>
         </div>
         <button
           onClick={() => setIsModalOpen(true)}
           className="inline-flex items-center px-3 py-1.5 pt-2 mt-4 text-sm font-light text-black transition-colors bg-white rounded-md"
         >
-          Tokenise a cast
+          Tokenise a post
         </button>
       </div>
 
       <AnimatePresence>
         {isModalOpen && (
           <motion.div
-            className="fixed inset-0 z-50 flex items-center justify-center bg-opacity-50 bg-black/30 backdrop-blur-sm"
+            className="fixed inset-0 h-screen z-50 flex items-center justify-center bg-opacity-50 bg-black/30 backdrop-blur-sm"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}

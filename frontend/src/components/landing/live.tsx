@@ -1,5 +1,5 @@
+import { ConnectKitButton } from "connectkit";
 import React, { useEffect, useRef } from "react";
-import WalletWrapper from "src/components/WalletWrapper";
 
 interface Particle {
   x: number;
@@ -114,29 +114,8 @@ const Live = () => {
   return (
     <div className="flex items-center justify-between mx-6 mb-6 border border-[#1c1c1f] bg-[#111014] px-9 py-7 rounded-xl shadow-[0_4px_8px_0_rgba(0,0,0,0.24)] relative isolate overflow-hidden">
       <div className="z-10 flex items-center justify-between w-full">
-        <h1 className="text-3xl font-light">Now live on Farcaster & Twitter</h1>
-        <WalletWrapper
-          text={
-            <div className="flex items-center gap-2">
-              <svg
-                width="20"
-                height="21"
-                viewBox="0 0 20 21"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M8.33176 5.26375C10.4878 4.94094 12.6718 4.89854 14.8292 5.13694C15.0143 5.1574 15.1792 5.23997 15.3029 5.36369M15.4028 12.3348C15.7256 10.1788 15.768 7.99474 15.5296 5.83736C15.5092 5.65229 15.4266 5.48741 15.3029 5.36369M15.3029 5.36369L4.69629 15.9703"
-                  stroke="white"
-                  strokeWidth="1.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
-              <span>Try it right now</span>
-            </div>
-          }
-        />
+        <h1 className="text-3xl font-light">Now live on Lens</h1>
+        <ConnectKitButton />
       </div>
       <ParticleBackground />
       <div className="h-40 w-48 bg-[#6FDBB5] absolute -top-32 right-40 blur-[50px] z-[-1]" />

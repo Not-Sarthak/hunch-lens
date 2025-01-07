@@ -14,7 +14,7 @@ export type AIGoalType = "aggressive" | "conservative" | "moderate";
 export interface FormState {
   step: FormStep;
   name: string;
-  basename: string;
+  lensname: string;
   goal: GoalType;
   aiType: AIType;
   aiGoal?: AIGoalType;
