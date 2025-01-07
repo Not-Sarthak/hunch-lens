@@ -108,7 +108,7 @@ const SocialPreview = ({ url }: { url: string }) => {
   if (!previewData) return null;
 
   const metadata = previewData.metadata;
-  const username = metadata.title.replace('Post by @', '');
+  const username = metadata.title;
   const imageUrl = metadata.asset?.image?.optimized?.uri;
 
   return (
