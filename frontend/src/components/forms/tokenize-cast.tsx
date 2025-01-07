@@ -8,6 +8,7 @@ import { X, Loader2 } from "lucide-react";
 import { z } from "zod";
 import getPostMetadata from "src/utils/getPostMetadata";
 import Image from "next/image";
+import { tokenisePost } from "../../utils/transactions";
 
 interface PostMetadata {
   __typename: string;
@@ -53,9 +54,6 @@ interface PostData {
 
 interface TokenizeFormData {
   tweetUrl: string;
-  marketName?: string;
-  initialSupply?: number;
-  price?: number;
 }
 
 const SocialPreview = ({ url }: { url: string }) => {
@@ -154,13 +152,11 @@ const SocialPreview = ({ url }: { url: string }) => {
 };
 
 const tokenizationSchema = z.object({
-  tweetUrl: z.string().url("Please enter a valid URL"),
-  marketName: z.string().optional(),
-  initialSupply: z.number().optional(),
-  price: z.number().optional()
+  tweetUrl: z.string().url("Please enter a valid URL")
 });
 
 const TokenizeCastForm = memo(({ closeModal }: { closeModal: () => void }) => {
+  const [postData, setPostData] = useState<PostData | null>(null);
   const {
     register,
     handleSubmit,
@@ -174,9 +170,48 @@ const TokenizeCastForm = memo(({ closeModal }: { closeModal: () => void }) => {
   });
 
   const onSubmit = async (data: TokenizeFormData) => {
-    console.log("Form submitted with data:", data);
-    
     try {
+      if (!data.tweetUrl) {
+        toast.error("Please enter a valid URL");
+        return;
+      }
+
+      const match = data.tweetUrl.match(/hey\.xyz\/posts\/([^\/]+)/);
+      if (!match) {
+        toast.error("Invalid Lens post URL");
+        return;
+      }
+
+      const postId = match[1];
+      const result = await getPostMetadata(postId);
+      const publication = result.data?.publication;
+      
+      if (!publication) {
+        toast.error("Failed to fetch post data");
+        return;
+      }
+
+      const username = publication.metadata.title.replace('Post by @', '');
+      const imageUrl = publication.metadata.asset?.image?.optimized?.uri || "";
+      const content = publication.metadata.content;
+
+      console.log("Tokenising post with data:", {
+        name: username,
+        symbol: username.toUpperCase(),
+        imageUri: imageUrl,
+        text: content,
+        postId
+      });
+
+      const tx = await tokenisePost({
+        name: username,
+        symbol: username.toUpperCase(),
+        imageUri: imageUrl,
+        text: content,
+        postId
+      });
+
+      console.log("Transaction:", tx);
       toast.success("Post tokenized successfully!");
       closeModal();
     } catch (error) {
@@ -184,6 +219,8 @@ const TokenizeCastForm = memo(({ closeModal }: { closeModal: () => void }) => {
       toast.error("Failed to tokenize post. Please try again.");
     }
   };
+
+  const url = watch("tweetUrl");
 
   return (
     <div className="w-full">
@@ -218,7 +255,7 @@ const TokenizeCastForm = memo(({ closeModal }: { closeModal: () => void }) => {
           )}
         </div>
         
-        <SocialPreview url={watch("tweetUrl")} />
+        <SocialPreview url={url} />
         
         <button
           type="submit"
