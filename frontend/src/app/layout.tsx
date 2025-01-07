@@ -4,6 +4,7 @@ import Navbar from "../components/header/navbar";
 import Footer from "../components/footer/footer";
 import { Toaster } from "sonner";
 import { Providers } from "./providers";
+import ogImage from "./opengraph-image.png";
 
 export const viewport = {
   width: "device-width",
@@ -16,7 +17,22 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Hunch",
     description: "Monetise your social virality on your own terms",
+    images: [
+      {
+        url: ogImage.src,
+        width: ogImage.width,
+        height: ogImage.height,
+        alt: "Hunch - Monetise your social virality"
+      }
+    ],
+    type: 'website'
   },
+  twitter: {
+    card: 'summary_large_image',
+    title: "Hunch",
+    description: "Monetise your social virality on your own terms",
+    images: [ogImage.src],
+  }
 };
 
 export default function RootLayout({
