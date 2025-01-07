@@ -6,34 +6,48 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
 import { X, Loader2 } from "lucide-react";
 import { z } from "zod";
-import { client } from "src/graphql/client";
-import getPostFromId from "src/graphql/getPostFromId";
 import getPostMetadata from "src/utils/getPostMetadata";
+import Image from "next/image";
 
-interface PreviewData {
-  name?: string;
-  username?: string;
-  content?: string;
-  stats?: {
-    totalAmountOfCollects?: number;
-    totalAmountOfMirrors?: number;
-    totalAmountOfComments?: number;
-  };
-  createdAt?: string;
-  profile?: {
-    picture?: {
-      uri?: string;
-      original?: {
-        url?: string;
+interface PostMetadata {
+  __typename: string;
+  content: string;
+  rawURI: string;
+  title: string;
+  asset?: {
+    __typename: string;
+    image: {
+      __typename: string;
+      optimized: {
+        __typename: string;
+        uri: string;
       };
     };
-    handle?: string;
-    name?: string;
   };
-  metadata?: {
-    media?: Array<{
-      url?: string;
-    }>;
+}
+
+interface PostData {
+  __typename: string;
+  by: {
+    __typename: string;
+    createdAt: string;
+    handle: {
+      __typename: string;
+      id: string;
+      linkedTo: {
+        __typename: string;
+        nftTokenId: string;
+      };
+      ownedBy: string;
+    };
+  };
+  metadata: PostMetadata;
+  stats: {
+    __typename: string;
+    quotes: number;
+    mirrors: number;
+    reactions: number;
+    comments: number;
   };
 }
 
@@ -45,7 +59,7 @@ interface TokenizeFormData {
 }
 
 const SocialPreview = ({ url }: { url: string }) => {
-  const [previewData, setPreviewData] = useState<PreviewData | null>(null);
+  const [previewData, setPreviewData] = useState<PostData | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -62,7 +76,7 @@ const SocialPreview = ({ url }: { url: string }) => {
 
       try {
         const result = await getPostMetadata(postId);
-        console.log("Got post data:", result);
+        console.log("Post data from API:", result.data?.publication);
         setPreviewData(result.data?.publication);
       } catch (err) {
         console.error("Preview error:", err);
@@ -95,51 +109,45 @@ const SocialPreview = ({ url }: { url: string }) => {
 
   if (!previewData) return null;
 
-  const profilePicture = previewData.profile?.picture?.uri || 
-                        previewData.profile?.picture?.original?.url;
+  const metadata = previewData.metadata;
+  const username = metadata.title.replace('Post by @', '');
+  const imageUrl = metadata.asset?.image?.optimized?.uri;
 
   return (
     <div className="p-4 space-y-3 rounded-lg border border-[#1E1E21]">
       <div className="flex items-center gap-3">
-        {profilePicture && (
-          <img
-            src={profilePicture}
-            alt="Profile"
-            className="w-10 h-10 rounded-full"
-          />
-        )}
         <div className="flex-1 min-w-0">
           <div className="flex flex-col">
             <div className="flex items-center gap-1">
               <span className="font-medium truncate text-neutral-100">
-                {previewData.profile?.name || previewData.profile?.handle}
+                {username}
               </span>
-              <p className="text-sm text-[#787878]">
-                @{previewData.profile?.handle}
-              </p>
+              <p className="text-sm text-[#787878]">@{username}</p>
             </div>
             <p className="text-xs text-[#787878]">
-              {new Date(previewData.createdAt || "").toLocaleDateString()}
+              {new Date(previewData.by.createdAt).toLocaleDateString()}
             </p>
           </div>
         </div>
       </div>
       <p className="mt-1 text-sm font-normal text-white">
-        {previewData.content}
+        {metadata.content}
       </p>
-      {previewData.metadata?.media && previewData.metadata.media.length > 0 && (
-        <div className="flex items-center justify-center gap-2 mt-3">
-          <img
-            src={previewData.metadata.media[0].url}
+      {imageUrl && (
+        <div className="flex items-center justify-center gap-2 mt-3 relative w-full h-48">
+          <Image
+            src={imageUrl}
             alt="Attached media"
-            className="object-cover w-full h-48 rounded-lg"
+            fill
+            className="object-cover rounded-lg"
           />
         </div>
       )}
       <div className="flex items-center gap-4 text-sm text-neutral-400">
-        <span>{previewData.stats?.totalAmountOfCollects || 0} collects</span>
-        <span>{previewData.stats?.totalAmountOfMirrors || 0} mirrors</span>
-        <span>{previewData.stats?.totalAmountOfComments || 0} comments</span>
+        <span>{previewData.stats.reactions || 0} reactions</span>
+        <span>{previewData.stats.mirrors || 0} mirrors</span>
+        <span>{previewData.stats.comments || 0} comments</span>
+        <span>{previewData.stats.quotes || 0} quotes</span>
       </div>
     </div>
   );
@@ -169,7 +177,6 @@ const TokenizeCastForm = memo(({ closeModal }: { closeModal: () => void }) => {
     console.log("Form submitted with data:", data);
     
     try {
-      // You can implement the tokenization logic here
       toast.success("Post tokenized successfully!");
       closeModal();
     } catch (error) {
