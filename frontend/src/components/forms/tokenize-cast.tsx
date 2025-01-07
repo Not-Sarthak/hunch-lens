@@ -212,7 +212,7 @@ const TokenizeCastForm = memo(({ closeModal }: { closeModal: () => void }) => {
       });
 
       console.log("Transaction:", tx);
-      toast.success("Post tokenized successfully!");
+      toast.success(`Post tokenized successfully! ${tx}`);
       closeModal();
     } catch (error) {
       console.error("Error in tokenization:", error);

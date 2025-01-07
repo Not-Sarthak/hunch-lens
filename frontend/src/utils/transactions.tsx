@@ -58,8 +58,8 @@ export const approvePost = async ({
   approvalAddress,
   amount,
 }: {
-  contractAddress: `0x${string}`;
-  approvalAddress: `0x${string}`;
+  contractAddress: any;
+  approvalAddress: any;
   amount: string;
 }) => {
   const walletClient = createWalletClient({
@@ -86,10 +86,10 @@ export const approvePost = async ({
 };
 
 export const buyPost = async ({
-  contractAddress,
-  amount,
+  contractAddress = "0x9731eC4D4989ea4792527E523Da6D67E58223a78",
+  amount = "5",
 }: {
-  contractAddress: `0x${string}`;
+  contractAddress: any;
   amount: string;
 }) => {
   const walletClient = createWalletClient({

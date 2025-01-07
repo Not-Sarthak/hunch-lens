@@ -2,20 +2,19 @@
 
 import React, { useEffect, useState } from "react";
 import CastCard from "../cards/cast-card";
-import FeedCard from "../cards/feed-card";
 import { toast } from "sonner";
-import axios from "axios";
+import { getTokenisedPosts } from "src/utils/transactions";
 
-type PlatformType = "twitter" | "farcaster";
-type TabType = "trending" | "others";
-
-interface CastData {
-  id: number;
-  type: PlatformType;
-  createdAt: string;
-  url: string;
-  data: string;
+interface TokenizedPost {
+  imageURI: string;
+  name: string;
+  postId: string;
+  symbol: string;
+  text: string;
+  tokenAddress: string;
 }
+
+type TabType = "trending" | "others";
 
 const ShimmerCard = () => (
   <div className="relative w-full max-w-2xl bg-[#16151A] rounded-xl overflow-hidden animate-pulse">
@@ -64,71 +63,31 @@ const TabButton = ({
 
 const Trending = () => {
   const [activeTab, setActiveTab] = useState<TabType>("trending");
-  const [casts, setCasts] = useState<CastData[]>([]);
+  const [posts, setPosts] = useState<TokenizedPost[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  const fetchTrendingCasts = async () => {
-    try {
-      const response = await axios.get(
-        "https://hunch-1.onrender.com/api/tokenization/markets",
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
-      return response.data.markets;
-    } catch (err) {
-      throw err;
-    }
-  };
-
-  const fetchFeedCasts = async () => {
-    try {
-      const response = await axios.get(
-        "https://hunch-1.onrender.com/api/tokenization/markets",
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
-      return response.data.markets;
-    } catch (err) {
-      throw err;
-    }
-  };
-
-  const fetchCasts = async (tab: TabType) => {
+  const fetchPosts = async () => {
     setLoading(true);
     setError(null);
     
     try {
-      const data = tab === "trending" 
-        ? await fetchTrendingCasts()
-        : await fetchFeedCasts();
-      
-      setCasts(data);
+      const result = await getTokenisedPosts();
+      console.log("Fetched tokenised posts:", result);
+      //@ts-ignore
+      setPosts(result);
     } catch (err) {
-      if (axios.isAxiosError(err)) {
-        if (err.response?.status === 401) {
-          toast.error("Authentication failed. Please login again.");
-        } else if (err.response?.status === 429) {
-          toast.error("Rate limit exceeded. Please try again later.");
-        } else {
-          toast.error(`Failed to fetch ${tab} casts`);
-        }
-      }
-      setError(`Failed to fetch ${tab} casts.`);
+      console.error("Error fetching posts:", err);
+      setError("Failed to fetch posts");
+      toast.error("Failed to fetch posts");
     } finally {
       setLoading(false);
     }
   };
 
   useEffect(() => {
-    fetchCasts(activeTab);
-  }, [activeTab]);
+    fetchPosts();
+  }, [activeTab]); 
 
   const renderContent = () => {
     if (loading) {
@@ -145,27 +104,14 @@ const Trending = () => {
       return <div className="text-red-500">{error}</div>;
     }
 
-    if (casts.length === 0) {
-      return <div className="text-neutral-500">No casts found.</div>;
+    if (posts.length === 0) {
+      return <div className="text-neutral-500">No posts found.</div>;
     }
 
-    if (activeTab === "trending") {
-      return casts.map((cast) => (
-        <CastCard
-          marketId={cast.id}
-          key={cast.url}
-          platform={cast.type.toLowerCase() as PlatformType}
-          data={cast.data}
-        />
-      ));
-    }
-
-    return casts.map((cast) => (
-      <FeedCard
-        marketId={cast.id}
-        key={cast.url}
-        platform={cast.type.toLowerCase() as PlatformType}
-        data={cast.data}
+    return posts.map((post, index) => (
+      <CastCard 
+        key={`${post.tokenAddress}-${index}`}
+        post={post}
       />
     ));
   };
