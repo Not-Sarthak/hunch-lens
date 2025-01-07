@@ -1,5 +1,6 @@
 "use client";
 
+import { chains } from '@lens-network/sdk/viem';
 import {
   marketFactoryAbi,
   marketFactoryAddress,
@@ -12,10 +13,9 @@ import {
   getContract,
   http,
 } from "viem";
-import { baseSepolia } from "viem/chains";
 
 export const publicClient = createPublicClient({
-  chain: baseSepolia,
+  chain: chains.testnet,
   transport: http(),
 });
 
@@ -33,7 +33,7 @@ export const tokenisePost = async ({
   postId: string;
 }) => {
   const walletClient = createWalletClient({
-    chain: baseSepolia,
+    chain: chains.testnet,
     transport: custom(window.ethereum),
   });
   const accounts = await walletClient.getAddresses();
@@ -63,7 +63,7 @@ export const approvePost = async ({
   amount: string;
 }) => {
   const walletClient = createWalletClient({
-    chain: baseSepolia,
+    chain: chains.testnet,
     transport: custom(window.ethereum),
   });
   const accounts = await walletClient.getAddresses();
@@ -93,7 +93,7 @@ export const buyPost = async ({
   amount: string;
 }) => {
   const walletClient = createWalletClient({
-    chain: baseSepolia,
+    chain: chains.testnet,
     transport: custom(window.ethereum),
   });
   const accounts = await walletClient.getAddresses();

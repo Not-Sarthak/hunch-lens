@@ -85,7 +85,6 @@ const Trending = () => {
   };
 
   const fetchFeedCasts = async () => {
-    // In the future, this will fetch from a different endpoint
     try {
       const response = await axios.get(
         "https://hunch-1.onrender.com/api/tokenization/markets",

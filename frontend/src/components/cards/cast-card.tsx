@@ -170,7 +170,6 @@ const CastCard = ({ data, platform, marketId }: CastCardProps) => {
   const [isHovered, setIsHovered] = React.useState(false);
   const router = useRouter();
 
-  // Normalize the data based on platform
   const normalizedData: NormalizedPost = React.useMemo(() => {
     return platform === "twitter"
       ? normalizeTwitterPost(data)
