@@ -19,6 +19,7 @@ import authenticateUser, {
   getStoredToken,
 } from "src/utils/authenticateUser";
 import getUserFeed from "src/utils/getUserFeed";
+import getPostMetadata from "src/utils/getPostMetadata";
 
 interface NavItem {
   label: string;
@@ -210,6 +211,7 @@ export const Navbar: React.FC = () => {
   const { isConnected } = useAccount();
 
   useEffect(() => {
+    getPostMetadata("0x09b42e-0x01-DA-fdec7ac8");
     const checkLensAuth = () => {
       const token = getStoredToken();
       setIsLensAuthenticated(!!token);

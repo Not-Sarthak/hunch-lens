@@ -38,7 +38,10 @@ const authenticateUser = async (
 
 export const getStoredToken = (): string | null => {
   const token = localStorage.getItem(AUTH_TOKEN_KEY);
-  console.log("Retrieved stored token:", token ? "exists" : "not found");
+  console.log(
+    "Retrieved stored token:",
+    token ? `exists ${token}` : "not found"
+  );
   return token;
 };
 
