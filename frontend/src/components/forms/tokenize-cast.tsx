@@ -5,9 +5,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
 import axios from "axios";
-import { TriangleAlert, X, Loader2 } from "lucide-react";
-import { useTokenizeStore } from "src/store/use-tokenize-store";
-// import { tokenizationSchema } from "src/schemas/tokenize-cast-schema";
+import { X, Loader2 } from "lucide-react";
 import { z } from "zod";
 import { backendUrl } from "src/constants";
 import type { TokenizeFormData } from "src/types";
@@ -115,7 +113,6 @@ const SocialPreview = ({ url }: { url: string }) => {
   );
 };
 
-// Explicit schema in case the imported one is incorrect
 const tokenizationSchema = z.object({
   tweetUrl: z.string().url("Please enter a valid URL"),
   marketName: z.string().optional(),
@@ -172,7 +169,7 @@ const TokenizeCastForm = memo(({ closeModal }: { closeModal: () => void }) => {
   return (
     <div className="w-full">
       <div className="flex items-center justify-between mb-6">
-        <h2 className="text-base font-medium text-neutral-50">Tokenize a Cast / Tweet</h2>
+        <h2 className="text-base font-medium text-neutral-50">Tokenize a Post</h2>
         <button onClick={closeModal} className="text-white hover:text-red-400">
           <X className="w-6 h-6" />
         </button>
@@ -183,12 +180,12 @@ const TokenizeCastForm = memo(({ closeModal }: { closeModal: () => void }) => {
             htmlFor="tweetUrl"
             className="block text-neutral-50 text-sm mb-1"
           >
-            Farcaster / Tweet URL
+            Lens Post URL
           </label>
           <input
             id="tweetUrl"
             {...register("tweetUrl")}
-            placeholder="https://warpcast.com/robertfelt.eth/0xfd5f7fd7"
+            placeholder=""
             className="px-3.5 py-3 bg-[#242424] w-full rounded-md text-neutral-100 placeholder-neutral-500 text-sm"
           />
           {errors.tweetUrl && (
@@ -214,7 +211,5 @@ const TokenizeCastForm = memo(({ closeModal }: { closeModal: () => void }) => {
     </div>
   );
 });
-
-TokenizeCastForm.displayName = "TokenizeCastForm";
 
 export default TokenizeCastForm;

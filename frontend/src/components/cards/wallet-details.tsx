@@ -18,7 +18,6 @@ const WalletDetails: React.FC<WalletDetailsProps> = ({
   const { address } = useAccount();
   
   const [selectedTimeframe, setSelectedTimeframe] = useState("Last Week");
-  const [investedCasts, setInvestedCasts] = useState(0);
 
   const formatCurrency = (num: number): string => {
     return new Intl.NumberFormat("en-US", {
@@ -33,15 +32,7 @@ const WalletDetails: React.FC<WalletDetailsProps> = ({
   };
 
   useEffect(() => {
-    const incrementInvestedCasts = () => {
-      setInvestedCasts((prev) => prev + 1);
-      const randomDelay = Math.random() * (30000 - 10000) + 1000; 
-      setTimeout(incrementInvestedCasts, randomDelay);
-    };
-
-    const initialTimeout = setTimeout(incrementInvestedCasts, 10000);
-
-    return () => clearTimeout(initialTimeout);
+    console.log(("Wallet Details Component Mounted")); 
   }, []);
 
   return (
@@ -83,10 +74,10 @@ const WalletDetails: React.FC<WalletDetailsProps> = ({
 
             <div className="">
               <div className="text-white text-base font-light font-helvetica capitalize leading-tight">
-                Invested Casts
+                Invested Posts
               </div>
               <div className="text-neutral-500 text-sm leading-[16.80px] mt-2 font-normal">
-                {investedCasts}
+                10
               </div>
             </div>
 

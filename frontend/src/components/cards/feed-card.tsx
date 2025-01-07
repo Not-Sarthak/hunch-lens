@@ -6,7 +6,6 @@ import { motion, AnimatePresence } from "framer-motion";
 import { MoveUpRight } from "lucide-react";
 import { useRouter } from "next/navigation";
 
-// Platform-agnostic interfaces
 interface MediaContent {
   url: string;
   alt: string;
@@ -84,7 +83,6 @@ const parseFarcasterString = (data: string): any => {
   return parsed;
 };
 
-// Transformation functions for different platforms
 const normalizeTwitterPost = (rawData: string): NormalizedPost => {
   const data = parseTwitterString(rawData);
 
@@ -93,22 +91,22 @@ const normalizeTwitterPost = (rawData: string): NormalizedPost => {
     platform: "twitter",
     content: {
       text: data.Text || "",
-      media: [], // Twitter media handling
+      media: [], 
     },
     author: {
       username: data.Username || "",
-      displayName: data.Username || "", // Using username as display name if not provided
+      displayName: data.Username || "", 
       avatarUrl: data.Avatar || "",
       isVerified: data["Blue Verified"]?.toLowerCase() === "yes",
-      bio: "", // Twitter data doesn't include bio in the string
+      bio: "", 
       walletAddress: data.publicAddress,
-      followerCount: 0, // Not provided in the data
-      followingCount: 0, // Not provided in the data
+      followerCount: 0, 
+      followingCount: 0, 
     },
     engagement: {
       replies: parseInt(data.Replies) || 0,
       likes: parseInt(data.Likes) || 0,
-      reposts: 0, // Not provided in the data
+      reposts: 0, 
     },
     timestamp: data["Created At"],
   };
@@ -136,7 +134,7 @@ const normalizeFarcasterPost = (rawData: string): NormalizedPost => {
       username: data["Author Username"]?.trim() || "",
       displayName: data["Author Display Name"]?.trim() || "",
       avatarUrl: data["Author PFP URL"]?.trim() || "",
-      isVerified: false, // Not provided in the data
+      isVerified: false, 
       bio: data["Author Bio"]?.trim() || "",
       walletAddress: data["Author Connected Address"]?.trim(),
       followerCount: parseInt(data["Author Follower Count"]) || 0,
@@ -146,7 +144,7 @@ const normalizeFarcasterPost = (rawData: string): NormalizedPost => {
       replies: parseInt(data["Replies Count"]) || 0,
       likes: parseInt(data["Reactions Count"]) || 0,
       reposts: parseInt(data["Recast Count"]) || 0,
-      price: 42.5, // Keeping the hardcoded price as in original
+      price: 42.5, 
     },
     channel: data["Channel ID"]
       ? {
@@ -166,11 +164,10 @@ interface CastCardProps {
   marketId: number;
 }
 
-const CastCard = ({ data, platform, marketId }: CastCardProps) => {
+const FeedCard = ({ data, platform, marketId }: CastCardProps) => {
   const [isHovered, setIsHovered] = React.useState(false);
   const router = useRouter();
 
-  // Normalize the data based on platform
   const normalizedData: NormalizedPost = React.useMemo(() => {
     return platform === "twitter"
       ? normalizeTwitterPost(data)
@@ -299,7 +296,7 @@ const CastCard = ({ data, platform, marketId }: CastCardProps) => {
             {platform === "farcaster" && (
               <div className="flex items-center gap-4">
                 <button className="w-full py-2 mt-4 text-black transition-colors bg-white rounded-lg hover:bg-gray-100">
-                  Buy this post
+                  Tokenise this post
                 </button>
                 <button
                   onClick={() => router.push(`/markets/${marketId}`)}
@@ -316,4 +313,4 @@ const CastCard = ({ data, platform, marketId }: CastCardProps) => {
   );
 };
 
-export default CastCard;
+export default FeedCard;

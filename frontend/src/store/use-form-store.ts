@@ -4,7 +4,7 @@ import { FormState, FormStore } from '../types';
 const initialState: FormState = {
   step: 1,
   name: '',
-  basename: '',
+  lensname: '',
   goal: 'profit',
   aiType: 'eliza',
   riskTolerance: 3,

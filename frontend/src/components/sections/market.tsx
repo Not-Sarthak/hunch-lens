@@ -167,7 +167,7 @@ const CastContent = ({ data }: { data: string }) => {
               <span>{parsedData["Replies Count"]} replies</span>
             </div>
             <div className="flex items-center space-x-1">
-              <span>{parsedData["Recast Count"]} recasts</span>
+              <span>{parsedData["Recast Count"]} reposts</span>
             </div>
             <div className="flex items-center space-x-1">
               <span>{parsedData["Reactions Count"]} likes</span>

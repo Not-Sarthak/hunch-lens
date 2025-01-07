@@ -1,32 +1,15 @@
-import React, { useEffect, useRef, useState } from "react";
-import farhatAltImage from "../../assets/farhat-alt.png";
-import farhatImage from "../../assets/farhat.png";
-import farhatLogo from "../../assets/farhat.png";
-import boiduLogo from "../../assets/boidu.jpeg";
-import jesseLogo from "../../assets/jesse.png";
+import React from "react";
+import sarthakLogo from "../../assets/sarthak.png";
 import Image from "next/image";
 
 const leaderboardStats = [
   {
     id: 1,
-    name: "Farhat Kadiwala",
-    username: "@farhatkadiwala",
-    amount: 2.01,
-    avatar: farhatLogo,
+    name: "Sarthak Shah",
+    username: "@sarthak13",
+    amount: 0.01,
+    avatar: sarthakLogo,
   },
-  // {
-  //   id: 2,
-  //   name: "Boidushya",
-  //   username: "@boi",
-  //   avatar: boiduLogo,
-  //   amount: 12.3,
-  // },
-  // {
-  //   name: "Jesse Pollak",
-  //   username: "@jesse",
-  //   avatar: jesseLogo,
-  //   amount: 34.5,
-  // },
 ];
 
 const LeaderboardList = () => {
