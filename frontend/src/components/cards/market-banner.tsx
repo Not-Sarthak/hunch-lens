@@ -96,7 +96,11 @@ const MarketBanner = () => {
       <div className="absolute -top-28 right-0 rounded-full w-[156px] h-[156px] bg-[#6FDBB5] blur-[50px]" />
       <div className="absolute -bottom-32 left-0 rounded-full w-[156px] h-[156px] bg-[#6FDBB5] blur-[50px]" />
       
-      <canvas ref={canvasRef} className="absolute inset-0 w-full h-full opacity-50" />
+      <canvas 
+        ref={canvasRef} 
+        className="absolute inset-0 w-full h-full opacity-50"
+        aria-hidden="true"
+      />
 
       <div className="relative z-10 flex flex-col items-center justify-center max-w-2xl">
         <div className="text-2xl font-normal leading-normal text-white font-helvetica">
@@ -108,7 +112,7 @@ const MarketBanner = () => {
         </div>
         <button
           onClick={() => setIsModalOpen(true)}
-          className="inline-flex items-center px-3 py-1.5 pt-2 mt-4 text-sm font-light text-black transition-colors bg-white rounded-md"
+          className="inline-flex items-center px-3 py-1.5 pt-2 mt-4 text-sm font-light text-black transition-colors bg-white rounded-md hover:bg-gray-100"
         >
           Tokenise a post
         </button>

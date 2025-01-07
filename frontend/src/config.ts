@@ -2,6 +2,8 @@ import { getDefaultConfig } from 'connectkit';
 import { createConfig } from 'wagmi';
 import { mainnet, polygon, optimism, arbitrum } from 'wagmi/chains';
 
+export const NEXT_PUBLIC_WC_PROJECT_ID=process.env.NEXT_PUBLIC_WC_PROJECT_ID;
+
 export const config = createConfig(
   getDefaultConfig({
     appName: 'ConnectKit Next.js demo',

@@ -11,10 +11,10 @@ const getPostMetadata = async (postId: string): Promise<any> => {
       },
       fetchPolicy: "network-only",
     });
-    console.log("Got the post", result);
+    console.log("Got the Post", result);
     return result;
   } catch (error) {
-    console.error("Error in getting profiles", error);
+    console.error("Error in Getting Profiles", error);
     throw error;
   }
 };

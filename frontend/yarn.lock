@@ -794,6 +794,11 @@
     "@jridgewell/resolve-uri" "^3.1.0"
     "@jridgewell/sourcemap-codec" "^1.4.14"
 
+"@lens-network/sdk@^0.0.0-canary-20241203140504":
+  version "0.0.0-canary-20241203140504"
+  resolved "https://registry.yarnpkg.com/@lens-network/sdk/-/sdk-0.0.0-canary-20241203140504.tgz#5179721f9e08f1fb9f469de9cf9f39ba1d1874db"
+  integrity sha512-w5mNEXQTP0pSkCq6b8sgM2/87dad1gFTP7hbaDxy4lXnM1fBrVA5OzxWRfCIJJY8/NGdw4RYhEzJoXf4IRR97w==
+
 "@lit-labs/ssr-dom-shim@^1.0.0", "@lit-labs/ssr-dom-shim@^1.1.0":
   version "1.2.1"
   resolved "https://registry.yarnpkg.com/@lit-labs/ssr-dom-shim/-/ssr-dom-shim-1.2.1.tgz#2f3a8f1d688935c704dbc89132394a41029acbb8"

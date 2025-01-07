@@ -9,6 +9,7 @@ import { useMemo } from 'react';
 import { http, createConfig } from 'wagmi';
 import { base, baseSepolia } from 'wagmi/chains';
 import { NEXT_PUBLIC_WC_PROJECT_ID } from './config';
+import { chains } from '@lens-network/sdk/viem';
 
 export function useWagmiConfig() {
   const projectId = NEXT_PUBLIC_WC_PROJECT_ID ?? '';
@@ -31,20 +32,19 @@ export function useWagmiConfig() {
         },
       ],
       {
-        appName: 'onchainkit',
+        appName: 'hunch',
         projectId,
       },
     );
 
     const wagmiConfig = createConfig({
-      chains: [base, baseSepolia],
+      chains: [base, baseSepolia, chains.testnet],
       // turn off injected provider discovery
       multiInjectedProviderDiscovery: false,
       connectors,
       ssr: true,
       transports: {
-        [base.id]: http(),
-        [baseSepolia.id]: http(),
+        [chains.testnet.id]: http(),
       },
     });
 

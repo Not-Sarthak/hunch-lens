@@ -1,5 +1,6 @@
 import { http, createPublicClient } from "viem";
 import { mainnet, baseSepolia } from "viem/chains";
+import { chains } from "@lens-network/sdk/viem";
 
 export const publicClient = [
   createPublicClient({
@@ -10,4 +11,8 @@ export const publicClient = [
     chain: baseSepolia,
     transport: http(),
   }),
+  createPublicClient({
+    chain: chains.testnet,
+    transport: http(),
+  })
 ];
