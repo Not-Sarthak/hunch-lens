@@ -18,7 +18,7 @@ interface Post {
 }
 
 interface Tab {
-  id: "collection" | "launched" | "investment-logs";
+  id: "feed" | "launched" | "investment-logs";
   label: string;
 }
 
@@ -27,7 +27,7 @@ interface TabProps {
 }
 
 const tabs: Tab[] = [
-  { id: "collection", label: "Collection" },
+  { id: "feed", label: "Feed" },
   { id: "launched", label: "Launched" },
   { id: "investment-logs", label: "Investment Logs" },
 ];
@@ -157,7 +157,7 @@ const InvestmentLogsTab = () => {
 };
 
 const PostFeed = () => {
-  const [activeTab, setActiveTab] = useState<Tab["id"]>("collection");
+  const [activeTab, setActiveTab] = useState<Tab["id"]>("feed");
 
   const posts: Post[] = [
     {
@@ -175,7 +175,7 @@ const PostFeed = () => {
   return (
     <div className="max-w-3xl mt-8">
       <TabNavigation activeTab={activeTab} onTabChange={setActiveTab} />
-      {activeTab === "collection" && <CollectionTab posts={posts} />}
+      {activeTab === "feed" && <CollectionTab posts={posts} />}
       {activeTab === "launched" && <LaunchedTab posts={posts} />}
       {activeTab === "investment-logs" && <InvestmentLogsTab />}
     </div>

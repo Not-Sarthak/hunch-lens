@@ -26,12 +26,6 @@ interface NavItem {
   icon: React.ReactNode;
 }
 
-interface Position {
-  left: number;
-  width: number;
-  opacity: number;
-}
-
 interface TabProps {
   index: number;
   path: string;
@@ -76,43 +70,6 @@ const Tab: React.FC<TabProps> = ({ index, path, children, activeTab }) => {
         })}
       </span>
     </li>
-  );
-};
-
-const AnalyticsIcon = ({ className }: { className?: string }) => {
-  return (
-    <svg
-      width="16"
-      height="16"
-      viewBox="0 0 20 20"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <path
-        d="M19 19H5C2.79086 19 1 17.2091 1 15V1M5 12L5.61026 10.1692C6.35529 7.93413 9.52955 7.97104 10.2224 10.2228C10.8649 12.311 13.7261 12.5478 14.7032 10.5937L17 6"
-        stroke={
-          className === "active-gradient"
-            ? "url(#analytics-gradient)"
-            : "currentColor"
-        }
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-      <defs>
-        <linearGradient
-          id="analytics-gradient"
-          x1="10"
-          y1="1"
-          x2="10"
-          y2="19"
-          gradientUnits="userSpaceOnUse"
-        >
-          <stop stopColor="#6FDBB5" />
-          <stop offset="1" stopColor="#45A176" />
-        </linearGradient>
-      </defs>
-    </svg>
   );
 };
 
@@ -277,11 +234,6 @@ export const Navbar: React.FC = () => {
     );
     setActiveTab(currentIndex !== -1 ? currentIndex : null);
   }, [pathname]);
-
-  const { disconnect, connectors } = useDisconnect();
-  const handleDisconnect = useCallback(() => {
-    connectors.map((connector) => disconnect({ connector }));
-  }, [disconnect, connectors]);
 
   const handleLensSignIn = async () => {
     try {

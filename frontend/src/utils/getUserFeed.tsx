@@ -2,7 +2,7 @@ import { client } from "src/graphql/client";
 import getFeed from "src/graphql/getFeed";
 
 const getUserFeed = async (profileId: string): Promise<any> => {
-  console.log("got the address", profileId);
+  console.log("Got the Address", profileId);
 
   try {
     const result = await client.query({

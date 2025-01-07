@@ -49,13 +49,13 @@ export const removeStoredToken = (): void => {
 
 export const getStoredId = (): string | null => {
   const token = localStorage.getItem(PROFILE_ID_KEY);
-  console.log("Retrieved profileId:", token ? "exists" : "not found");
+  console.log("Retrieved ProfileId:", token ? "exists" : "not found");
   return token;
 };
 
 export const removeStoredId = (): void => {
   localStorage.removeItem(PROFILE_ID_KEY);
-  console.log("Profile Id Removed Successfully");
+  console.log("Profile ID Removed Successfully");
 };
 
 export default authenticateUser;
