@@ -2,9 +2,10 @@
 
 Hunch is a social trading platform connecting people who spot viral content early with those who want to profit from it. Create markets for viral posts, trade on insights, and earn from your predictions.
 
-### For Curators
+![image](https://github.com/user-attachments/assets/0aa085b0-fcb8-4ca4-8df2-381871a69ee7)
 
-![image](https://github.com/user-attachments/assets/26741ed3-db99-4f6f-8ede-9a85bc364984)
+
+### For Curators
 
 If you're good at spotting viral posts before they blow up:
 
@@ -33,10 +34,10 @@ Trade based on your insights
 2. **Trade**: Buy tokens when you think a post will go viral
 3. **Profit**: Sell when the post gains significant engagement
 
-## Contract addresses
+## Useful Links:
 
-LENS_TESTNET_CONTRACT_ADDRESS = 0x9731eC4D4989ea4792527E523Da6D67E58223a78
-
-## MIT License
+Demo: https://youtu.be/vHhJQT0SWeI <br/>
+Live Link: https://hunch-lens.vercel.app/ <br/>
+Contract: https://block-explorer.testnet.lens.dev/address/0x9731eC4D4989ea4792527E523Da6D67E58223a78 <br/>
 
 Built during Lens Holiday Hackathon by Sarthak & Sahil
