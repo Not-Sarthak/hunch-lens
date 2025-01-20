@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import CastCard from "../cards/cast-card";
+import CastCard from "../cards/post-card";
 import { toast } from "sonner";
 import { getTokenisedPosts } from "src/utils/transactions";
 

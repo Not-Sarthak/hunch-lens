@@ -139,7 +139,7 @@ const LandingPageSection: React.FC = () => {
     <>
       <BackgroundCircle />
       <ParticleBackground />
-      <div className="relative max-w-landing border-x border-b rounded-b-2xl border-[#1E1E21] min-h-screen bg-[#111015] bg-opacity-95">
+      <div className="relative max-w-landing border-x border-b rounded-b-2xl border-[#1E1E21] bg-[#111015] bg-opacity-95">
         <AnimatedContent />
         <motion.div
           initial={{ opacity: 0, y: 8 }}
