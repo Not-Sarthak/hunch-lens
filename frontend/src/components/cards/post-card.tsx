@@ -35,7 +35,7 @@ const CastCard = ({ post }: CastCardProps) => {
     try {
       setIsLoading(true);
       const tx = await buyPost({
-        contractAddress: post.tokenAddress,
+        contractAddress: post.tokenAddress as `0x${string}`,
         amount: "5"
       });
       

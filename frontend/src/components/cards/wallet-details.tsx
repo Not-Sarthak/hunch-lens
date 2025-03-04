@@ -23,7 +23,7 @@ const WalletDetails: React.FC<WalletDetailsProps> = ({ balance, base, usdc }) =>
             <div className="text-[#787878] text-sm font-normal">
               Your Wallet / Balance
             </div>
-            <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2">
+            <div className="flex items-center gap-1 sm:gap-2">
               <span className="text-white text-xl sm:text-2xl font-medium">{formatAddress(address)}</span>
               <span className="bg-gradient-to-b from-[#6FDBB5] to-[#45A176] inline-block text-transparent bg-clip-text font-normal tracking-tight text-3xl sm:text-[44px] leading-[36px] sm:leading-[44px]">
                 / {formatCurrency(balance)}
@@ -47,7 +47,7 @@ const WalletDetails: React.FC<WalletDetailsProps> = ({ balance, base, usdc }) =>
               <div className="text-[#787878] text-sm mt-1">10</div>
             </div>
 
-            <div className="relative md:block pl-2 sm:pl-4 ml-0 sm:ml-4 border-l border-[#1E1E21]">
+            <div className="relative hidden md:block pl-2 sm:pl-4 ml-0 sm:ml-4 border-l border-[#1E1E21]">
               <TimeframeDropdown value={selectedTimeframe} onChange={setSelectedTimeframe} />
             </div>
           </div>

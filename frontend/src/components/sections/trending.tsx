@@ -74,8 +74,13 @@ const Trending = () => {
     try {
       const result = await getTokenisedPosts();
       console.log("Fetched tokenised posts:", result);
+      
+      // Reverse the array to get latest posts first
       //@ts-ignore
-      setPosts(result);
+      const reversedPosts = [...result].reverse();
+      
+      //@ts-ignore
+      setPosts(reversedPosts);
     } catch (err) {
       console.error("Error fetching posts:", err);
       setError("Failed to fetch posts");
