@@ -14,7 +14,7 @@ const Leaderboard = () => {
         opacity: 1,
         y: 0,
       }}
-      className="flex items-center justify-center w-full py-32 pl-20"
+      className="flex items-center max-w-7xl mx-auto justify-center w-full py-32 px-4 md:px-6 lg:pl-20"
     >
       <LeaderboardSection />
     </motion.div>

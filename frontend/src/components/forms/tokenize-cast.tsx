@@ -6,7 +6,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
 import { X, Loader2 } from "lucide-react";
 import { z } from "zod";
-import getPostMetadata from "src/utils/getPostMetadata";
+import getPostMetadata from "src/utils/get-post-metadata";
 import Image from "next/image";
 import { tokenisePost } from "../../utils/transactions";
 

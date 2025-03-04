@@ -11,6 +11,7 @@ interface MarketPageProps {
 
 const MarketPage: React.FC<MarketPageProps> = ({ params }) => {
   const { marketId } = params;
+  console.log(marketId);
 
   return (
     <motion.div

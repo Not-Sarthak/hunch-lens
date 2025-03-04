@@ -1,202 +1,29 @@
 "use client";
 
-import React, {
-  useRef,
-  useState,
-  useEffect,
-  useLayoutEffect,
-  useCallback,
-} from "react";
+import React, { useState, useEffect, useLayoutEffect } from "react";
 import { useRouter, usePathname } from "next/navigation";
-import { useAccount, useDisconnect, useSignMessage } from "wagmi";
+import { useAccount, useSignMessage } from "wagmi";
 import Image from "next/image";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { ConnectKitButton } from "connectkit";
-import getProfiles from "src/utils/getLensProfile";
-import genChallenge from "src/utils/generateChallenge";
+import getProfiles from "src/utils/get-lens-profile";
+import genChallenge from "src/utils/generate-challenge";
 import authenticateUser, {
   getStoredId,
   getStoredToken,
-} from "src/utils/authenticateUser";
-import getUserFeed from "src/utils/getUserFeed";
-import getPostMetadata from "src/utils/getPostMetadata";
-
-interface NavItem {
-  label: string;
-  path: string;
-  icon: React.ReactNode;
-}
-
-interface TabProps {
-  index: number;
-  path: string;
-  children: React.ReactNode;
-  activeTab: number | null;
-}
-
-const Tab: React.FC<TabProps> = ({ index, path, children, activeTab }) => {
-  const router = useRouter();
-  const ref = useRef<HTMLLIElement | null>(null);
-
-  const handleClick = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    router.push(path);
-  };
-
-  const isActive = activeTab === index;
-
-  return (
-    <li
-      id={`tab-${index}`}
-      ref={ref}
-      onClick={handleClick}
-      className={`relative grid place-items-center z-10 cursor-pointer p-3 rounded-xl transition-all duration-200 outline-none ${
-        isActive
-          ? "bg-gradient-to-b from-[#26262A] to-[#16151A] border border-[#1E1E21]"
-          : "hover:bg-[#26262A]/20 border border-transparent"
-      }`}
-      role="tab"
-      aria-selected={isActive}
-      tabIndex={0}
-      onKeyPress={(e) => {
-        if (e.key === "Enter" || e.key === " ") {
-          e.preventDefault();
-          router.push(path);
-        }
-      }}
-    >
-      <span className={`pointer-events-none`}>
-        {React.cloneElement(children as React.ReactElement, {
-          className: isActive ? "active-gradient" : "text-[#737373]",
-        })}
-      </span>
-    </li>
-  );
-};
-
-const DashboardIcon = ({ className }: { className?: string }) => {
-  return (
-    <svg
-      width="16"
-      height="16"
-      viewBox="0 0 18 14"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <path
-        d="M1 7H17M1 13H17M1 1H17"
-        stroke={
-          className === "active-gradient"
-            ? "url(#analytics-gradient)"
-            : "currentColor"
-        }
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-      <defs>
-        <linearGradient
-          id="analytics-gradient"
-          x1="10"
-          y1="1"
-          x2="10"
-          y2="19"
-          gradientUnits="userSpaceOnUse"
-        >
-          <stop stopColor="#6FDBB5" />
-          <stop offset="1" stopColor="#45A176" />
-        </linearGradient>
-      </defs>
-    </svg>
-  );
-};
-
-const ProfileIcon = ({ className }: { className?: string }) => {
-  return (
-    <svg
-      width="16"
-      height="16"
-      viewBox="0 0 24 24"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <path
-        d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z"
-        stroke={
-          className === "active-gradient"
-            ? "url(#analytics-gradient)"
-            : "currentColor"
-        }
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-      <defs>
-        <linearGradient
-          id="analytics-gradient"
-          x1="10"
-          y1="1"
-          x2="10"
-          y2="19"
-          gradientUnits="userSpaceOnUse"
-        >
-          <stop stopColor="#6FDBB5" />
-          <stop offset="1" stopColor="#45A176" />
-        </linearGradient>
-      </defs>
-    </svg>
-  );
-};
-
-const LeaderboardIcon = ({ className }: { className?: string }) => {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      fill="none"
-      width="16"
-      height="16"
-      viewBox="0 0 24 24"
-      stroke={
-        className === "active-gradient"
-          ? "url(#profile-gradient)"
-          : "currentColor"
-      }
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <path
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        d="M9 21V15C9 14.0681 9 13.6022 8.84776 13.2346C8.64477 12.7446 8.25542 12.3552 7.76537 12.1522C7.39782 12 6.93188 12 6 12C5.06812 12 4.60218 12 4.23463 12.1522C3.74458 12.3552 3.35523 12.7446 3.15224 13.2346C3 13.6022 3 14.0681 3 15V17.8C3 18.9201 3 19.4802 3.21799 19.908C3.40973 20.2843 3.71569 20.5903 4.09202 20.782C4.51984 21 5.0799 21 6.2 21H9ZM9 21H15M9 21V6C9 5.06812 9 4.60218 9.15224 4.23463C9.35523 3.74458 9.74458 3.35523 10.2346 3.15224C10.6022 3 11.0681 3 12 3C12.9319 3 13.3978 3 13.7654 3.15224C14.2554 3.35523 14.6448 3.74458 14.8478 4.23463C15 4.60218 15 5.06812 15 6V21M15 21H17.8C18.9201 21 19.4802 21 19.908 20.782C20.2843 20.5903 20.5903 20.2843 20.782 19.908C21 19.4802 21 18.9201 21 17.8V11C21 10.0681 21 9.60218 20.8478 9.23463C20.6448 8.74458 20.2554 8.35523 19.7654 8.15224C19.3978 8 18.9319 8 18 8C17.0681 8 16.6022 8 16.2346 8.15224C15.7446 8.35523 15.3552 8.74458 15.1522 9.23463C15 9.60218 15 10.0681 15 11V21Z"
-      />
-      <defs>
-        <linearGradient
-          id="profile-gradient"
-          x1="10"
-          y1="1"
-          x2="10"
-          y2="19"
-          gradientUnits="userSpaceOnUse"
-        >
-          <stop stopColor="#6FDBB5" />
-          <stop offset="1" stopColor="#45A176" />
-        </linearGradient>
-      </defs>
-    </svg>
-  );
-};
-
-const navigationItems: NavItem[] = [
-  { label: "Dashboard", path: "/dashboard", icon: <DashboardIcon /> },
-  { label: "Profile", path: "/profile", icon: <ProfileIcon /> },
-  { label: "Leaderboard", path: "/leaderboard", icon: <LeaderboardIcon /> },
-];
+} from "src/utils/authenticate-user";
+import getUserFeed from "src/utils/get-user-feed";
+import getPostMetadata from "src/utils/get-post-metadata";
+import { Tab } from "./tab";
+import { navigationItems } from "src/static";
+import { ProfileIcon, HamburgerIcon } from "./tab-icons";
+import { MobileTab } from "./mobile-tab";
 
 export const Navbar: React.FC = () => {
   const router = useRouter();
   const pathname = usePathname();
   const [isLensAuthenticated, setIsLensAuthenticated] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const { address } = useAccount();
   const { signMessageAsync } = useSignMessage();
@@ -209,6 +36,10 @@ export const Navbar: React.FC = () => {
   });
 
   const { isConnected } = useAccount();
+
+  useEffect(() => {
+    setIsMobileMenuOpen(false);
+  }, [pathname]);
 
   useEffect(() => {
     getPostMetadata("0x09b42e-0x01-DA-fdec7ac8");
@@ -277,87 +108,247 @@ export const Navbar: React.FC = () => {
     }
   };
 
-  const handleProfileClick = (e: React.MouseEvent) => {
-    e.preventDefault();
+  const handleProfileClick = (e?: React.MouseEvent) => {
+    if (e) e.preventDefault();
     router.push("/profile");
   };
 
+  const toggleMobileMenu = () => {
+    setIsMobileMenuOpen(!isMobileMenuOpen);
+  };
+
   return (
-    <motion.nav
-      initial={{ opacity: 0, y: 8 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.25 }}
-      className={
-        pathname !== "/"
-          ? "fixed top-0 left-0 right-0 z-20 text-white py-3.5 h-20 border-b-[1px] border-[#1E1E21] backdrop-blur-lg bg-[#111015aa]"
-          : "max-w-landing z-20 text-white pt-3.5 h-20 border-[#1E1E21] backdrop-blur-lg bg-[#111015] border-x rounded-t-2xl"
-      }
-    >
-      <div
+    <>
+      <motion.nav
+        initial={{ opacity: 0, y: 8 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.25 }}
         className={
           pathname !== "/"
-            ? "flex items-center justify-between px-4"
-            : "flex items-center justify-between px-4 pb-3.5 border-b-[1px] border-[#1E1E21] mx-4"
+            ? "fixed top-0 left-0 right-0 z-20 text-white py-3.5 h-20 border-b-[1px] border-[#1E1E21] backdrop-blur-lg bg-[#111015aa]"
+            : "max-w-landing bg-[#111015] z-20 text-white pt-3.5 h-20 border-[#1E1E21] backdrop-blur-lg border-x rounded-t-2xl"
         }
       >
-        <div className="flex items-center">
-          <Image src="/logo.svg" alt="logo" width={100} height={40} />
-        </div>
-
-        {pathname !== "/" && (
-          <div className="fixed top-20 left-0 w-20 h-[calc(100vh_-_5rem)] border-r border-[#1E1E21] flex-1 flex justify-center z-30 p-4 px-2">
-            <ul className="relative flex flex-col gap-8 p-1 w-fit rounded-xl">
-              {navigationItems.map((item, index) => (
-                <Tab
-                  key={item.label}
-                  index={index}
-                  path={item.path}
-                  activeTab={activeTab}
-                >
-                  {item.icon}
-                </Tab>
-              ))}
-            </ul>
+        <div
+          className={
+            pathname !== "/"
+              ? "flex items-center justify-between px-4"
+              : "flex items-center justify-between px-4 pb-3.5 border-b-[1px] border-[#1E1E21] mx-4"
+          }
+        >
+          <div className="flex items-center">
+            <Image src="/logo.svg" alt="logo" width={100} height={40} />
           </div>
-        )}
 
-        <div className="flex items-center justify-end gap-4">
-          {address && (
-            <button
-              className={`disconnect-btn ${isLensAuthenticated ? "bg-green-500/10" : ""}`}
-              onClick={
-                isLensAuthenticated ? handleProfileClick : handleLensSignIn
-              }
-            >
-              {isLensAuthenticated ? (
-                <ProfileIcon className="active-gradient" />
-              ) : (
-                <svg
-                  width="20"
-                  height="20"
-                  viewBox="0 0 20 21"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M1.66663 12.5833V9.66667C1.66663 7.33311 1.66663 6.16634 2.12077 5.27504C2.52024 4.49103 3.15766 3.85361 3.94167 3.45414C4.83296 3 5.99974 3 8.33329 3H11.25C12.4148 3 12.9972 3 13.4567 3.1903C14.0692 3.44404 14.5559 3.93072 14.8097 4.54329C14.9824 4.96043 14.9983 5.47895 14.9998 6.44275M1.66663 12.5833C1.66663 13.6914 1.66663 14.6621 1.98379 15.4278C2.40669 16.4488 3.21783 17.2599 4.23878 17.6828C5.00449 18 5.9752 18 7.91663 18H11.0004M1.66663 12.5833C1.66663 10.6419 1.66663 9.6712 1.98379 8.90549C2.40669 7.88453 3.21783 7.07339 4.23878 6.6505C5.00449 6.33333 5.9752 6.33333 7.91663 6.33333H12.0833C13.4449 6.33333 14.329 6.33333 14.9998 6.44275M14.9998 6.44275C15.2855 6.48934 15.5324 6.55578 15.7611 6.6505C16.7821 7.07339 17.5932 7.88453 18.0161 8.90549C18.2066 9.36533 18.2827 9.89912 18.3131 10.6727M11.6666 10.5H14.1666M14.3335 18.0002L16.3335 16.0002M16.3335 16.0002L18.3335 14.0002M16.3335 16.0002L14.3335 14.0002M16.3335 16.0002L18.3335 18.0002"
-                    stroke={"#737373"}
-                    strokeWidth="1.5"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
-              )}
-
-              <span className="pt-0.5">
-                {isLensAuthenticated ? "Profile" : "Sign In With Lens"}
-              </span>
-            </button>
+          {/* Desktop Sidebar - unchanged */}
+          {pathname !== "/" && (
+            <div className="fixed hidden lg:flex top-20 left-0 w-20 h-[calc(100vh_-_5rem)] border-r border-[#1E1E21] flex-1 justify-center z-30 p-4 px-2">
+              <ul className="relative flex flex-col gap-8 p-1 w-fit rounded-xl">
+                {navigationItems.map((item, index) => (
+                  <Tab
+                    key={item.label}
+                    index={index}
+                    path={item.path}
+                    activeTab={activeTab}
+                  >
+                    {item.icon}
+                  </Tab>
+                ))}
+              </ul>
+            </div>
           )}
-          {pathname === "/" ? <ConnectKitButton /> : <ConnectKitButton />}
+
+          <div className="flex items-center justify-end gap-4">
+            {/* Mobile hamburger menu button */}
+            <div className="lg:hidden">
+              <HamburgerIcon
+                isOpen={isMobileMenuOpen}
+                toggle={toggleMobileMenu}
+              />
+            </div>
+
+            {/* Desktop buttons */}
+            <div className="hidden lg:flex items-center gap-4">
+              {address && (
+                <button
+                  className={`disconnect-btn ${isLensAuthenticated ? "bg-green-500/10" : ""}`}
+                  onClick={
+                    isLensAuthenticated ? handleProfileClick : handleLensSignIn
+                  }
+                >
+                  {isLensAuthenticated ? (
+                    <ProfileIcon className="active-gradient" />
+                  ) : (
+                    <svg
+                      width="20"
+                      height="20"
+                      viewBox="0 0 20 21"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M1.66663 12.5833V9.66667C1.66663 7.33311 1.66663 6.16634 2.12077 5.27504C2.52024 4.49103 3.15766 3.85361 3.94167 3.45414C4.83296 3 5.99974 3 8.33329 3H11.25C12.4148 3 12.9972 3 13.4567 3.1903C14.0692 3.44404 14.5559 3.93072 14.8097 4.54329C14.9824 4.96043 14.9983 5.47895 14.9998 6.44275M1.66663 12.5833C1.66663 13.6914 1.66663 14.6621 1.98379 15.4278C2.40669 16.4488 3.21783 17.2599 4.23878 17.6828C5.00449 18 5.9752 18 7.91663 18H11.0004M1.66663 12.5833C1.66663 10.6419 1.66663 9.6712 1.98379 8.90549C2.40669 7.88453 3.21783 7.07339 4.23878 6.6505C5.00449 6.33333 5.9752 6.33333 7.91663 6.33333H12.0833C13.4449 6.33333 14.329 6.33333 14.9998 6.44275M14.9998 6.44275C15.2855 6.48934 15.5324 6.55578 15.7611 6.6505C16.7821 7.07339 17.5932 7.88453 18.0161 8.90549C18.2066 9.36533 18.2827 9.89912 18.3131 10.6727M11.6666 10.5H14.1666M14.3335 18.0002L16.3335 16.0002M16.3335 16.0002L18.3335 14.0002M16.3335 16.0002L14.3335 14.0002M16.3335 16.0002L18.3335 18.0002"
+                        stroke={"#737373"}
+                        strokeWidth="1.5"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                    </svg>
+                  )}
+
+                  <span className="pt-0.5">
+                    {isLensAuthenticated ? "Profile" : "Sign In With Lens"}
+                  </span>
+                </button>
+              )}
+              {pathname === "/" ? <ConnectKitButton /> : <ConnectKitButton />}
+            </div>
+          </div>
         </div>
-      </div>
-    </motion.nav>
+      </motion.nav>
+
+      {/* Mobile Menu */}
+      <AnimatePresence>
+        {isMobileMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.2 }}
+            className="fixed inset-0 z-40 lg:hidden"
+          >
+            <div
+              className="absolute inset-0 bg-black/80 backdrop-blur-sm"
+              onClick={toggleMobileMenu}
+            ></div>
+            <motion.div
+              initial={{ x: "100%" }}
+              animate={{ x: 0 }}
+              exit={{ x: "100%" }}
+              transition={{ duration: 0.3, ease: "easeInOut" }}
+              className="absolute right-0 top-0 h-full w-[80%] max-w-[300px] bg-[#16151A] border-l border-[#1E1E21] overflow-y-auto"
+            >
+              {/* SVG Gradient Definitions for Mobile Menu */}
+              <svg width="0" height="0" className="absolute">
+                <defs>
+                  <linearGradient
+                    id="analytics-gradient"
+                    x1="10"
+                    y1="1"
+                    x2="10"
+                    y2="19"
+                    gradientUnits="userSpaceOnUse"
+                  >
+                    <stop stopColor="#6FDBB5" />
+                    <stop offset="1" stopColor="#45A176" />
+                  </linearGradient>
+                  <linearGradient
+                    id="profile-gradient"
+                    x1="10"
+                    y1="1"
+                    x2="10"
+                    y2="19"
+                    gradientUnits="userSpaceOnUse"
+                  >
+                    <stop stopColor="#6FDBB5" />
+                    <stop offset="1" stopColor="#45A176" />
+                  </linearGradient>
+                </defs>
+              </svg>
+
+              <div className="p-6 flex flex-col h-full">
+                <div className="mb-8 flex justify-end">
+                  <button
+                    onClick={toggleMobileMenu}
+                    className="text-white p-2"
+                    aria-label="Close menu"
+                  >
+                    <svg
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M18 6L6 18M6 6L18 18"
+                        stroke="white"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                    </svg>
+                  </button>
+                </div>
+
+                <div className="flex-1">
+                  <h3 className="text-[#737373] uppercase text-xs font-semibold mb-4 tracking-wider">
+                    Navigation
+                  </h3>
+                  <ul className="space-y-2">
+                    {navigationItems.map((item, index) => (
+                      <MobileTab
+                        key={item.label}
+                        item={item}
+                        isActive={activeTab === index}
+                        onClick={() => {
+                          router.push(item.path);
+                          setIsMobileMenuOpen(false);
+                        }}
+                      />
+                    ))}
+                  </ul>
+                </div>
+
+                <div className="mt-auto pt-6 border-t border-[#1E1E21] space-y-4">
+                  {address && (
+                    <button
+                      className={`w-full flex items-center gap-3 p-3 rounded-xl ${
+                        isLensAuthenticated
+                          ? "bg-green-500/10"
+                          : "bg-[#26262A]/20"
+                      }`}
+                      onClick={() => {
+                        isLensAuthenticated
+                          ? handleProfileClick()
+                          : handleLensSignIn();
+                        setIsMobileMenuOpen(false);
+                      }}
+                    >
+                      {isLensAuthenticated ? (
+                        <ProfileIcon className="active-gradient" />
+                      ) : (
+                        <svg
+                          width="20"
+                          height="20"
+                          viewBox="0 0 20 21"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M1.66663 12.5833V9.66667C1.66663 7.33311 1.66663 6.16634 2.12077 5.27504C2.52024 4.49103 3.15766 3.85361 3.94167 3.45414C4.83296 3 5.99974 3 8.33329 3H11.25C12.4148 3 12.9972 3 13.4567 3.1903C14.0692 3.44404 14.5559 3.93072 14.8097 4.54329C14.9824 4.96043 14.9983 5.47895 14.9998 6.44275M1.66663 12.5833C1.66663 13.6914 1.66663 14.6621 1.98379 15.4278C2.40669 16.4488 3.21783 17.2599 4.23878 17.6828C5.00449 18 5.9752 18 7.91663 18H11.0004M1.66663 12.5833C1.66663 10.6419 1.66663 9.6712 1.98379 8.90549C2.40669 7.88453 3.21783 7.07339 4.23878 6.6505C5.00449 6.33333 5.9752 6.33333 7.91663 6.33333H12.0833C13.4449 6.33333 14.329 6.33333 14.9998 6.44275M14.9998 6.44275C15.2855 6.48934 15.5324 6.55578 15.7611 6.6505C16.7821 7.07339 17.5932 7.88453 18.0161 8.90549C18.2066 9.36533 18.2827 9.89912 18.3131 10.6727M11.6666 10.5H14.1666M14.3335 18.0002L16.3335 16.0002M16.3335 16.0002L18.3335 14.0002M16.3335 16.0002L14.3335 14.0002M16.3335 16.0002L18.3335 18.0002"
+                            stroke={"#737373"}
+                            strokeWidth="1.5"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          />
+                        </svg>
+                      )}
+                      <span className="text-white">
+                        {isLensAuthenticated ? "Profile" : "Sign In With Lens"}
+                      </span>
+                    </button>
+                  )}
+                  <div className="w-full">
+                    <ConnectKitButton />
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </>
   );
 };
 

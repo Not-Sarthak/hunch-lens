@@ -13,6 +13,7 @@ import {
   getContract,
   http,
 } from "viem";
+import { toast } from "sonner";
 
 export const publicClient = createPublicClient({
   chain: chains.testnet,
@@ -85,32 +86,93 @@ export const approvePost = async ({
   return tx;
 };
 
+const formatErrorMessage = (error: any): string => {
+  const message = error?.message || "Transaction failed";
+  
+  // Check if it's a chain mismatch error
+  if (message.includes("chain") && message.includes("match")) {
+    return "Please switch to Lens Testnet Network";
+  }
+
+  // If message is too long, truncate it
+  if (message.length > 60) {
+    return message.substring(0, 60) + "...";
+  }
+
+  return message;
+};
+
 export const buyPost = async ({
-  contractAddress = "0x9731eC4D4989ea4792527E523Da6D67E58223a78",
-  amount = "5",
+  contractAddress,
+  amount,
 }: {
-  contractAddress: any;
+  contractAddress: `0x${string}`;
   amount: string;
 }) => {
-  const walletClient = createWalletClient({
-    chain: chains.testnet,
-    transport: custom(window.ethereum),
-  });
-  const accounts = await walletClient.getAddresses();
-  const walletAddress = accounts[0];
+  try {
+    const walletClient = createWalletClient({
+      chain: chains.testnet,
+      transport: custom(window.ethereum),
+    });
+    const accounts = await walletClient.getAddresses();
+    const walletAddress = accounts[0];
 
-  const tokenContract = getContract({
-    address: contractAddress,
-    abi: tokenAbi,
-    client: walletClient,
-  });
+    const tokenContract = getContract({
+      address: contractAddress,
+      abi: tokenAbi,
+      client: walletClient,
+    });
 
-  const tx = await tokenContract.write.mint({
-    account: walletAddress,
-    value: BigInt(amount),
-  });
-  console.log("Token bought transaction:", tx);
-  return tx;
+    // Convert ETH amount to wei (1 ETH = 1e18 wei)
+    const amountInWei = BigInt(Math.floor(parseFloat(amount) * 1e18));
+
+    const tx = await tokenContract.write.mint({
+      account: walletAddress,
+      value: amountInWei,
+    });
+    console.log("Token bought transaction:", tx);
+    return tx;
+  } catch (error: any) {
+    console.error("Error buying token:", error);
+    toast.error(formatErrorMessage(error));
+    throw error;
+  }
+};
+
+export const sellPost = async ({
+  contractAddress,
+  amount,
+}: {
+  contractAddress: `0x${string}`;
+  amount: string;
+}) => {
+  try {
+    const walletClient = createWalletClient({
+      chain: chains.testnet,
+      transport: custom(window.ethereum),
+    });
+    const accounts = await walletClient.getAddresses();
+    const walletAddress = accounts[0];
+
+    const tokenContract = getContract({
+      address: contractAddress,
+      abi: tokenAbi,
+      client: walletClient,
+    });
+
+    // Convert ETH amount to wei (1 ETH = 1e18 wei)
+    const amountInWei = BigInt(Math.floor(parseFloat(amount) * 1e18));
+
+    const tx = await tokenContract.write.burn([amountInWei], {
+      account: walletAddress,
+    });
+    console.log("Token sold transaction:", tx);
+    return tx;
+  } catch (error: any) {
+    console.error("Error selling token:", error);
+    toast.error(formatErrorMessage(error));
+    throw error;
+  }
 };
 
 export const getTokenisedPosts = async () => {
@@ -135,4 +197,27 @@ export const getTokenisedPost = async (owner: `0x${string}`) => {
   const market = await contract.read.getTokensByDeployer([owner]);
   console.log("Launched tokenised post:", market);
   return market;
+};
+
+export const getTokenPrice = async (contractAddress: `0x${string}`) => {
+  const tokenContract = getContract({
+    address: contractAddress,
+    abi: tokenAbi,
+    client: publicClient,
+  });
+
+  try {
+    const [poolBalance, totalSupply] = await Promise.all([
+      tokenContract.read.poolBalance(),
+      tokenContract.read.totalSupply(),
+    ]);
+
+    if (totalSupply === BigInt(0)) return "0";
+    
+    // Price = poolBalance / totalSupply
+    return (Number(poolBalance) / Number(totalSupply)).toString();
+  } catch (error) {
+    console.error("Error fetching token price:", error);
+    return "0.01"; // Fallback price
+  }
 };

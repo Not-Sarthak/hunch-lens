@@ -4,9 +4,9 @@ import React, { useState } from "react";
 import sahilLogo from "../../assets/sahil.png";
 import sarthakLogo from "../../assets/sarthak.png";
 import staniLogo from "../../assets/stani.png";
-
 import fireImage from "../../assets/fire-img.png";
 import Image, { StaticImageData } from "next/image";
+import { ThreeDotsIcon } from "./tab-icons";
 
 interface Tab {
   id: "onFire" | "hitAuthors" | "activeCurators";
@@ -81,38 +81,6 @@ interface PostCardProps {
   post: Post;
 }
 
-const ThreeDotsIcon = () => (
-  <svg
-    width="20"
-    height="20"
-    viewBox="0 0 20 20"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-  >
-    <path
-      d="M9.99996 5.00001C9.53972 5.00001 9.16663 4.62691 9.16663 4.16668C9.16663 3.70644 9.53972 3.33334 9.99996 3.33334C10.4602 3.33334 10.8333 3.70644 10.8333 4.16668C10.8333 4.62691 10.4602 5.00001 9.99996 5.00001Z"
-      stroke="#737373"
-      strokeWidth="1.5"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    />
-    <path
-      d="M9.99996 10.8333C9.53972 10.8333 9.16663 10.4602 9.16663 10C9.16663 9.53977 9.53972 9.16668 9.99996 9.16668C10.4602 9.16668 10.8333 9.53977 10.8333 10C10.8333 10.4602 10.4602 10.8333 9.99996 10.8333Z"
-      stroke="#737373"
-      strokeWidth="1.5"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    />
-    <path
-      d="M9.99996 16.6667C9.53972 16.6667 9.16663 16.2936 9.16663 15.8333C9.16663 15.3731 9.53972 15 9.99996 15C10.4602 15 10.8333 15.3731 10.8333 15.8333C10.8333 16.2936 10.4602 16.6667 9.99996 16.6667Z"
-      stroke="#737373"
-      strokeWidth="1.5"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    />
-  </svg>
-);
-
 const PostCard: React.FC<PostCardProps> = ({ post }) => (
   <div className="text-gray-300 w-full font-helvetica rounded-xl p-4 px-6 pb-0 max-h-[11.5rem] overflow-hidden border border-[#1E1E21]">
     <div className="flex items-center gap-4 justify-between w-full">
@@ -127,7 +95,7 @@ const PostCard: React.FC<PostCardProps> = ({ post }) => (
         <div>
           <div className="flex items-center gap-2">
             <h2 className="font-medium">{post.author.name}</h2>
-            <p className="text-[#737373]">{post.author.username}</p>
+            <p className="text-[#737373] text-sm">{post.author.username}</p>
           </div>
           <p className="text-[#737373] text-sm font-medium">
             {formatTimeAgo(post.timestamp)}
@@ -136,8 +104,8 @@ const PostCard: React.FC<PostCardProps> = ({ post }) => (
       </div>
       <ThreeDotsIcon />
     </div>
-    <p className="my-4 leading-tight">{post.content}</p>
-    {post.image && <Image src={post.image} alt="post image" />}
+    <p className="my-4 leading-tight text-sm sm:text-base">{post.content}</p>
+    {post.image && <Image src={post.image} alt="post image" className="w-full" />}
   </div>
 );
 
@@ -148,71 +116,6 @@ const PostList: React.FC<{ posts: Post[] }> = ({ posts }) => (
     ))}
   </div>
 );
-
-const OnFireTabContent = () => {
-  return (
-    <div className="space-y-4">
-      {posts.map((post) => (
-        <div
-          key={post.id}
-          className="text-gray-300 w-full font-helvetica rounded-xl p-4 px-6 pb-0 max-h-[11.5rem] overflow-hidden border border-[#1E1E21]"
-        >
-          <div className="flex items-center gap-4 justify-between w-full">
-            <div className="flex items-center gap-4">
-              <Image
-                className="rounded-full"
-                src={post.author.avatar}
-                alt="icon"
-                height={32}
-                width={32}
-              />
-              <div>
-                <div className="flex items-center gap-2">
-                  <h2 className="font-medium">{post.author.name}</h2>
-                  <p className="text-[#737373]">{post.author.username}</p>
-                </div>
-                <p className="text-[#737373] text-sm font-medium">
-                  {formatTimeAgo(post.timestamp)}
-                </p>
-              </div>
-            </div>
-            <svg
-              width="20"
-              height="20"
-              viewBox="0 0 20 20"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M9.99996 5.00001C9.53972 5.00001 9.16663 4.62691 9.16663 4.16668C9.16663 3.70644 9.53972 3.33334 9.99996 3.33334C10.4602 3.33334 10.8333 3.70644 10.8333 4.16668C10.8333 4.62691 10.4602 5.00001 9.99996 5.00001Z"
-                stroke="#737373"
-                strokeWidth="1.5"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-              <path
-                d="M9.99996 10.8333C9.53972 10.8333 9.16663 10.4602 9.16663 10C9.16663 9.53977 9.53972 9.16668 9.99996 9.16668C10.4602 9.16668 10.8333 9.53977 10.8333 10C10.8333 10.4602 10.4602 10.8333 9.99996 10.8333Z"
-                stroke="#737373"
-                strokeWidth="1.5"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-              <path
-                d="M9.99996 16.6667C9.53972 16.6667 9.16663 16.2936 9.16663 15.8333C9.16663 15.3731 9.53972 15 9.99996 15C10.4602 15 10.8333 15.3731 10.8333 15.8333C10.8333 16.2936 10.4602 16.6667 9.99996 16.6667Z"
-                stroke="#737373"
-                strokeWidth="1.5"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
-          </div>
-          <p className="my-4 leading-tight">{post.content}</p>
-          {post.image && <Image src={post.image} alt="post image" />}
-        </div>
-      ))}
-    </div>
-  );
-};
 
 const TabContent: React.FC<TabContentProps> = ({ activeTab }) => {
   const hitAuthorPosts = [...posts].sort((a, b) => b.id - a.id);
@@ -249,28 +152,30 @@ const TabbedNavigation = () => {
   ];
 
   return (
-    <div>
-      <div className="flex space-x-8 px-4">
-        {tabs.map((tab) => (
-          <button
-            key={tab.id}
-            onClick={() => setActiveTab(tab.id)}
-            className={`flex items-center gap-2 pt-4 pb-4 px-1 relative transition-colors
-              ${
-                activeTab === tab.id
-                  ? "text-white"
-                  : "text-[#737373] hover:text-gray-300"
-              }`}
-          >
-            <span className="flex items-center gap-2 text-sm">{tab.label}</span>
-            {activeTab === tab.id && (
-              <div className="absolute top-0 left-0 -mx-4 w-[calc(100%_+_2rem)] h-[2px] bg-white/50 rounded-full" />
-            )}
-          </button>
-        ))}
+    <div className="bg-[#111015] rounded-xl border border-[#1C1C1F] overflow-hidden">
+      <div className="p-4 border-b border-[#1C1C1F]">
+        <h2 className="text-white text-lg font-medium">Lens Feed</h2>
       </div>
-
-      <TabContent activeTab={activeTab} />
+      <div className="overflow-x-auto scrollbar-hide">
+        <div className="flex border-b border-[#1C1C1F] min-w-max">
+          {tabs.map((tab) => (
+            <button
+              key={tab.id}
+              onClick={() => setActiveTab(tab.id)}
+              className={`px-3 sm:px-4 py-2 text-sm sm:text-base transition-colors whitespace-nowrap ${
+                activeTab === tab.id
+                  ? "text-white border-b-2 border-[#6FDBB5]"
+                  : "text-neutral-500 hover:text-neutral-400"
+              }`}
+            >
+              {tab.label}
+            </button>
+          ))}
+        </div>
+      </div>
+      <div className="p-4">
+        <TabContent activeTab={activeTab} />
+      </div>
     </div>
   );
 };

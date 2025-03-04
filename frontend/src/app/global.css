@@ -257,6 +257,11 @@ body,
   stroke: url(#analytics-gradient) !important;
 }
 
+/* Ensure mobile menu icons are properly styled */
+.mobile-menu-icon.active-gradient path {
+  stroke: url(#analytics-gradient) !important;
+}
+
 :root {
   --ock-font-family: "'Helvetica Neue', sans-serif";
   --ock-bg-default: #111015;
@@ -339,9 +344,18 @@ div[data-testid="ockIdentityLayout_container"] {
   padding-block: 1rem;
 }
 
-.max-w-landing {
-  width: 66.66%;
-  margin-inline: auto;
+@layer utilities {
+  .max-w-landing {
+    width: 66.66%;
+    margin-inline: auto;
+  }
+  
+  @media (max-width: 768px) {
+    .max-w-landing {
+      width: 100%;
+      margin-inline: 0;
+    }
+  }
 }
 
 .gradient-mask {
@@ -372,4 +386,13 @@ div[data-testid="ockIdentityLayout_container"] {
 
 .animate-scroll {
   animation: scroll 20s linear infinite;
+}
+
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
 }

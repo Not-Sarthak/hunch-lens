@@ -3,7 +3,7 @@ import sarthakLogo from "../../assets/sarthak.png";
 import lensImage from "../../assets/lens.svg";
 import Image, { StaticImageData } from "next/image";
 import { useAccount, useBalance } from "wagmi";
-import getProfiles from "src/utils/getLensProfile";
+import getProfiles from "src/utils/get-lens-profile";
 import RepScore from "../cards/rep-score";
 import LogCard from "../cards/log-card";
 
@@ -64,27 +64,27 @@ const ThreeDotsIcon = () => (
 );
 
 const PostCard = ({ post }: { post: Post }) => (
-  <div className="bg-[#111015] rounded-lg border border-[#1C1C1F] p-4">
+  <div className="bg-[#111015] rounded-lg border border-[#1C1C1F] p-3 md:p-4">
     <div className="flex items-center justify-between">
-      <div className="flex items-center gap-3">
+      <div className="flex items-center gap-2 md:gap-3">
         <Image
           src={post.author.avatar}
           alt=""
-          className="w-8 h-8 rounded-full"
+          className="w-7 h-7 md:w-8 md:h-8 rounded-full"
         />
         <div>
-          <div className="flex items-center gap-2">
-            <span className="font-medium text-white">{post.author.name}</span>
-            <span className="text-[#737373]">{post.author.username}</span>
+          <div className="flex flex-wrap items-center gap-1 md:gap-2">
+            <span className="font-medium text-white text-sm md:text-base">{post.author.name}</span>
+            <span className="text-[#737373] text-xs md:text-sm">{post.author.username}</span>
           </div>
-          <span className="text-[#737373] text-sm">{post.timestamp}</span>
+          <span className="text-[#737373] text-xs md:text-sm">{post.timestamp}</span>
         </div>
       </div>
       <button className="text-[#737373] hover:text-white transition-colors">
         <ThreeDotsIcon />
       </button>
     </div>
-    <p className="mt-4 text-white">{post.content}</p>
+    <p className="mt-3 md:mt-4 text-white text-sm md:text-base">{post.content}</p>
   </div>
 );
 
@@ -95,20 +95,22 @@ const TabNavigation = ({
   activeTab: string;
   onTabChange: (id: Tab["id"]) => void;
 }) => (
-  <div className="flex space-x-8">
-    {tabs.map((tab) => (
-      <button
-        key={tab.id}
-        onClick={() => onTabChange(tab.id)}
-        className={`p-4 relative ${
-          activeTab === tab.id
-            ? "text-white border-t border-white"
-            : "text-[#737373]"
-        }`}
-      >
-        {tab.label}
-      </button>
-    ))}
+  <div className="overflow-x-auto scrollbar-hide">
+    <div className="flex space-x-4 md:space-x-8 min-w-max">
+      {tabs.map((tab) => (
+        <button
+          key={tab.id}
+          onClick={() => onTabChange(tab.id)}
+          className={`p-2 md:p-4 relative text-sm md:text-base ${
+            activeTab === tab.id
+              ? "text-white border-t border-white"
+              : "text-[#737373]"
+          }`}
+        >
+          {tab.label}
+        </button>
+      ))}
+    </div>
   </div>
 );
 
@@ -173,11 +175,13 @@ const PostFeed = () => {
   ];
 
   return (
-    <div className="max-w-3xl mt-8">
+    <div className="w-full mt-4 md:mt-8">
       <TabNavigation activeTab={activeTab} onTabChange={setActiveTab} />
-      {activeTab === "feed" && <CollectionTab posts={posts} />}
-      {activeTab === "launched" && <LaunchedTab posts={posts} />}
-      {activeTab === "investment-logs" && <InvestmentLogsTab />}
+      <div className="mt-4">
+        {activeTab === "feed" && <CollectionTab posts={posts} />}
+        {activeTab === "launched" && <LaunchedTab posts={posts} />}
+        {activeTab === "investment-logs" && <InvestmentLogsTab />}
+      </div>
     </div>
   );
 };
@@ -244,19 +248,19 @@ const ProfileSection = () => {
   }, []);
 
   if (isLoading) {
-    return <div className="min-w-[50vw] flex justify-center">Loading...</div>;
+    return <div className="w-full flex justify-center">Loading...</div>;
   }
 
   if (error) {
     return (
-      <div className="min-w-[50vw] flex justify-center text-red-500">
+      <div className="w-full flex justify-center text-red-500">
         {error}
       </div>
     );
   }
 
   return (
-    <div className="min-w-[50vw]">
+    <div className="w-full max-w-[90vw] md:min-w-[50vw]">
       <div className="flex flex-col items-center justify-center">
         <Image
           src={sarthakLogo}
@@ -272,16 +276,16 @@ const ProfileSection = () => {
           {formatAddress(profileData?.ownedBy)}
         </p>
       </div>
-      <div className="flex items-start justify-between space-y-1">
+      <div className="flex flex-row items-start justify-between mt-6 md:mt-0 space-y-4 md:space-y-1">
         <div>
-          <div className="text-neutral-500 text-sm font-normal font-helvetica leading-[16.80px] mb-4">
+          <div className="text-neutral-500 text-sm font-normal font-helvetica leading-[16.80px] mb-2 md:mb-4">
             Your Wallet / Balance
           </div>
-          <div className="flex items-center gap-2">
-            <span className="text-2xl text-white">
+          <div className="flex flex-row items-center gap-1 sm:gap-2">
+            <span className="text-lg sm:text-2xl text-white">
               {formatAddress(address)}
             </span>
-            <span className="bg-gradient-to-b from-[#6FDBB5] to-[#45A176] inline-block text-transparent bg-clip-text font-normal tracking-tight text-[44px] leading-[44px]">
+            <span className="bg-gradient-to-b from-[#6FDBB5] to-[#45A176] inline-block text-transparent bg-clip-text font-normal tracking-tight text-2xl sm:text-[44px] leading-tight sm:leading-[44px]">
               / {getFormattedBalance()}
             </span>
           </div>

@@ -1,4 +1,3 @@
-import { ConnectKitButton } from "connectkit";
 import React, { useEffect, useRef } from "react";
 
 interface Particle {
@@ -43,21 +42,19 @@ class ParticleImpl implements Particle {
   draw(ctx: CanvasRenderingContext2D): void {
     ctx.beginPath();
     ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-    ctx.fillStyle = `rgba(255, 255, 255, ${this.alpha})`;
+    ctx.fillStyle = `rgba(111, 219, 181, ${this.alpha})`;
     ctx.fill();
     ctx.shadowBlur = 15;
-    ctx.shadowColor = "rgba(255, 255, 255, 0.5)";
+    ctx.shadowColor = "rgba(111, 219, 181, 0.5)";
   }
 }
 
-const ParticleBackground: React.FC = () => {
+export const ParticleBackground: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const canvas = canvasRef.current;
-    const container = containerRef.current;
-    if (!canvas || !container) return;
+    if (!canvas) return;
 
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
@@ -65,18 +62,17 @@ const ParticleBackground: React.FC = () => {
     let animationFrameId: number;
 
     const setCanvasSize = () => {
-      if (canvas && container) {
-        canvas.width = container.offsetWidth;
-        canvas.height = container.offsetHeight;
+      if (canvas) {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
       }
     };
 
     setCanvasSize();
-    const resizeObserver = new ResizeObserver(setCanvasSize);
-    resizeObserver.observe(container);
+    window.addEventListener("resize", setCanvasSize);
 
     const particles: Particle[] = Array.from(
-      { length: 35 },
+      { length: 400 },
       () => new ParticleImpl(canvas)
     );
 
@@ -92,36 +88,15 @@ const ParticleBackground: React.FC = () => {
     animate();
 
     return () => {
-      resizeObserver.disconnect();
+      window.removeEventListener("resize", setCanvasSize);
       cancelAnimationFrame(animationFrameId);
     };
   }, []);
 
   return (
-    <div
-      ref={containerRef}
-      className="absolute top-0 right-0 z-0 w-1/2 h-full opacity-50"
-    >
-      <canvas
-        ref={canvasRef}
-        className="absolute top-0 left-0 w-full h-full pointer-events-none"
-      />
-    </div>
+    <canvas
+      ref={canvasRef}
+      className="fixed top-0 left-0 w-full h-full pointer-events-none -z-10"
+    />
   );
 };
-
-const Live = () => {
-  return (
-    <div className="flex items-center justify-between lg:mx-6 mb-6 border border-[#1c1c1f] bg-[#111014] px-4 lg:px-9 py-7 rounded-xl shadow-[0_4px_8px_0_rgba(0,0,0,0.24)] relative isolate overflow-hidden">
-      <div className="z-10 flex items-center justify-between w-full">
-        <h1 className="text-xl lg:text-3xl whitespace-nowrap font-light">Now live on Lens</h1>
-        <ConnectKitButton />
-      </div>
-      <ParticleBackground />
-      <div className="h-40 w-48 bg-[#6FDBB5] absolute -top-32 right-40 blur-[50px] z-[-1]" />
-      <div className="h-12 w-12 bg-[#6FDBB5] absolute -bottom-16 left-8 blur-[50px] z-[-1]" />
-    </div>
-  );
-};
-
-export default Live;

@@ -1,8 +1,9 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useAccount } from "wagmi";
 import TimeframeDropdown from "../dropdown/time-frame-dropdown";
+import { formatAddress, formatCurrency } from "src/utils/format-functions";
 
 interface WalletDetailsProps {
   balance: number;
@@ -10,82 +11,44 @@ interface WalletDetailsProps {
   usdc: number;
 }
 
-const WalletDetails: React.FC<WalletDetailsProps> = ({
-  balance,
-  base,
-  usdc,
-}) => {
+const WalletDetails: React.FC<WalletDetailsProps> = ({ balance, base, usdc }) => {
   const { address } = useAccount();
-  
   const [selectedTimeframe, setSelectedTimeframe] = useState("Last Week");
 
-  const formatCurrency = (num: number): string => {
-    return new Intl.NumberFormat("en-US", {
-      style: "currency",
-      currency: "USD",
-    }).format(num);
-  };
-
-  const formatAddress = (address: string | undefined): string => {
-    if (!address) return "Not Connected";
-    return `${address.slice(0, 4)}...${address.slice(-4)}`;
-  };
-
-  useEffect(() => {
-    console.log(("Wallet Details Component Mounted")); 
-  }, []);
-
   return (
-    <div className="p-[1px] rounded-lg">
-      <div className="text-gray-300 py-8 w-full font-helvetica rounded-lg">
-        <div className="flex justify-between items-center">
-          <div className="space-y-1">
-            <div className="text-neutral-500 text-sm font-normal font-helvetica leading-[16.80px] mb-4">
+    <div className="rounded-lg w-full border border-[#1E1E21]">
+      <div className="px-5 py-5 w-full bg-gradient-to-b from-[#26262A] to-[#16151A] font-helvetica rounded-lg">
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-6">
+          <div className="space-y-2">
+            <div className="text-[#787878] text-sm font-normal">
               Your Wallet / Balance
             </div>
-            <div className="flex items-center gap-2">
-              <span className="text-white text-2xl">
-                {formatAddress(address)}
-              </span>
-              <span className="bg-gradient-to-b from-[#6FDBB5] to-[#45A176] inline-block text-transparent bg-clip-text font-normal tracking-tight text-[44px] leading-[44px]">
+            <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2">
+              <span className="text-white text-xl sm:text-2xl font-medium">{formatAddress(address)}</span>
+              <span className="bg-gradient-to-b from-[#6FDBB5] to-[#45A176] inline-block text-transparent bg-clip-text font-normal tracking-tight text-3xl sm:text-[44px] leading-[36px] sm:leading-[44px]">
                 / {formatCurrency(balance)}
               </span>
             </div>
           </div>
 
-          <div className="flex items-center gap-8">
-            <div className="">
-              <div className="text-white text-base font-light font-helvetica capitalize leading-tight">
-                $ETH
-              </div>
-              <div className="text-neutral-500 text-sm leading-[16.80px] mt-2 font-normal">
-                {formatCurrency(base)}
-              </div>
+          <div className="flex flex-wrap items-center gap-x-8 gap-y-4 mt-2 sm:mt-0">
+            <div className="min-w-[80px]">
+              <div className="text-white text-base font-medium">ETH</div>
+              <div className="text-[#787878] text-sm mt-1">{formatCurrency(base)}</div>
             </div>
 
-            <div className="">
-              <div className="text-white text-base font-light font-helvetica capitalize leading-tight">
-                $USDC
-              </div>
-              <div className="text-neutral-500 text-sm leading-[16.80px] mt-2 font-normal">
-                {formatCurrency(usdc)}
-              </div>
+            <div className="min-w-[80px]">
+              <div className="text-white text-base font-medium">USDC</div>
+              <div className="text-[#787878] text-sm mt-1">{formatCurrency(usdc)}</div>
             </div>
 
-            <div className="">
-              <div className="text-white text-base font-light font-helvetica capitalize leading-tight">
-                Invested Posts
-              </div>
-              <div className="text-neutral-500 text-sm leading-[16.80px] mt-2 font-normal">
-                10
-              </div>
+            <div className="min-w-[80px]">
+              <div className="text-white text-base font-medium">Invested Posts</div>
+              <div className="text-[#787878] text-sm mt-1">10</div>
             </div>
 
-            <div className="relative ml-8">
-              <TimeframeDropdown
-                value={selectedTimeframe}
-                onChange={setSelectedTimeframe}
-              />
+            <div className="relative md:block pl-2 sm:pl-4 ml-0 sm:ml-4 border-l border-[#1E1E21]">
+              <TimeframeDropdown value={selectedTimeframe} onChange={setSelectedTimeframe} />
             </div>
           </div>
         </div>

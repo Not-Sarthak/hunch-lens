@@ -1,12 +1,6 @@
 export const LENS_CHAIN_ID = 84532;
 export const marketFactoryAddress =
   "0x9731eC4D4989ea4792527E523Da6D67E58223a78";
-export const tokenContractAddress = "";
-
-export const backendUrl =
-  process.env.NODE_ENV === "production"
-    ? ""
-    : "https://hunch-1.onrender.com/api";
 
 export const marketFactoryAbi = [
   {

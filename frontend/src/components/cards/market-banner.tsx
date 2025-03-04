@@ -92,7 +92,7 @@ const MarketBanner = () => {
   }, [isModalOpen]);
 
   return (
-    <div className="relative w-full overflow-hidden rounded-2xl bg-[#111015] p-8 py-6 border border-[#1C1C1F]">
+    <div className="relative w-full overflow-hidden rounded-2xl bg-[#111015] p-4 sm:p-6 md:p-8 py-6 border border-[#1C1C1F]">
       <div className="absolute -top-28 right-0 rounded-full w-[156px] h-[156px] bg-[#6FDBB5] blur-[50px]" />
       <div className="absolute -bottom-32 left-0 rounded-full w-[156px] h-[156px] bg-[#6FDBB5] blur-[50px]" />
       
@@ -102,11 +102,11 @@ const MarketBanner = () => {
         aria-hidden="true"
       />
 
-      <div className="relative z-10 flex flex-col items-center justify-center max-w-2xl">
-        <div className="text-2xl font-normal leading-normal text-white font-helvetica">
+      <div className="relative z-10 flex flex-col items-center justify-center max-w-2xl mx-auto text-center">
+        <div className="text-xl sm:text-2xl font-normal leading-normal text-white font-helvetica">
           Create markets for banger posts
         </div>
-        <div className="flex flex-col items-center justify-center pt-2 text-base font-light leading-tight text-white/50 font-helvetica">
+        <div className="flex flex-col items-center justify-center pt-2 text-sm sm:text-base font-light leading-tight text-white/50 font-helvetica">
           <span>Don't wait for popular posts to be tokenised.</span>
           <span>Tokenise them yourself and raise the bar!</span>
         </div>
@@ -128,7 +128,7 @@ const MarketBanner = () => {
             onClick={() => setIsModalOpen(false)}
           >
             <motion.div
-              className="bg-[#111015] rounded-lg border-[#1e1e21] border-[1px] shadow-lg p-6 max-w-lg w-full relative"
+              className="bg-[#111015] rounded-lg border-[#1e1e21] border-[1px] shadow-lg p-4 sm:p-6 m-4 sm:m-0 max-w-lg w-full relative"
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.9, opacity: 0 }}
